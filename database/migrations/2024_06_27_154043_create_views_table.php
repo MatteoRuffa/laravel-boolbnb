@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id('UniqueID');
-            $table->string('name', 255);
-            $table->string('last_name', 255);
-            $table->string('email', 255)->unique();
-            $table->string('password', 255);
+        Schema::create('views', function (Blueprint $table) {
+            $table->id();
+            // $table->unsignedBigInteger('apartment_id');
+            // $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->string('ip_address', 255);
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('views');
     }
 };
