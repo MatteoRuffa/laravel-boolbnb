@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('apartment_id');
             $table->unsignedBigInteger('service_id');
-            $table->foreign('apartment_id')->references('UniqueID')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments');
             $table->foreign('service_id')->references('id')->on('services');
             $table->timestamps();
         });

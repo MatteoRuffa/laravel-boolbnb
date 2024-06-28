@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('views', function (Blueprint $table) {
              $table ->unsignedBigInteger('apartment_id')->nullable();
-            $table->foreign('apartment_id')->references('UniqueID')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments');
         });
     }
 
