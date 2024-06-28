@@ -27,7 +27,7 @@
                 <td class="{{ Route::currentRouteName() === 'admin.apartments.index' ? '' : 'd-none' }}">
                     <div class="d-flex justify-content-center align-items-center">
                         <!-- Amministration Actions -->
-                        <a href="#" class="table-icon p-3 m-1 open-modal-info" data-bs-toggle="modal" data-bs-target="#staticBackdropInfo" data-title="{{ $element->title }}" data-description="{{ $element->description }}" data-created="{{ $element->created }}" data-categories="{{ $element->categories }}">
+                        <a href="{{ route('admin.apartments.show', $element) }}" class="table-icon p-3 m-1 " >
                             <div class="icon-container">
                                 <i class="fas fa-info-circle"></i>
                             </div>
@@ -38,14 +38,14 @@
                                 <i class="fas fa-pencil-alt"></i>
                             </div>
                         </a> -->
-                        <!-- <form id="delete-form-{{ $element->id }}" action="{{ route('admin.apartments.destroy', $element->id) }}"
+                        <form id="delete-form-{{ $element->id }}" action="{{ route('admin.apartments.destroy', $element->id) }}"
                             method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="button" class="btn btn-table table-icon" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
-                        </form> -->
+                        </form> 
                     </div>
                 </td>
             </tr>

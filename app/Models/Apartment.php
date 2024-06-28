@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Models\Service;
-// use App\Models\User;
+use App\Models\User;
 use App\Models\View;
 use App\Models\Promotion;
 use App\Models\ApartmentPromotion;
@@ -53,23 +53,30 @@ class Apartment extends Model
         return $this->hasMany(View::class);
     }
 
-    public static function generateSlug($name)
-    {
+    public static function generateSlug($name){
         $slugBase = Str::slug(trim($name), '-');
-        $existingSlugs = \App\Models\Apartment::where('slug', 'like', $slugBase . '%')
-                                               ->pluck('slug')
-                                               ->toArray();
-
-        if (!in_array($slugBase, $existingSlugs)) {
-            return $slugBase;
+        $slugs = \App\Models\Apartment::orderBy('slug')->pluck('slug')->toArray();
+        $num = 1;
+        $slugNumbers = [];
+        
+        foreach ($slugs as $slug) {
+            if (preg_match('/-(\d+)$/', $slug, $matches)) {
+                $slugNumbers[] = intval($matches[1]);
+            }
         }
 
-        $num = 1;
-        while (in_array($slugBase . '-' . $num, $existingSlugs)) {
+        while (in_array($num, $slugNumbers)) {
             $num++;
         }
 
-        return $slugBase . '-' . $num;
+        $slug = $slugBase . '-' . $num;
+
+        if(preg_match('/-(\d+)$/', $slugBase, $matches)){
+            if(!in_array($matches[1],$slugNumbers)){
+                $slug=$slugBase;   
+            }
+        }
+        return $slug;
     }
 
     public function isPromoted()

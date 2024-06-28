@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreApartmentRequest;
+use App\Http\Requests\UpdateApartmentRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+
 class ApartmentController extends Controller
 {
     /**
@@ -15,7 +20,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $user = auth()->user(); // Recupera l'utente autenticato
-        $apartments = $user->apartments;
+        $apartments = $user->apartments()->paginate(10);
         return view('admin.apartments.index', compact('apartments'));
     }
 
@@ -24,43 +29,43 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        // return view('admin.apartments.create');
+         return view('admin.apartments.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreApartmentRequest $request)
     {
-        // $validateData = $request->validate([s
-        //     'name' => 'required|string|max:255',
-        //     'description' => 'required|string',
-        //     'rooms' => 'required|integer|min:1',
-        //     'beds' => 'required|integer|min:1',
-        //     'bathrooms' => 'required|integer|min:1',
-        //     'square_meters' => 'required|integer|min:1',
-        //     'address' => 'required|string|max:255',
-        //     'longitude' => 'required|numeric',
-        //     'latitude' => 'required|numeric',
-        //     'visibility' => 'required|boolean',
-        //     'image_cover' => 'nullable|string|max:255',
-        // ]);
+        $validateData = $request->validated();
+        $validatedData['slug'] = Apartment::generateSlug($validateData['name']);
         
-        // $validatedData['slug'] = Apartment::generateSlug($validatedData['name']);
-        // $validatedData['user_id'] = Auth::id();
+        $validatedData['user_id'] = Auth::id();
+        $new_apartment = new Apartment();
+        if ($request->hasFile('image_cover')) {
+            $image_cover = Storage::put('img-apart-bnb', $request->image_cover);
+            $validatedData['image_cover'] = $image_cover;
+            $new_apartment->image_cover=$validatedData['image_cover'];
+        }
+        
+        $new_apartment->fill($validateData);
+        $new_apartment->slug= $validatedData['slug'];
+        $new_apartment->longitude=1;
+        $new_apartment->latitude=1;
+        $new_apartment->visibility=0;
+        $new_apartment->user_id= $validatedData['user_id'];
+        $new_apartment->save();
 
-        // Apartment::create($validatedData);
-
-        // return redirect()->route('admin.apartments.index')->with('success', 'Apartment created successfully.');
+        return redirect()->route('admin.apartments.index')->with('success', 'Apartment created successfully.');
     }
+    
 
     /**
      * Display the specified resource.
      */
     public function show(Apartment $apartment)
     {
-        // $this->authorize('view', $apartments);
-        // return view('admin.apartments.show', compact('apartment'));
+        return view('admin.apartments.show', compact('apartment'));
     }
 
     /**
@@ -68,45 +73,55 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        // $this->authorize('update', $apartments);
-        // return view('admin.apartments.edit', compact('apartment'));
+        if ($apartment->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('admin.apartments.edit', compact('apartment'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Apartment $apartment)
+    public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        // $this->authorize('update', $apartment);
+        $validateData = $request->validated();
+        if ($request->hasFile('image_cover')) {
+            $image_cover = Storage::put('img-apart-bnb', $request->image_cover);
+            $validatedData['image_cover'] = $image_cover;
+            $apartment->image_cover=$validatedData['image_cover'];
+        }
+        if($apartment->name !== $validateData['name']){
+            $validatedData['slug'] = Apartment::generateSlug($validateData['name']);
+            $apartment->slug= $validatedData['slug'];
+        }
+        $apartment->fill($validateData);
+        $apartment->save();
+        return view('admin.apartments.show', compact('apartment'));
+        // $project_modified =  Project::findOrFail($id);
+        // $form_data = $request->validated();
+        // if ($request->hasFile('image_url')) {
+        //     if ($project_modified->image_url) {
+        //         Storage::delete($project_modified->image_url);
+        //     }
+        //     $img_path = Storage::put('my_images', $request->image_url);
+        //     $form_data['image_url'] = $img_path;
+        // }
+        // if ($project_modified->title != $form_data["title"]) {
+        //     $form_data["slug"] =  Project::generateSlug($form_data["title"]);
+        // }
+        // $project_modified->fill($form_data);
+        // $project_modified->update();
+        // return redirect()->route("admin.projects.index")->with('message', "Project (id:{$project_modified->id}): {$project_modified->title} modified successfully");
 
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'description' => 'required|string',
-        //     'rooms' => 'required|integer|min:1',
-        //     'beds' => 'required|integer|min:1',
-        //     'bathrooms' => 'required|integer|min:1',
-        //     'square_meters' => 'required|integer|min:1',
-        //     'address' => 'required|string|max:255',
-        //     'longitude' => 'required|numeric',
-        //     'latitude' => 'required|numeric',
-        //     'visibility' => 'required|boolean',
-        //     'image_cover' => 'nullable|string|max:255',
-        // ]);
-
-        // $validatedData['slug'] = Apartment::generateSlug($validatedData['name']);
-
-        // $apartment->update($validatedData);
-
-        // return redirect()->route('admin.apartments.index')->with('success', 'Apartment updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Apartment $apartment)
+    public function destroy($id)
     {
-        // $this->authorize('delete', $apartment);
-        // $apartment->delete();
-        // return redirect()->route('admin.apartments.index')->with('success', 'Apartment deleted successfully.');
+        $apartment = Apartment::findOrFail($id);
+        $apartment->delete();
+        return redirect()->route('admin.apartments.index')->with('message', "Apartment (id:{$apartment->id}): {$apartment->name} eliminate with succes from db");
     }
 }
