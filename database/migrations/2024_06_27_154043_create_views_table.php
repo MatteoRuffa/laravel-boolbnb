@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('views', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
-            $table->string('slug');
-            $table->text('description')->nullable();
-            $table->date('created');
-            $table->string('image_url', 255)->nullable();
+            $table->string('ip_address', 255);
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('views');
     }
 };
