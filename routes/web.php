@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\ApartmentController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +22,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 //Middlware controlla se l'utente è autenticato e verificato; se sì, allora le rotte vengono eseguite; se no entra in gioco la rotta di fallback che rimanda alla dashboard: ma se non è autenticato, allora viene rimandato alla login (e questo è definito in app/Http/Middleware/Authenticate.php)
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('projects', ProjectController::class);
-    Route::get('/admin/projects/{project}', [ProjectController::class, 'show'])->name('admin.projects.show');
+    Route::resource('apartments', ApartmentController::class);
+    // Route::get('/admin/projects/{project}', [ProjectController::class, 'show'])->name('admin.projects.show');
 });
 
 
