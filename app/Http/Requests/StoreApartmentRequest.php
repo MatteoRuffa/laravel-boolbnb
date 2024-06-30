@@ -29,6 +29,7 @@ class StoreApartmentRequest extends FormRequest
                 'bathrooms' => 'required|integer|min:1',
                 'square_meters' => 'required|integer|min:10',
                 'address' => 'required|string|max:255',
+                'image_cover' => 'required|image|max:2048',
         ];
     }
     public function messages()

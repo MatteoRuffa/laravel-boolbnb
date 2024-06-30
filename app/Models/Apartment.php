@@ -79,6 +79,12 @@ class Apartment extends Model
         return $slug;
     }
 
+    public static function formatAddress($address){
+        $addressF = Str::slug(trim($address), '%20');
+        return  $addressF;
+    }
+    
+
     public function isPromoted()
     {
         $now = Carbon::now();
