@@ -113,6 +113,16 @@
                             @enderror
                         </div>
                     </div> 
+                    <div class="mb-3">
+                        <p>Select service:</p>
+                        @foreach ($services as $service)
+                        <div>
+                            <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input"
+                                {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
+                            <label for="" class="form-check-label">{{ $service->name }}</label>
+                        </div>
+                        @endforeach
+                    </div>
 
                     <div class="text-center w-25 mx-auto d-flex gap-2">
                         <button type="submit" class="btn ">Add the Apartment</button>
@@ -125,3 +135,9 @@
 
     </section>
 @endsection
+
+
+
+
+
+

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class MessageController extends Controller
 {
@@ -12,7 +13,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $promotion = Message::paginate(10);
+        return view('admin.promotions.index', compact('promotion'));
     }
 
     /**

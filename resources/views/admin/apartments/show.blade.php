@@ -47,6 +47,11 @@
                     </button>
                     <a href="{{ route('admin.apartments.index') }}" class="btn">Back</a>
                 </div>
+                @if($apartment->services)
+                    @foreach ($apartment->services as $service)
+                        <span class="badge text-bg-danger">{{$service->name}}</span>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>

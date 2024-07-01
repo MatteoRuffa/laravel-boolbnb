@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateApartmentRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Promotion;
+use App\Models\Service;
 
 
 class ApartmentController extends Controller
@@ -32,7 +33,8 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-         return view('admin.apartments.create');
+        $services= Service::all();
+         return view('admin.apartments.create',compact('services'));
     }
 
     /**
@@ -73,6 +75,9 @@ class ApartmentController extends Controller
         $new_apartment->fill($validatedData);
         $new_apartment->visibility=0;
         $new_apartment->save();
+        if($request->has('services')){
+            $new_apartment->services()->sync($request->services);
+        }
 
         return redirect()->route('admin.apartments.index')->with('success', 'Apartment created successfully.');
     }
@@ -108,7 +113,8 @@ class ApartmentController extends Controller
         if ($apartment->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
-        return view('admin.apartments.edit', compact('apartment'));
+        $services= Service::all();
+        return view('admin.apartments.edit', compact('apartment','services'));
     }
 
     /**
@@ -150,6 +156,9 @@ class ApartmentController extends Controller
         }
         $apartment->fill($validatedData);
         $apartment->save();
+        if($request->has('services')){
+            $apartment->services()->sync($request->services);
+        }
         return view('admin.apartments.show', compact('apartment'));
         // $project_modified =  Project::findOrFail($id);
         // $form_data = $request->validated();

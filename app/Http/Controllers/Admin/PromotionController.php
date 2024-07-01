@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Models\Apartment;
 use App\Models\Promotion;
 use Carbon\Carbon;
+use App\Http\Controllers\Controller;
+
 
 class PromotionController extends Controller
 {
@@ -14,7 +16,8 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        //
+        $promotions = Promotion::all();
+        return view('admin.promotions.index', compact('promotions'));
     }
 
     /**

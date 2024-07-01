@@ -14,4 +14,8 @@
         {{$apartments->links('vendor.pagination.bootstrap-5')}} 
         
     </section>
-@endsection
+@endsection 
+
+
+
+
