@@ -296,9 +296,21 @@ li {
     background-color: #29C1E6;
 }
 
-#comic-form {
+.img_edit, .serv{
+    border: 1px solid #29C1E6;
+    border-radius: 20px;
     padding: 20px;
-    border: 1px solid red;
+}
+
+.serv{
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.mine-custom-btn{
+    background-color: #FA8A42;
 }
 
 

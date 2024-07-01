@@ -135,7 +135,7 @@
                 </div> --}}
 
 
-                <div class="mb-3 @error('image_cover') @enderror d-flex gap-5 align-items-center">
+                <div class="mb-3 @error('image_cover') @enderror gap-5 img_edit ">
                     <div class="w-25">
                         @if ($apartment->image_cover && strpos($apartment->image_cover, 'http') !== false)
                             <img id="uploadPreview" class="w-100 uploadPreview" width="100"
@@ -148,6 +148,7 @@
                                 alt="preview">
                         @endif
                     </div>
+                
                     <div class="w-75">
                         <label for="image" class="form-label text-white">Immagine </label>
                         <input type="file" accept="image/*" class="form-control upload_image" name="image_cover"
@@ -157,9 +158,9 @@
                         @enderror
                     </div>
                 </div>
-
-                <div class="mb-3">
-                    <p>Select services:</p>
+                <h5>Select services:</h5>
+                <div class="mb-3 serv">
+                    
                     @foreach ($services as $service)
                     <div>
                         <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input"
@@ -170,7 +171,7 @@
                 </div>
                 <br>
                 <div class="text-center w-50 mx-auto d-flex gap-2">
-                    <button type="submit" class="mine-custom-btn mt-3 w-100">Salva</button>
+                    <button type="submit" class="mine-custom-btn btn mt-3 w-100">Salva</button>
                     <a href="{{ route('admin.apartments.index') }}"
                         class="btn btn-dark-override mine-custom-btn min-custom-btn-grey mt-3 w-100">Indietro</a>
                 </div>
