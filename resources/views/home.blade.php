@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="container">
-        <h1>Welcome to M.R. Portfolio public part</h1>
-        <p>To access the content please login</p>
+        <h1>Wellcome to Bool 'n' Bubbles Administration</h1>
+        <p>Please login to continue</p>
     </section>
 @endsection
