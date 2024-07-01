@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-dark fixed-top">
+<nav id="nav-side" class="navbar navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
 
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
@@ -6,14 +6,13 @@
       <span class="navbar-toggler-icon"></span>
       <a class="navbar-brand" href="#">Menu</a>
     </button>
-    <div class="p-3 ms-4 my-1 position-relative">
+    <div  class="p-3 ms-4 my-1 position-relative">
       <div class="logo-container">
-        <p><i class="fs-2 fa-solid fa-house-flood-water"></i></p>
+        <p><i class="fs-4 fa-solid fa-house-flood-water"></i></p>
       </div>
       <div class="bubbles">
         <div></div>
       </div>
-
     </div>
     @include('partials.header')
 

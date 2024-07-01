@@ -22,17 +22,17 @@ class UpdateApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'name' => 'string|max:255',
-                'description' => 'string',
-                'rooms' => 'integer|min:1',
-                'beds' => 'integer|min:1',
-                'bathrooms' => 'integer|min:1',
-                'square_meters' => 'integer|min:10',
-                'image_cover' => 'image|max:2048',
-                'streetName' => 'string|max:255',
-                'houseNumber' => 'integer|min:1',
-                'city' => 'string|max:255',
-                'cap' => 'string|max:99999|min:00001',
+            'name' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'rooms' => 'nullable|integer|min:1',
+            'beds' => 'nullable|integer|min:1',
+            'bathrooms' => 'nullable|integer|min:1',
+            'square_meters' => 'nullable|integer|min:10',
+            'image_cover' => 'nullable|image|max:2048',
+            'streetName' => 'nullable|string|max:255',
+            'houseNumber' => 'nullable|integer|min:1',
+            'city' => 'nullable|string|max:255',
+            'cap' => 'nullable|string|max:99999|min:00001',
         ];
     }
     public function messages()

@@ -153,13 +153,25 @@ class ApartmentController extends Controller
             } else {
                 return back()->withErrors(['address' => 'Could not retrieve coordinates for the given address.']);
             }
+            
+            $validatedData['address'] = $apartment->address;
+            $validatedData['latitude'] = $apartment->latitude;
+            $validatedData['longitude'] = $apartment->longitude;
         }
+        $fields = ['name', 'description', 'rooms', 'bathrooms', 'beds', 'square_meters', 'address', 'latitude', 'longitude', 'slug', 'image_cover'];
+        
+        foreach ($fields as $field) {
+            if (!isset($validatedData[$field])) {
+                $validatedData[$field] = $apartment->$field;
+            }
+        }
+
         $apartment->fill($validatedData);
         $apartment->save();
         if($request->has('services')){
             $apartment->services()->sync($request->services);
         }
-        return view('admin.apartments.show', compact('apartment'));
+        return view('admin.apartments.show', compact('apartment')); 
         // $project_modified =  Project::findOrFail($id);
         // $form_data = $request->validated();
         // if ($request->hasFile('image_url')) {
