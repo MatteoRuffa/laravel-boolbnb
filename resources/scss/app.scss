@@ -243,8 +243,62 @@ main {
     }
 }
 
+// ls-styles //
+#ls-icons { // questa classe serve per le icone dei badge dei servizi
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+}
+
+#ls-badge {
+    background-color: #29C1E6;
+    margin-top: 5px;
+    margin-right: 5px;
+    flex-wrap: wrap;
+}
+
+#ls-badges-container {
+    max-width: 500px;
+}
+
+.ls-glass {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+.ls-border {
+    border: 1px solid #29C1E6;
+}
+
+#info-left {
+    min-width: 475px;
+    margin-right: 25px;
+}
+
+#admin-name {
+    font-weight: bold;
+    text-decoration: underline;
+    display: block;
+    font-size: 2.5rem;
+}
+
+li {
+    list-style-type: none;
+}
+
+.ls-btn {
+    background-color: #FA8A42;
+}
+
+.ls-btn-2 {
+    background-color: #29C1E6;
+}
+
 #comic-form {
     padding: 20px;
     border: 1px solid red;
 }
+
 
