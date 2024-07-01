@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use Illuminate\Support\Facades\Validator;
@@ -37,23 +38,36 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        $validateData = $request->validated();
-        $validatedData['slug'] = Apartment::generateSlug($validateData['name']);
+        $validatedData = $request->validated();
+        $validatedData['slug'] = Apartment::generateSlug($validatedData['name']);
         
         $validatedData['user_id'] = Auth::id();
-        $new_apartment = new Apartment();
         if ($request->hasFile('image_cover')) {
             $image_cover = Storage::put('img-apart-bnb', $request->image_cover);
             $validatedData['image_cover'] = $image_cover;
-            $new_apartment->image_cover=$validatedData['image_cover'];
         }
-        
-        $new_apartment->fill($validateData);
-        $new_apartment->slug= $validatedData['slug'];
-        $new_apartment->longitude=1;
-        $new_apartment->latitude=1;
+        $client = new Client([
+            'verify' => false,
+        ]);
+        $apiBaseUrl='https://api.tomtom.com/search/2/geocode/';
+        $apiAdress= Apartment::formatAddress($validatedData['address']);
+        $response = $client->get( $apiBaseUrl . $apiAdress . '.json', [
+            'query' => [
+                'key' => env('TOMTOM_API_KEY'),
+            ]
+        ]);
+
+        $data = json_decode($response->getBody(), true);
+
+        if (isset($data['results'][0]['position'])) {
+            $validatedData['latitude'] = $data['results'][0]['position']['lat'];
+            $validatedData['longitude'] = $data['results'][0]['position']['lon'];
+        } else {
+            return back()->withErrors(['address' => 'Could not retrieve coordinates for the given address.']);
+        }
+        $new_apartment = new Apartment();
+        $new_apartment->fill($validatedData);
         $new_apartment->visibility=0;
-        $new_apartment->user_id= $validatedData['user_id'];
         $new_apartment->save();
 
         return redirect()->route('admin.apartments.index')->with('success', 'Apartment created successfully.');
@@ -84,17 +98,38 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        $validateData = $request->validated();
+        $validatedData = $request->validated();
         if ($request->hasFile('image_cover')) {
             $image_cover = Storage::put('img-apart-bnb', $request->image_cover);
             $validatedData['image_cover'] = $image_cover;
             $apartment->image_cover=$validatedData['image_cover'];
         }
-        if($apartment->name !== $validateData['name']){
+        if($apartment->name !== $validatedData['name']){
             $validatedData['slug'] = Apartment::generateSlug($validateData['name']);
             $apartment->slug= $validatedData['slug'];
         }
-        $apartment->fill($validateData);
+        if($apartment->address !== $validatedData['address']){
+            $client = new Client([
+                'verify' => false,
+            ]);
+            $apiBaseUrl='https://api.tomtom.com/search/2/geocode/';
+            $apiAdress= Apartment::formatAddress($validatedData['address']);
+            $response = $client->get( $apiBaseUrl . $apiAdress . '.json', [
+                'query' => [
+                    'key' => env('TOMTOM_API_KEY'),
+                ]
+            ]);
+    
+            $data = json_decode($response->getBody(), true);
+    
+            if (isset($data['results'][0]['position'])) {
+                $validatedData['latitude'] = $data['results'][0]['position']['lat'];
+                $validatedData['longitude'] = $data['results'][0]['position']['lon'];
+            } else {
+                return back()->withErrors(['address' => 'Could not retrieve coordinates for the given address.']);
+            }
+        }
+        $apartment->fill($validatedData);
         $apartment->save();
         return view('admin.apartments.show', compact('apartment'));
         // $project_modified =  Project::findOrFail($id);
