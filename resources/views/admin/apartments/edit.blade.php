@@ -4,14 +4,17 @@
 @section('content')
     <section class="container py-5">
         <div class="container rounded-2 p-5 container-table">
-            <h1 class="text-center text-white fw-bolder">Modify apartment: {{ $apartment->title }}</h1>
+            <h1 class=" text-black fw-bolder text-uppercase">Modify apartment: {{ $apartment->title }}</h1>
 
             <form id="comic-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
 
                 @method('PUT')
-                <div class="mb-3 @error('name') @enderror">
+
+            <div class="row">
+
+                <div class="mb-3 col @error('name') @enderror">
                     <label for="name" class="form-label fs-5 fw-medium">Name</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                         id="name" name="name" value="{{ old('name', $apartment->name) }}" required maxlength="255"
@@ -21,16 +24,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-3 @error('description') @enderror">
-                    <label for="description" class="form-label fs-5 fw-medium">Description</label>
-                    <textarea class="form-control @error('description') is-invalid @enderror" id="description"
-                        name="description" >{{ old('description',  $apartment->beds) }}</textarea>
-                    @error('description')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3 @error('rooms') @enderror">
+                <div class="mb-3 col @error('rooms') @enderror">
                     <label for="rooms" class="form-label fs-5 fw-medium">Rooms</label>
                     <input type="number" class="form-control @error('rooms') is-invalid @enderror"
                         id="rooms" name="rooms" value="{{ old('rooms', $apartment->rooms) }}">
@@ -38,8 +32,11 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
+            </div>
 
-                <div class="mb-3 @error('beds') @enderror">
+
+            <div class="row">
+                <div class="mb-3 col @error('beds') @enderror">
                     <label for="beds" class="form-label fs-5 fw-medium">Beds</label>
                     <input type="number"
                         class="form-control @error('beds') is-invalid @enderror"
@@ -51,20 +48,34 @@
                     @enderror
                 </div>
 
-                <div class="mb-3 @error('bathrooms') @enderror">
+
+
+                <div class="mb-3 col @error('bathrooms') @enderror">
                     <label for="bathrooms" class="form-label fs-5 fw-medium">Bathrooms</label>
                     <input type="number" class="form-control @error('bathrooms') is-invalid @enderror" id="bathrooms" name="bathrooms"
-                        >{{ old('bathrooms', $apartment->bathrooms) }}
+                        ><span>Now: </span>{{ old('bathrooms', $apartment->bathrooms) }}
                     @error('bathrooms')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="mb-3 @error('square_meters') @enderror">
+                <div class="mb-3 col @error('square_meters') @enderror">
                     <label for="square_meters" class="form-label fs-5 fw-medium">Square meters</label>
                     <input type="number" class="form-control @error('square_meters') is-invalid @enderror" id="square_meters" name="square_meters"
-                        >{{ old('square_meters', $apartment->square_meters) }}
+                        ><span>Now: </span>{{ old('square_meters', $apartment->square_meters) }}
                     @error('square_meters')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+            </div>
+
+
+                <div class="mb-3 @error('description') @enderror">
+                    <label for="description" class="form-label fs-5 fw-medium">Description</label>
+                    <textarea class="form-control @error('description') is-invalid @enderror" id="description"
+                        name="description"  >{{ old('description',  $apartment->beds) }}</textarea>
+                    @error('description')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
@@ -151,7 +162,7 @@
                     @foreach ($services as $service)
                     <div>
                         <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input"
-                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
+                        {{ $apartment->services->contains($service->id) ? 'checked' : ''}}>
                         <label for="" class="form-check-label">{{ $service->name }}</label>
                     </div>
                     @endforeach
@@ -160,7 +171,7 @@
                 <div class="text-center w-50 mx-auto d-flex gap-2">
                     <button type="submit" class="mine-custom-btn mt-3 w-100">Salva</button>
                     <a href="{{ route('admin.apartments.index') }}"
-                        class="mine-custom-btn min-custom-btn-grey mt-3 w-100">Indietro</a>
+                        class="btn btn-dark-override mine-custom-btn min-custom-btn-grey mt-3 w-100">Indietro</a>
                 </div>
             </form>
         </div>
