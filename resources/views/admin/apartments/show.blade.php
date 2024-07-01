@@ -74,7 +74,7 @@
                     <a class="btn ls-btn p-2" href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="update-link p-4">
                         <i class="fa-solid fa-gear"></i>
                     </a>
-                    <button type="button" class="btn btn-danger p-2 mx-2" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    <button type="button" class="btn btn-danger p-2 mx-2" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $apartment->id }}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                     <a href="{{ route('admin.apartments.index') }}" class="btn ls-btn-2">Back</a>

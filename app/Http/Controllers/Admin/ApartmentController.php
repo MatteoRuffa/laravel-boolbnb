@@ -195,8 +195,11 @@ class ApartmentController extends Controller
      */
     public function destroy($id)
     {
+
         $apartment = Apartment::findOrFail($id);
+        $apartment->services()->detach();
         $apartment->delete();
         return redirect()->route('admin.apartments.index')->with('message', "Apartment (id:{$apartment->id}): {$apartment->name} eliminate with succes from db");
+       
     }
 }

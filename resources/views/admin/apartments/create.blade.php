@@ -113,6 +113,7 @@
                             @enderror
                         </div>
                     </div> 
+                    
                     <div class="mb-3">
                         <p>Select service:</p>
                         @foreach ($services as $service)
