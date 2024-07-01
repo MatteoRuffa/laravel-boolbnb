@@ -105,16 +105,16 @@ body {
     background: linear-gradient(to bottom, $mr-text-dark, lighten($mr-text-dark, 10%));
     color: white;
 }
-
 .offcanvas {
-    --bs-dark-rgb: rgb(67, 56, 79)!important;
-    background-color: var(--bs-dark-rgb)!important;
-}
-
-.bg-dark {
-    --bs-dark-rgb: rgb(67, 56, 79)!important;
-    background-color: var(--bs-dark-rgb)!important;
-}
+    background:linear-gradient(to bottom, #1085bfdf, lighten(#108bbfed, 10%))
+     !important;
+ }
+ 
+ //questo cambia il colore della nav dell'header quando si è loggati
+ .bg-dark {
+     background:linear-gradient(to bottom, $mr-text-dark, lighten($mr-text-dark, 10%))
+     !important;
+ }
 
 // main
 main {
@@ -170,4 +170,64 @@ main {
 .address {
     display: flex;
     justify-content: space-between;
+}
+
+.logo-container {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    
+    i {
+        background: linear-gradient(#fbdb4f,#FA8A42 );
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+.bubbles {
+    position:relative;
+    border-radius:100%;
+    width: 60px;
+    aspect-ratio: 1;
+    background: linear-gradient(#29C1E6, #109FBF);
+
+    animation: bubbles-rotation 5s linear infinite;
+   
+    
+    div,div::before,div::after{
+        position: absolute;
+        width: 10px;
+        left: -5px;
+        aspect-ratio: 1;
+        border-radius: 100%;
+        background-color: #29C1E6;
+    }
+
+    div::before {
+        content: '';
+        display: block;
+        width: 16px;
+        left: -18px;
+        top: 20px;
+        background-color: #0d839e;
+    }
+
+    div::after {
+        content: '';
+        display: block;
+        width: 6px;
+        left: 25px;
+        top: -9px;
+        background-color: #0d839e;
+    }
+    @keyframes bubbles-rotation  {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
 }
