@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon; //nicolai
 
 class ApartmentPromotion extends Model
 {
@@ -27,4 +28,11 @@ class ApartmentPromotion extends Model
     {
         return $this->belongsTo(Promotion::class);
     }
+
+    //nicolai
+    // public function timeRemaining() {
+    //     $now = Carbon::now();
+    //     return $now->diffForHumans($this->end_date, true);
+    // }
+    //fine
 }

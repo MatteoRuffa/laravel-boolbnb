@@ -17,7 +17,13 @@ class Promotion extends Model
 
     //Relazione uno a molti tra promozioni e appartamenti (tabella pivot)
     public function apartments(){
-        return $this->belongsToMany(Apartment::class)->using(ApartmentPromotion::class);
+        
+        //nicolai
+        // return $this->belongsToMany(Apartment::class)->using(ApartmentPromotion::class);
+    //     return $this->belongsToMany(Apartment::class, 'apartment_promotion')
+    //                 ->withPivot('start_date', 'end_date')
+    //                 ->withTimestamps();
+    // }
+        //fine
     }
-
 }

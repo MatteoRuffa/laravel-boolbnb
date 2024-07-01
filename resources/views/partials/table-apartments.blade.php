@@ -33,11 +33,11 @@
                             </div>
                         </a>
 
-                        <!-- <a href="{{ route('admin.apartments.edit', $element) }}" class="table-icon m-1 pe-2">
+                        <a href="{{ route('admin.apartments.edit', $element) }}" class="table-icon m-1 pe-2">
                             <div class="icon-container">
                                 <i class="fas fa-pencil-alt"></i>
                             </div>
-                        </a> -->
+                        </a>
                         <form id="delete-form-{{ $element->id }}" action="{{ route('admin.apartments.destroy', $element->id) }}"
                             method="POST">
                             @csrf

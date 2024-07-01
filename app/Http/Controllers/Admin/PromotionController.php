@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Promotion;
 use Illuminate\Http\Request;
+use App\Models\Apartment;
+use App\Models\Promotion;
+use Carbon\Carbon;
 
 class PromotionController extends Controller
 {
@@ -26,10 +28,19 @@ class PromotionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    //nicolai
+    // public function store(Request $request, Apartment $apartment)
+    // {
+    //     $this->authorize('update', $apartment);
+
+    //     $promotionId = $request->input('promotion_id');
+    //     $promotion = Promotion::findOrFail($promotionId);
+
+    //     $apartment->addPromotion($promotion);
+
+    //     return redirect()->route('apartments.show', $apartment)->with('success', 'Appartamento sponsorizzato con successo');
+    // }
+    //fine
 
     /**
      * Display the specified resource.

@@ -12,6 +12,8 @@ use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Promotion;
+
 
 class ApartmentController extends Controller
 {
@@ -50,7 +52,8 @@ class ApartmentController extends Controller
             'verify' => false,
         ]);
         $apiBaseUrl='https://api.tomtom.com/search/2/geocode/';
-        $apiAdress= Apartment::formatAddress($validatedData['address']);
+        $validatedData['address']=Apartment::formatAddress($validatedData['streetName'],$validatedData['houseNumber'],$validatedData['city'],$validatedData['cap']); 
+        $apiAdress= Apartment::apiFormatAddress($validatedData['address']);
         $response = $client->get( $apiBaseUrl . $apiAdress . '.json', [
             'query' => [
                 'key' => env('TOMTOM_API_KEY'),
@@ -65,6 +68,7 @@ class ApartmentController extends Controller
         } else {
             return back()->withErrors(['address' => 'Could not retrieve coordinates for the given address.']);
         }
+        
         $new_apartment = new Apartment();
         $new_apartment->fill($validatedData);
         $new_apartment->visibility=0;
@@ -79,8 +83,22 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view('admin.apartments.show', compact('apartment'));
+        $promotions=Promotion::all();
+        return view('admin.apartments.show', compact('apartment', 'promotions'));
     }
+    // .nicolai
+    //  public function promote(Request $request, Apartment $apartment)
+    // {
+    //     $this->authorize('update', $apartment);
+
+    //     $promotionId = $request->input('promotion_id');
+    //     $promotion = Promotion::findOrFail($promotionId);
+
+    //     $apartment->addPromotion($promotion);
+
+    //     return redirect()->route('admin.apartments.show', $apartment)->with('success', 'Appartamento sponsorizzato con successo');
+    //  }
+    // fine
 
     /**
      * Show the form for editing the specified resource.
@@ -105,15 +123,16 @@ class ApartmentController extends Controller
             $apartment->image_cover=$validatedData['image_cover'];
         }
         if($apartment->name !== $validatedData['name']){
-            $validatedData['slug'] = Apartment::generateSlug($validateData['name']);
+            $validatedData['slug'] = Apartment::generateSlug($validatedData['name']);
             $apartment->slug= $validatedData['slug'];
         }
-        if($apartment->address !== $validatedData['address']){
+        if($validatedData['streetName']&& $validatedData['houseNumber']&& $validatedData['city']&&$validatedData['cap']){
+            $validatedData['address']=Apartment::formatAddress($validatedData['streetName'],$validatedData['houseNumber'],$validatedData['city'],$validatedData['cap']); 
             $client = new Client([
                 'verify' => false,
             ]);
             $apiBaseUrl='https://api.tomtom.com/search/2/geocode/';
-            $apiAdress= Apartment::formatAddress($validatedData['address']);
+            $apiAdress= Apartment::apiFormatAddress($validatedData['address']);
             $response = $client->get( $apiBaseUrl . $apiAdress . '.json', [
                 'query' => [
                     'key' => env('TOMTOM_API_KEY'),

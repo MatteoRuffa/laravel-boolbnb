@@ -79,17 +79,45 @@ class Apartment extends Model
         return $slug;
     }
 
-    public static function formatAddress($address){
-        $addressF = Str::slug(trim($address), '%20');
+    public static function formatAddress($streetName,$houseNumber,$city,$cap){
+        $addressF = trim($streetName).' '.trim($houseNumber).' '.trim($city).' '.trim($cap);
+        return  $addressF;
+    }
+    public static function apiFormatAddress($address){
+        $addressF = str_replace(' ','%20',$address);
         return  $addressF;
     }
     
     //ciap
-    public function isPromoted()
-    {
-        $now = Carbon::now();
-        return $this->promotions()->wherePivot('start_date', '<=', $now)
-                                  ->wherePivot('end_date', '>=', $now)
-                                  ->exists();
-    }
+    // public function isPromoted()
+    // {
+    //     $now = Carbon::now();
+    //     return $this->promotions()->wherePivot('start_date', '<=', $now)
+    //                               ->wherePivot('end_date', '>=', $now)
+    //                               ->exists();
+    // }
+
+    //nicolai
+    // public function currentPromotion()
+    // {
+    //     return $this->promotions()->wherePivot('end_date', '>', now())->orderBy('end_date', 'desc')->first();
+    // }
+
+    // public function addPromotion(Promotion $promotion)
+    // {
+    //     $currentPromotion = $this->currentPromotion();
+    //     $startDate = now();
+
+    //     if ($currentPromotion) {
+    //         $startDate = $currentPromotion->pivot->end_date;
+    //     }
+
+    //     $endDate = $startDate->copy()->addHours($promotion->duration);
+
+    //     return $this->promotions()->attach($promotion->id, [
+    //         'start_date' => $startDate,
+    //         'end_date' => $endDate,
+    //     ]);
+    // }
+    //fine
 }

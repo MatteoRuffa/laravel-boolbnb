@@ -28,8 +28,11 @@ class StoreApartmentRequest extends FormRequest
                 'beds' => 'required|integer|min:1',
                 'bathrooms' => 'required|integer|min:1',
                 'square_meters' => 'required|integer|min:10',
-                'address' => 'required|string|max:255',
                 'image_cover' => 'required|image|max:2048',
+                'streetName' => 'required|string|max:255',
+                'houseNumber' => 'required|integer|min:1',
+                'city' => 'required|string|max:255',
+                'cap' => 'required|string|max:99999|min:00001',
         ];
     }
     public function messages()
@@ -58,9 +61,22 @@ class StoreApartmentRequest extends FormRequest
             'square_meters.integer' => 'Il campo metri quadrati deve essere un numero intero.',
             'square_meters.min' => 'Il campo metri quadrati deve essere almeno 10.',
             
-            'address.required' => 'Il campo indirizzo è obbligatorio.',
-            'address.string' => 'Il campo indirizzo deve essere una stringa.',
-            'address.max' => 'Il campo indirizzo non può superare i 255 caratteri.',
+            'streetName.required' => 'Il campo street name è obbligatorio.',
+            'streetName.string' => 'Il campo indirizzo deve essere una stringa.',
+            'streetName.max' => 'Il campo indirizzo non può superare i 255 caratteri.',
+
+            'houseNumber.required' => 'Il campo house number è obbligatorio.',
+            'houseNumber.integer' => 'Il campo metri quadrati deve essere un numero intero.',
+            'houseNumber.min' => 'Il campo metri quadrati deve essere almeno 1.',
+
+            'city.required' => 'Il campo city è obbligatorio.',
+            'city.string' => 'Il campo indirizzo deve essere una stringa.',
+            'city.max' => 'Il campo indirizzo non può superare i 255 caratteri.',
+
+            'cap.required' => 'Il campo cap è obbligatorio.',
+            'cap.integer' => 'Il campo metri quadrati deve essere un numero intero.',
+            'cap.min' => 'Il campo cap deve avere 5 cifre.',
+            'cap.max' => 'Il campo cap deve avere 5 cifre.',
             
             'visibility.required' => 'Il campo visibilità è obbligatorio.',
             'visibility.boolean' => 'Il campo visibilità deve essere vero o falso.',

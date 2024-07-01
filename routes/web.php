@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ApartmentController;
+use App\Http\Controllers\Admin\ServiceController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('apartments', ApartmentController::class)->parameters(['apartments'=>'apartment:slug']);
+    // Route::post('apartments/{apartment}/promote', [ApartmentController::class, 'promote'])->name('apartments.promote');
+    Route::resource('services', ServiceController::class);
     // Route::get('/admin/projects/{project}', [ProjectController::class, 'show'])->name('admin.projects.show');
 });
 

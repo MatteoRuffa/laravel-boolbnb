@@ -25,6 +25,10 @@
             <a class="nav-link {Route::currentRouteName() == 'admin.apartments.index' ? 'active' : ''}}" 
             href="{{route('admin.apartments.index')}}">Apartments</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {Route::currentRouteName() == 'admin.services.index' ? 'active' : ''}}" 
+            href="{{route('admin.services.index')}}">Services</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Carpet

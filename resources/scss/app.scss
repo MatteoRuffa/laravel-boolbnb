@@ -141,6 +141,12 @@ main {
     button.no-border {
         border: none!important;
     }
+    .img-icon {
+        width: 60px;
+        img {
+            width: 100%;
+        }
+    }
 }
 
 // pagination
@@ -160,3 +166,8 @@ main {
 }
 
 
+//form 
+.address {
+    display: flex;
+    justify-content: space-between;
+}

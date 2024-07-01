@@ -50,8 +50,8 @@
                 </div>
 
                 <div class="mb-3 @error('square_meters') @enderror">
-                    <label for="bathrooms">Bagni</label>
-                    <input type="number" id="bathrooms" name="bathrooms" value="{{ old('bathrooms') }}" required>
+                    <label for="bathrooms"  class="form-label fs-5 fw-medium">Bathrooms</label>
+                    <input type="number" class="form-control @error('beds') is-invalid @enderror" id="bathrooms" name="bathrooms" value="{{ old('bathrooms') }}" required>
                     @error('bathrooms')
                         <div class="error">{{ $message }}</div>
                     @enderror
@@ -66,13 +66,37 @@
                     @enderror
                 </div>
 
-                <div class="mb-3 @error('address') @enderror">
-                    <label for="address" class="form-label fs-5 fw-medium">Address</label>
-                    <input class="form-control @error('address') is-invalid @enderror" type="text" id="address" name="address" value="{{ old('address') }}" required>
-                    @error('address')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                <div class="address">
+                    <div class="mb-3 @error('streetName') @enderror">
+                        <label for="streetName" class="form-label fs-5 fw-medium">Street name</label>
+                        <input class="form-control @error('streetName') is-invalid @enderror" type="text" id="streetName" name="streetName" value="{{ old('streetName') }}" required>
+                        @error('streetName')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                        <div class="mb-3 @error('houseNumber') @enderror">
+                        <label for="houseNumber" class="form-label fs-5 fw-medium">House number</label>
+                        <input class="form-control @error('houseNumber') is-invalid @enderror" type="number" id="houseNumber" name="houseNumber" value="{{ old('houseNumber') }}" required>
+                        @error('houseNumber')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3 @error('city') @enderror">
+                        <label for="city" class="form-label fs-5 fw-medium">City</label>
+                        <input class="form-control @error('city') is-invalid @enderror" type="text" id="city" name="city" value="{{ old('city') }}" required>
+                        @error('city')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3 @error('cap') @enderror">
+                        <label for="cap" class="form-label fs-5 fw-medium">Cap</label>
+                        <input class="form-control @error('cap') is-invalid @enderror" type="number" id="cap" name="cap" value="{{ old('cap') }}" required>
+                        @error('cap')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
+
 
                 <div class="mb-3 @error('image_cover') @enderror d-flex gap-5 align-items-center">
                     <div class="w-25 text-center">
