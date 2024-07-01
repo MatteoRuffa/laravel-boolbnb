@@ -84,7 +84,7 @@ class Apartment extends Model
         return  $addressF;
     }
     
-
+    //ciap
     public function isPromoted()
     {
         $now = Carbon::now();
