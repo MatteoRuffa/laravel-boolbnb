@@ -6,7 +6,7 @@
         <div class="container rounded-2 p-5 container-table">
             <h1 class="text-center text-white fw-bolder">Modify apartment: {{ $apartment->title }}</h1>
 
-            <form id="comic-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST"
+            <form id="comic-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST" novalidate
                 enctype="multipart/form-data">
                 @csrf
 
@@ -146,12 +146,13 @@
                         @enderror
                     </div>
                 </div>
+
                 <div class="mb-3">
                     <p>Select services:</p>
                     @foreach ($services as $service)
                     <div>
                         <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input"
-                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
+                        {{ $apartment->services->contains($service->id) ? 'checked' : ''}}>
                         <label for="" class="form-check-label">{{ $service->name }}</label>
                     </div>
                     @endforeach
