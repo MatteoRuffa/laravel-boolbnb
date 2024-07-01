@@ -1,5 +1,11 @@
 <!-- resources/views/admin/project/table.blade.php -->
 @include('partials.modal-show')
+@if($elements->isEmpty())
+    <div class="alert alert-info">
+        There are no apartments to display. Please add a new apartment.
+    </div>
+    
+@else
 <table id="mr-table" class="table table-dark table-hover shadow mb-2 mt-3">
     <thead>
         <tr>
@@ -42,15 +48,17 @@
                             method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-table table-icon" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <button type="button" class="btn btn-table table-icon" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $element->id }}">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </form> 
                     </div>
                 </td>
             </tr>
+            @include('partials.modal-delete', ['element' => $element])
         @endforeach
     </tbody>
 </table>
-@include('partials.modal-delete')
+@endif
+
 
