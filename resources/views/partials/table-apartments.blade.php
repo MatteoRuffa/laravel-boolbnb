@@ -6,7 +6,7 @@
     </div>
     
 @else
-<table id="mr-table" class="table table-dark table-hover shadow mb-2 mt-3">
+<table id="mr-table" class="table  table-hover shadow mb-2 mt-3">
     <thead>
         <tr>
             <!-- <th scope="col">#id Project</th> -->

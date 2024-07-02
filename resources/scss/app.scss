@@ -142,6 +142,7 @@ main {
 
 // table
 #mr-table {
+    border: 1px solid #29C1E6;
     border-radius: 10px;
     overflow: hidden;
     .table-icon {
@@ -209,29 +210,30 @@ main {
     
     div,div::before,div::after{
         position: absolute;
-        width: 8px;
-        left: -5px;
+        width: 12px;
+        left: -12px;
+        top: 2px ;
         aspect-ratio: 1;
         border-radius: 100%;
-        background-color: #2981e6;
+        background-color: #fbdb4f;
     }
 
     div::before {
         content: '';
         display: block;
-        width: 15px;
-        left: -9px;
-        top: 20px;
-        background-color: #0d519e;
+        width: 16px;
+        left: -6px;
+        top: 23px;
+        background-color: #FA8A42;
     }
 
     div::after {
         content: '';
         display: block;
         width: 7px;
-        left: 25px;
-        top: -9px;
-        background-color: #3267a9;
+        left: 19px;
+        top: -11px;
+        background-color: #fbec10;
     }
     @keyframes bubbles-rotation  {
         0% {
@@ -277,6 +279,11 @@ main {
     margin-right: 25px;
 }
 
+#info-right {
+    min-width: 650px;
+    min-height: 700px;
+}
+
 #admin-name {
     font-weight: bold;
     text-decoration: underline;
@@ -294,12 +301,14 @@ li {
 
 .ls-btn-2 {
     background-color: #29C1E6;
+    border: none;
 }
 
-.img_edit, .serv{
+.img_edit, .serv, .address{
     border: 1px solid #29C1E6;
     border-radius: 20px;
     padding: 20px;
+    margin: 10px auto;
 }
 
 .serv{
@@ -312,5 +321,9 @@ li {
 .mine-custom-btn{
     background-color: #FA8A42;
 }
+
+
+
+
 
 
