@@ -176,6 +176,25 @@
                 </div>
             </form>
         </div>
-
     </section>
+    <script>
+        document.getElementById('apartment-form').addEventListener('submit', function(event) {
+            const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
+            const serviceError = document.getElementById('service-error');
+            let isServiceSelected = false;
+    
+            serviceCheckboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    isServiceSelected = true;
+                }
+            });
+    
+            if (!isServiceSelected) {
+                serviceError.style.display = 'block';
+                event.preventDefault();
+            } else {
+                serviceError.style.display = 'none';
+            }
+        });
+    </script>
 @endsection
