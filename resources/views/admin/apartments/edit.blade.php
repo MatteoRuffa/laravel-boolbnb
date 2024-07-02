@@ -6,7 +6,7 @@
         <div class="container rounded-2 p-5 container-table">
             <h1 class=" text-black fw-bolder text-uppercase">Modify apartment: {{ $apartment->title }}</h1>
 
-            <form id="comic-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST" novalidate
+            <form id="edit-apartment-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST" novalidate
                 enctype="multipart/form-data">
                 @csrf
 
@@ -134,7 +134,7 @@
                 </div> --}}
 
 
-                <div class="mb-3 @error('image_cover') @enderror gap-5 img_edit" id="edit-apartment-form">
+                <div class="mb-3 @error('image_cover') @enderror gap-5 img_edit">
                     <div class="w-25">
                         @if ($apartment->image_cover && strpos($apartment->image_cover, 'http') !== false)
                             <img id="uploadPreview" class="w-100 uploadPreview" width="100"
@@ -168,7 +168,7 @@
                     </div>
                     @endforeach
                     @error('services')
-                    <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <div class="alert alert-danger" id="service-error" style="display: none;">Please select at least one service.</div>
                 </div>
@@ -182,23 +182,24 @@
         </div>
     </section>
     <script>
-     document.getElementById('edit-apartment-form').addEventListener('submit', function(event) {
-        const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
-        const serviceError = document.getElementById('service-error');
-        let isServiceSelected = false;
+   <script>
+        document.getElementById('edit-apartment-form').addEventListener('submit', function(event) {
+            const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
+            const serviceError = document.getElementById('service-error');
+            let isServiceSelected = false;
 
-        serviceCheckboxes.forEach(function(checkbox) {
-            if (checkbox.checked) {
-                isServiceSelected = true;
+            serviceCheckboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    isServiceSelected = true;
+                }
+            });
+
+            if (!isServiceSelected) {
+                serviceError.style.display = 'block';
+                event.preventDefault();
+            } else {
+                serviceError.style.display = 'none';
             }
         });
-
-        if (!isServiceSelected) {
-            serviceError.style.display = 'block';
-            event.preventDefault();
-        } else {
-            serviceError.style.display = 'none';
-        }
-    });
     </script>
 @endsection
