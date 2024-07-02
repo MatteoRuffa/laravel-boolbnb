@@ -111,7 +111,7 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         if ($apartment->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
+            abort(404, 'Unauthorized action.');
         }
         $services= Service::all();
         return view('admin.apartments.edit', compact('apartment','services'));
