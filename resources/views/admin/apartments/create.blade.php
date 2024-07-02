@@ -9,7 +9,7 @@
         <div class="container">
             <h1 class=" fw-bolder text-center ">Add a Apartment</h1>
             
-            <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" id="apartment-form">
+            <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" id="create-apartment-form">
                 @csrf
                 
                 
@@ -136,7 +136,7 @@
         </div>
     </section>
     <script>
-        document.getElementById('apartment-form').addEventListener('submit', function(event) {
+        document.getElementById('create-apartment-form').addEventListener('submit', function(event) {
             const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
             const serviceError = document.getElementById('service-error');
             let isServiceSelected = false;

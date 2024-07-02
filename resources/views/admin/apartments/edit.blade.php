@@ -134,7 +134,7 @@
                 </div> --}}
 
 
-                <div class="mb-3 @error('image_cover') @enderror gap-5 img_edit ">
+                <div class="mb-3 @error('image_cover') @enderror gap-5 img_edit" id="edit-apartment-form">
                     <div class="w-25">
                         @if ($apartment->image_cover && strpos($apartment->image_cover, 'http') !== false)
                             <img id="uploadPreview" class="w-100 uploadPreview" width="100"
@@ -178,7 +178,7 @@
         </div>
     </section>
     <script>
-        document.getElementById('apartment-form').addEventListener('submit', function(event) {
+        document.getElementById('edit-apartment-form').addEventListener('submit', function(event) {
             const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
             const serviceError = document.getElementById('service-error');
             let isServiceSelected = false;
