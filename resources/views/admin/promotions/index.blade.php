@@ -10,7 +10,6 @@
             </div>
         @endif
 
-        <!-- Include the table for apartments -->
         @include('partials.table-promotions', ['elements' => $promotions, 'elementName' => 'promotion']) 
         {{-- {{$apartments->links('vendor.pagination.bootstrap-5')}}  --}}
 
