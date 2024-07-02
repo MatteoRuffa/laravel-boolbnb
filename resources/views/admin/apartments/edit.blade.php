@@ -6,7 +6,7 @@
         <div class="container rounded-2 p-5 container-table">
             <h1 class=" text-black fw-bolder text-uppercase">Modify apartment: {{ $apartment->title }}</h1>
 
-            <form id="comic-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST" novalidate
+            <form id="comic-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST" 
                 enctype="multipart/form-data">
                 @csrf
 

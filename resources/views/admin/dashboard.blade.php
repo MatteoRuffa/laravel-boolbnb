@@ -1,5 +1,3 @@
-<!-- resources/views/admin/dashboard.blade.php -->
-
 @extends('layouts.admin')
 
 @section('content')
@@ -8,7 +6,6 @@
 
     <div id="dashboard" class="row justify-content-center">
         <div class="col">
-            <!-- Include i diversi grafici -->
             @include('partials.dashboard-card.messages')
             @include('partials.dashboard-card.analytics')
             @include('partials.dashboard-card.contability')
@@ -19,5 +16,4 @@
 @endsection
 
 @push('scripts')
-<!-- Altri script se necessario -->
 @endpush
