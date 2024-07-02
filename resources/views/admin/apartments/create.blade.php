@@ -67,34 +67,14 @@
                 </div>
 
                 <div class="address">
-                    <div class="mb-3 @error('streetName') @enderror">
-                        <label for="streetName" class="form-label fs-5 fw-medium">Street name</label>
-                        <input class="form-control @error('streetName') is-invalid @enderror" type="text" id="streetName" name="streetName" value="{{ old('streetName') }}" required>
-                        @error('streetName')
+                    <div class="mb-3 @error('address') @enderror">
+                        <label for="address" class="form-label fs-5 fw-medium">Address</label>
+                        <input class="form-control @error('address') is-invalid @enderror" type="text" id="address" name="address" value="{{ old('address') }}" required maxlength="255" minlength="7">
+                        @error('address')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                        <div class="mb-3 @error('houseNumber') @enderror">
-                        <label for="houseNumber" class="form-label fs-5 fw-medium">House number</label>
-                        <input class="form-control @error('houseNumber') is-invalid @enderror" type="number" id="houseNumber" name="houseNumber" value="{{ old('houseNumber') }}" required>
-                        @error('houseNumber')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3 @error('city') @enderror">
-                        <label for="city" class="form-label fs-5 fw-medium">City</label>
-                        <input class="form-control @error('city') is-invalid @enderror" type="text" id="city" name="city" value="{{ old('city') }}" required>
-                        @error('city')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3 @error('cap') @enderror">
-                        <label for="cap" class="form-label fs-5 fw-medium">Cap</label>
-                        <input class="form-control @error('cap') is-invalid @enderror" type="number" id="cap" name="cap" value="{{ old('cap') }}" required>
-                        @error('cap')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <select id="resultsSelect" class="form-control mt-2" style="display: none;"></select>    
                 </div>
 
 
@@ -136,6 +116,7 @@
         </div>
     </section>
     <script>
+        //funzione per i service
         document.getElementById('create-apartment-form').addEventListener('submit', function(event) {
             const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
             const serviceError = document.getElementById('service-error');
@@ -154,6 +135,58 @@
                 serviceError.style.display = 'none';
             }
         });
+        //funzione api indirizzo
+        document.addEventListener('DOMContentLoaded', function() {
+        const addressInput = document.getElementById('address');
+        const resultsSelect = document.getElementById('resultsSelect');
+        const apiKey= 'pqIYPfZIN1ji4KwqY0UAXNvwMpSdx2GH';
+        const apiBaseUrl= 'https://api.tomtom.com/search/2/search/';
+        const fetchAddresses = (query) => {
+            return fetch(`${apiBaseUrl}${query}.json?key=${apiKey}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => data.results)
+                .catch(error => {
+                    console.error('Error fetching the address:', error);
+                    return [];
+                });
+        };
+
+        const updateResults = (results) => {
+            resultsSelect.innerHTML = '';
+            if (results.length > 0) {
+                resultsSelect.style.display = 'block';
+                results.forEach(result => {
+                    const option = document.createElement('option');
+                    option.value = result.address.freeformAddress;
+                    option.textContent = result.address.freeformAddress;
+                    resultsSelect.appendChild(option);
+                });
+            } else {
+                resultsSelect.style.display = 'none';
+            }
+        };
+        addressInput.addEventListener('input', async function() {
+            const query = addressInput.value;
+            if (query.length < 5) {
+                resultsSelect.style.display = 'none';
+                resultsSelect.innerHTML = '';
+                return;
+            }
+            const results = await fetchAddresses(query);
+            updateResults(results);
+        });
+
+        resultsSelect.addEventListener('change', function() {
+            addressInput.value = resultsSelect.value;
+            resultsSelect.style.display = 'none';
+        });
+
+    });
     </script>
 @endsection
 
