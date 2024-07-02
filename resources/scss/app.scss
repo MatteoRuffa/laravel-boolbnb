@@ -275,14 +275,13 @@ main {
     border: 1px solid #29C1E6;
 }
 
-#info-left {
-    margin-right: 25px;
-}
+   #info-left {
+      margin: 25px;
+    }
 
-#info-right {
-    min-width: 650px;
-    min-height: 700px;
-}
+    #info-right {
+       margin: 25px;
+    } 
 
 #admin-name {
     font-weight: bold;

@@ -6,11 +6,11 @@
         
         
         <div class="text-center">
-            <img src="{{ asset('storage/' . $apartment->image_cover) }}" alt="{{ $apartment->name }}">
+            <img class="responsive-img img-fluid" src="{{ asset('storage/' . $apartment->image_cover) }}" alt="{{ $apartment->name }}">
         </div>
             
 
-            <div class="d-flex p-4 mt-5 justify-content-between">
+            <div class="d-flex p-4 mt-5 justify-content-between query">
             
                 
                 <div id="info-left" class="ls-glass ls-border p-3">
@@ -85,6 +85,52 @@
                     <a href="{{ route('admin.apartments.index') }}" class="btn ls-btn-2">Back</a>
                 </div>
     </div>
+
+    <style>
+    .responsive-img {
+        width: 60%;
+    }
+    #info-left {
+            width: 40%;
+        }
+        #info-right {
+            width: 60%;
+        }
+
+     @media (max-width: 990px) {
+        .responsive-img {
+            width: 100%;
+        }
+
+        .query {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #info-left, #info-right {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+       
+
+        .link {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .link a, .link button {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .link a:last-child {
+            margin-bottom: 0;
+        }
+     
+    } 
+</style>
+
+   
 @endsection
 
 @include('partials.modal-delete', ['element' => $apartment, 'elementName' => 'apartment'])
