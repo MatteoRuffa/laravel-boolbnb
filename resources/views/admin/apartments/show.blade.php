@@ -11,23 +11,28 @@
             
 
             <div class="d-flex p-4 mt-5 justify-content-between">
+            
                 
                 <div id="info-left" class="ls-glass ls-border p-3">
+                <h4 class="text-center text-uppercase mb-4">Information</h4>
+
                     
-                    <p id="admin-name" >{{ $apartment->name }}</p>
+                    <h3 class="fw-bold" >{{ $apartment->name }}</h3>
 
                 <ul class="p-2">
-                    <li>- Rooms: {{ $apartment->rooms }}</li>
-                    <li>- Bathrooms: {{ $apartment->bathrooms }}</li>
-                    <li>- Beds: {{ $apartment->beds }}</li>
-                    <li>- Square Meters: {{ $apartment->square_meters }}</li>
+                    <li><i class="fa-solid fa-home"></i> Rooms: {{ $apartment->rooms }}</li>
+                    <li><i class="fa-solid fa-bath"></i> Bathrooms: {{ $apartment->bathrooms }}</li>
+                    <li><i class="fa-solid fa-bed"></i> Beds: {{ $apartment->beds }}</li>
+                    <li><i class="fa-solid fa-ruler"></i> Square Meters: {{ $apartment->square_meters }}</li>
                 </ul>
 
-                <div class="fw-medium fs-5">Address:</div>
+                <h6 class="fw-bold">Address:</h6>
                     <p>{{ $apartment->address }}</p>
                     <br>
+                    <h6 class="fw-bold">Latitude:</h6>
                     <p>{{ $apartment->latitude }}</p>
                     <br>
+                    <h6 class="fw-bold">Longitude:</h6>
                     <p>{{ $apartment->longitude }}</p>
 
                   
@@ -44,9 +49,9 @@
                     </div>
                 </div>
                 <div id="info-right" class="ls-border ls-glass p-3">
-                    <h4 class="text-center">Informations</h4>
+                    <h4 class="text-center text-uppercase mb-4">Description</h4>
                     {{-- <p>Description: {{ $apartment->description }}</p> --}}
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus reprehenderit illum, velit, blanditiis laborum quibusdam, ratione nisi eligendi magnam a minima fugiat ex nam inventore excepturi dolorem sit at corrupti libero accusamus voluptate porro aliquam quas quia. Aspernatur eaque saepe dolorum commodi adipisci similique, ducimus quasi temporibus praesentium. At itaque, natus modi quo, eaque perspiciatis consequatur asperiores sed excepturi obcaecati temporibus commodi corporis! Nulla eaque, tempore aliquid natus in odit non expedita quia molestias. Rerum eligendi, veritatis aliquid, id odio unde placeat harum quo sed eaque blanditiis ut, molestias cumque vero iste libero. Incidunt perferendis dolorum quaerat quod itaque nobis voluptate enim ea deserunt cupiditate sit et esse, in eos magnam, est dolorem vero molestias consequatur iure quas expedita. Ipsam consequuntur quae dolore nostrum. Dolorum, omnis ea placeat enim eos accusamus fugit in sapiente incidunt repudiandae officia illum praesentium animi iure corporis eius hic nemo tempore earum id perspiciatis voluptate sequi est? Perspiciatis quod in sed accusantium voluptates autem officia non distinctio iste natus vel rem reprehenderit impedit pariatur, culpa temporibus aut error velit veritatis nostrum enim eius maxime repellendus voluptatibus! Doloribus eveniet mollitia eius nobis, nisi ipsam nemo. Dolor eum debitis doloremque aperiam aliquam accusantium quia eius, nesciunt earum odio reiciendis eligendi tenetur, quam optio quae consectetur suscipit, officiis magni illo enim. Facilis ipsam sequi nobis odio quia consectetur explicabo facere perferendis eveniet, ex voluptatem, repudiandae nulla temporibus. Sunt voluptatem molestias dolores sint minus quae a earum nesciunt perferendis non totam quisquam animi, eaque quia in asperiores facilis sequi maxime corporis consequuntur, eius officia cumque? Fugit voluptates distinctio nulla cum odit laboriosam suscipit impedit itaque perspiciatis nesciunt repellendus voluptatem modi maxime nobis, soluta ad in eos amet deleniti officia ab autem quidem? Eveniet nam adipisci dolorem, cumque obcaecati provident id aperiam corrupti. Ipsa esse fugiat atque delectus soluta amet.</p>
+                    <p>{{ $apartment->description }}</p>
                 </div>
 
                 

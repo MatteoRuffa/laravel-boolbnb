@@ -53,7 +53,7 @@
                 <div class="mb-3 col @error('bathrooms') @enderror">
                     <label for="bathrooms" class="form-label fs-5 fw-medium">Bathrooms</label>
                     <input type="number" class="form-control @error('bathrooms') is-invalid @enderror" id="bathrooms" name="bathrooms"
-                        ><span>Now: </span>{{ old('bathrooms', $apartment->bathrooms) }}
+                       placeholder="{{ old('bathrooms', $apartment->bathrooms) }}" >
                     @error('bathrooms')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -62,28 +62,28 @@
                 <div class="mb-3 col @error('square_meters') @enderror">
                     <label for="square_meters" class="form-label fs-5 fw-medium">Square meters</label>
                     <input type="number" class="form-control @error('square_meters') is-invalid @enderror" id="square_meters" name="square_meters"
-                        ><span>Now: </span>{{ old('square_meters', $apartment->square_meters) }}
+                        placeholder="{{ old('square_meters', $apartment->square_meters) }}">
                     @error('square_meters')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-
             </div>
 
 
                 <div class="mb-3 @error('description') @enderror">
                     <label for="description" class="form-label fs-5 fw-medium">Description</label>
                     <textarea class="form-control @error('description') is-invalid @enderror" id="description"
-                        name="description"  >{{ old('description',  $apartment->beds) }}</textarea>
+                        name="description"  >{{ old('description',  $apartment->description) }}</textarea>
                     @error('description')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
+                <h5>Address:</h5>
                 <div class="address">
                     <div class="mb-3 @error('streetName') @enderror">
                         <label for="streetName" class="form-label fs-5 fw-medium">Street name</label>
-                        <input class="form-control @error('streetName') is-invalid @enderror" type="text" id="streetName" name="streetName" value="{{ old('streetName') }}" required>
+                        <input class="form-control @error('streetName') is-invalid @enderror" type="text" id="streetName" name="streetName" value="{{ old('streetName') }}"  required>
                         @error('streetName')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -110,7 +110,7 @@
                         @enderror
                     </div>
                 </div>
-
+            
                 {{-- <div class="mb-3 @error('image_cover') @enderror d-flex gap-5 align-items-center">
                     <div class="w-25">
                         @if ($movie->image_cover && strpos($movie->image_cover, 'http') !== false)
@@ -173,7 +173,7 @@
                 <div class="text-center w-50 mx-auto d-flex gap-2">
                     <button type="submit" class="mine-custom-btn btn mt-3 w-100">Salva</button>
                     <a href="{{ route('admin.apartments.index') }}"
-                        class="btn btn-dark-override mine-custom-btn min-custom-btn-grey mt-3 w-100">Indietro</a>
+                        class="btn   ls-btn-2 mt-3 w-100">Indietro</a>
                 </div>
             </form>
         </div>
