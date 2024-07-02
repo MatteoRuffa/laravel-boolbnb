@@ -167,6 +167,10 @@
                         <label for="" class="form-check-label">{{ $service->name }}</label>
                     </div>
                     @endforeach
+                    @error('services')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <div class="alert alert-danger" id="service-error" style="display: none;">Please select at least one service.</div>
                 </div>
                 <br>
                 <div class="text-center w-50 mx-auto d-flex gap-2">
@@ -178,23 +182,23 @@
         </div>
     </section>
     <script>
-        document.getElementById('edit-apartment-form').addEventListener('submit', function(event) {
-            const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
-            const serviceError = document.getElementById('service-error');
-            let isServiceSelected = false;
-    
-            serviceCheckboxes.forEach(function(checkbox) {
-                if (checkbox.checked) {
-                    isServiceSelected = true;
-                }
-            });
-    
-            if (!isServiceSelected) {
-                serviceError.style.display = 'block';
-                event.preventDefault();
-            } else {
-                serviceError.style.display = 'none';
+     document.getElementById('edit-apartment-form').addEventListener('submit', function(event) {
+        const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
+        const serviceError = document.getElementById('service-error');
+        let isServiceSelected = false;
+
+        serviceCheckboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                isServiceSelected = true;
             }
         });
+
+        if (!isServiceSelected) {
+            serviceError.style.display = 'block';
+            event.preventDefault();
+        } else {
+            serviceError.style.display = 'none';
+        }
+    });
     </script>
 @endsection
