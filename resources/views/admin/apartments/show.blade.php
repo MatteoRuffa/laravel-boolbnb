@@ -86,51 +86,7 @@
                 </div>
     </div>
 
-    <style>
-    .responsive-img {
-        width: 60%;
-    }
-    #info-left {
-            width: 40%;
-        }
-        #info-right {
-            width: 60%;
-        }
-
-     @media (max-width: 990px) {
-        .responsive-img {
-            width: 100%;
-        }
-
-        .query {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #info-left, #info-right {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-       
-
-        .link {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .link a, .link button {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .link a:last-child {
-            margin-bottom: 0;
-        }
-     
-    } 
-</style>
-
-   
+    
 @endsection
 
 @include('partials.modal-delete', ['element' => $apartment, 'elementName' => 'apartment'])
