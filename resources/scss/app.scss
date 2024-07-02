@@ -163,18 +163,18 @@ main {
 
 // pagination
 .pagination .page-link {
-    background-color: rgb(68, 51, 86);
+    background-color: $mr-primary-color;
     color: white; 
 }
 .pagination .page-item.active .page-link {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-    border-color: rgb(68, 51, 86); 
+    border-color: $mr-primary-color; 
 }
 .pagination .page-link:active {
-    background-color: rgb(68, 51, 86); 
+    background-color:$mr-primary-color; 
     color: white; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-    border-color: rgb(68, 51, 86); 
+    border-color: $mr-primary-color; 
 }
 
 
