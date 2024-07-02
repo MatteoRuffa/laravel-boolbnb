@@ -9,14 +9,14 @@
         <div class="container">
             <h1 class=" fw-bolder text-center ">Add a Apartment</h1>
             
-            <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" novalidate>
+            <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" id="create-apartment-form">
                 @csrf
                 
                 
                 <div class="mb-3 @error('name') @enderror">
                         <label for="name" class="form-label fs-5 fw-medium">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                            id="name" name="name" value="{{ old('name') }}" required maxlength="255" >
+                            id="name" name="name" value="{{ old('name') }}" required maxlength="255" minlength="3">
                         @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -60,7 +60,7 @@
                 <div class="mb-3 @error('square_meters') @enderror">
                     <label for="square_meters" class="form-label fs-5 fw-medium">Square meters</label>
                     <input type="text" class="form-control @error('square_meters') is-invalid @enderror"
-                        id="square_meters" name="square_meters" value="{{ old('square_meters') }}" required maxlength="255" minlength="3">
+                        id="square_meters" name="square_meters" value="{{ old('square_meters') }}" required maxlength="255" minlength="2">
                     @error('square_meters')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -123,6 +123,7 @@
                             <label for="" class="form-check-label">{{ $service->name }}</label>
                         </div>
                         @endforeach
+                        <div class="alert alert-danger" id="service-error" style="display: none;">Please select at least one service.</div>
                     </div>
 
                     <div class="text-center w-25 mx-auto d-flex gap-2">
@@ -133,8 +134,27 @@
                     </div> 
             </form>
         </div>
-
     </section>
+    <script>
+        document.getElementById('create-apartment-form').addEventListener('submit', function(event) {
+            const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
+            const serviceError = document.getElementById('service-error');
+            let isServiceSelected = false;
+    
+            serviceCheckboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    isServiceSelected = true;
+                }
+            });
+    
+            if (!isServiceSelected) {
+                serviceError.style.display = 'block';
+                event.preventDefault();
+            } else {
+                serviceError.style.display = 'none';
+            }
+        });
+    </script>
 @endsection
 
 
