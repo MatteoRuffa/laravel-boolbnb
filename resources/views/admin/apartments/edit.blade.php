@@ -150,7 +150,7 @@
                     </div>
                 
                     <div class="w-75">
-                        <label for="image" class="form-label text-white">Immagine </label>
+                        <label for="image" class="form-label text-white">Image </label>
                         <input type="file" accept="image/*" class="form-control upload_image" name="image_cover"
                             value="{{ old('image_cover', $apartment->image_cover) }}">
                         @error('image_cover')

@@ -14,7 +14,7 @@
                 
                 
                 <div class="mb-3 @error('name') @enderror">
-                        <label for="name" class="form-label fs-5 fw-medium">name</label>
+                        <label for="name" class="form-label fs-5 fw-medium">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                             id="name" name="name" value="{{ old('name') }}" required maxlength="255" >
                         @error('name')
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="mb-3 @error('rooms') @enderror">
-                    <label for="rooms" class="form-label fs-5 fw-medium">Stanze</label>
+                    <label for="rooms" class="form-label fs-5 fw-medium">Rooms</label>
                     <input type="number" class="form-control @error('rooms') is-invalid @enderror"
                         id="rooms" name="rooms" value="{{ old('rooms') }}" required>
                     @error('rooms')
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="mb-3 @error('beds') @enderror">
-                    <label for="beds" class="form-label fs-5 fw-medium">Letti</label>
+                    <label for="beds" class="form-label fs-5 fw-medium">Beds</label>
                     <input type="number" class="form-control @error('beds') is-invalid @enderror"
                         id="beds" name="beds" value="{{ old('beds') }}" required>
                     @error('beds')
