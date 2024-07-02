@@ -33,6 +33,8 @@ class StoreApartmentRequest extends FormRequest
                 'houseNumber' => 'required|integer|min:1',
                 'city' => 'required|string|max:255',
                 'cap' => 'required|string|max:99999|min:00001',
+                'services' => 'required|array|min:1', 
+                'services.*' => 'integer|exists:services,id',
         ];
     }
     public function messages()
@@ -83,6 +85,10 @@ class StoreApartmentRequest extends FormRequest
             
             'image_cover.string' => 'Il campo immagine di copertina deve essere una stringa.',
             'image_cover.max' => 'Il campo immagine di copertina non può superare i 255 caratteri.',
+            
+            'services.required' => 'Please select at least one service.',
+            'services.*.integer' => 'Each selected service must be valid.',
+            'services.*.exists' => 'Each selected service must exist.',
         ];
         
     }
