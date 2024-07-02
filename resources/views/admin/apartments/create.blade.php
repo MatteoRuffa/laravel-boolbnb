@@ -9,7 +9,9 @@
         <div class="container">
             <h1 class=" fw-bolder text-center ">Add a Apartment</h1>
             
+
             <form action="{{ route('admin.apartments.store') }}" method="POST" enctype="multipart/form-data" id="create-apartment-form">
+
                 @csrf
                 
                 
