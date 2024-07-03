@@ -96,16 +96,29 @@
                         </div>
                     </div> 
                     
-                    <div class="mb-3">
+                    <div class="mb-3 @error('services') is-invalid @enderror">
                         <p>Select service:</p>
                         @foreach ($services as $service)
                         <div>
-                            <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input"
+                            <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input @error('services') is-invalid @enderror"
                                 {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
                             <label for="" class="form-check-label">{{ $service->name }}</label>
                         </div>
                         @endforeach
+                        @error('services')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         <div class="alert alert-danger" id="service-error" style="display: none;">Please select at least one service.</div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="visibility" name="visibility" value="1" {{ old('visibility') ? 'checked' : '' }}>
+                            <label class="form-check-label fs-5 fw-medium" for="visibility">
+                                Show on page 
+                            </label>
+                        </div>
                     </div>
 
                     <div class="text-center w-25 mx-auto d-flex gap-2">

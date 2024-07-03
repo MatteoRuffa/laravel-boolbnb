@@ -118,7 +118,7 @@
 
 
                 <div class="mb-3 @error('image_cover') @enderror gap-5 img_edit">
-                    <div class="w-25">
+                    <div class="w-25  text-center">
                         @if ($apartment->image_cover && strpos($apartment->image_cover, 'http') !== false)
                             <img id="uploadPreview" class="w-100 uploadPreview" width="100"
                                 src="{{ $apartment->image_cover }}" alt="preview">
@@ -133,16 +133,16 @@
                 
                     <div class="w-75">
                         <label for="image" class="form-label text-white">Image </label>
-                        <input type="file" accept="image/*" class="form-control upload_image" name="image_cover"
+                        <input type="file" accept="image/*" class="form-control upload_image" id="uploadImage" name="image_cover"
                             value="{{ old('image_cover', $apartment->image_cover) }}">
                         @error('image_cover')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
+
                 <h5>Select services:</h5>
                 <div class="mb-3 serv">
-                    
                     @foreach ($services as $service)
                     <div>
                         <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input"
@@ -155,6 +155,16 @@
                     @enderror
                     <div class="alert alert-danger" id="service-error" style="display: none;">Please select at least one service.</div>
                 </div>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="visibility" name="visibility" value="1" {{ $apartment->visibility ? 'checked' : '' }}>
+                        <label class="form-check-label fs-5 fw-medium" for="visibility">
+                            Show on page 
+                        </label>
+                    </div>
+                </div>
+
                 <br>
                 <div class="text-center w-50 mx-auto d-flex gap-2">
                     <button type="submit" class="mine-custom-btn btn mt-3 w-100">Salva</button>
@@ -164,8 +174,10 @@
             </form>
         </div>
     </section>
+
     <script>
         //funzione per i service
+
         document.getElementById('edit-apartment-form').addEventListener('submit', function(event) {
             const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
             const serviceError = document.getElementById('service-error');

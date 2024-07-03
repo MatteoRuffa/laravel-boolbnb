@@ -2,10 +2,10 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container ls-glass ls-border p-4">
+    <div class="container my-1 ls-glass ls-border p-4">
         
         
-        <div class="text-center">
+        <div class="text-center img-show">
             <img src="{{ asset('storage/' . $apartment->image_cover) }}" alt="{{ $apartment->name }}">
         </div>
             
@@ -50,30 +50,9 @@
                 </div>
                 <div id="info-right" class="ls-border ls-glass p-3">
                     <h4 class="text-center text-uppercase mb-4">Description</h4>
-                    {{-- <p>Description: {{ $apartment->description }}</p> --}}
                     <p>{{ $apartment->description }}</p>
                 </div>
 
-                
-
-                {{-- @if ($apartment->isPromoted())
-                    <div class="alert alert-info mt-3">
-                        Questo appartamento è sponsorizzato fino al {{ $apartment->currentPromotion()->pivot->end_date->format('d-m-Y H:i') }} ({{ $apartment->currentPromotion()->pivot->end_date->diffForHumans() }} rimanenti).
-                    </div>
-                @else
-                    <form action="{{ route('admin.apartments.promote', $apartment) }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="promotion_id" class="form-label">Seleziona un pacchetto di sponsorizzazione:</label>
-                            <select class="form-select" id="promotion_id" name="promotion_id" required>
-                                @foreach ($promotions as $promotion)
-                                    <option value="{{ $promotion->id }}">{{ $promotion->title }} - {{ $promotion->price }} € per {{ $promotion->duration }} ore</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sponsorizza</button>
-                    </form>
-                @endif --}}
             </div>          
                 <div class="link d-flex align-items-center justify-content-start p-3">
                     <a class="btn ls-btn p-2" href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="update-link p-4">
