@@ -138,7 +138,7 @@
 
 
                 <div class="mb-3 @error('image_cover') @enderror gap-5 img_edit">
-                    <div class="w-25">
+                    <div class="w-25  text-center">
                         @if ($apartment->image_cover && strpos($apartment->image_cover, 'http') !== false)
                             <img id="uploadPreview" class="w-100 uploadPreview" width="100"
                                 src="{{ $apartment->image_cover }}" alt="preview">
@@ -153,7 +153,7 @@
                 
                     <div class="w-75">
                         <label for="image" class="form-label text-white">Image </label>
-                        <input type="file" accept="image/*" class="form-control upload_image" name="image_cover"
+                        <input type="file" accept="image/*" class="form-control upload_image" id="uploadImage" name="image_cover"
                             value="{{ old('image_cover', $apartment->image_cover) }}">
                         @error('image_cover')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -194,7 +194,6 @@
             </form>
         </div>
     </section>
-    <script>
    <script>
         document.getElementById('edit-apartment-form').addEventListener('submit', function(event) {
             const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
