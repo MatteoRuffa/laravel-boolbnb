@@ -8,10 +8,11 @@ use App\Models\Service;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
         $services = Service::all();
+        // dd($services);
         return response()->json([
             'status' => 'success',
             'message' => 'Ok',
