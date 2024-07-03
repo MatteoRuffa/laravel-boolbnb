@@ -44,7 +44,7 @@ class ApartmentController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['slug'] = Apartment::generateSlug($validatedData['name']);
-        
+
         $validatedData['user_id'] = Auth::id();
         if ($request->hasFile('image_cover')) {
             $image_cover = Storage::put('img-apart-bnb', $request->image_cover);
@@ -73,7 +73,7 @@ class ApartmentController extends Controller
         
         $new_apartment = new Apartment();
         $new_apartment->fill($validatedData);
-        $new_apartment->visibility=0;
+        $new_apartment->visibility = $request->has('visibility') ? 1 : 0;
         $new_apartment->save();
         if($request->has('services')){
             $new_apartment->services()->sync($request->services);
@@ -111,7 +111,7 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         if ($apartment->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
+            abort(404, 'Unauthorized action.');
         }
         $services= Service::all();
         return view('admin.apartments.edit', compact('apartment','services'));
@@ -167,6 +167,7 @@ class ApartmentController extends Controller
         }
 
         $apartment->fill($validatedData);
+        $apartment->visibility = $request->has('visibility') ? 1 : 0;
         $apartment->save();
         if($request->has('services')){
             $apartment->services()->sync($request->services);
@@ -199,7 +200,7 @@ class ApartmentController extends Controller
         $apartment = Apartment::findOrFail($id);
         $apartment->services()->detach();
         $apartment->delete();
-        return redirect()->route('admin.apartments.index')->with('message', "Apartment (id:{$apartment->id}): {$apartment->name} eliminate with succes from db");
+        return redirect()->route('admin.apartments.index')->with('message', "Apartment {$apartment->name}: eliminate with succes from db");
        
     }
 }

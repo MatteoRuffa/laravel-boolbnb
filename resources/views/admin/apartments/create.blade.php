@@ -128,6 +128,15 @@
                         <div class="alert alert-danger" id="service-error" style="display: none;">Please select at least one service.</div>
                     </div>
 
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="visibility" name="visibility" value="1" {{ old('visibility') ? 'checked' : '' }}>
+                            <label class="form-check-label fs-5 fw-medium" for="visibility">
+                                Show on page 
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="text-center w-25 mx-auto d-flex gap-2">
                         <button type="submit" class="btn ">Add the Apartment</button>
                         <a href="{{ route('admin.apartments.index') }}"

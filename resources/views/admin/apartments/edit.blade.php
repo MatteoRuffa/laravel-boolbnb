@@ -160,9 +160,9 @@
                         @enderror
                     </div>
                 </div>
+
                 <h5>Select services:</h5>
                 <div class="mb-3 serv">
-                    
                     @foreach ($services as $service)
                     <div>
                         <input type="checkbox" name="services[]" value="{{ $service->id }}" class="form-check-input"
@@ -175,6 +175,16 @@
                     @enderror
                     <div class="alert alert-danger" id="service-error" style="display: none;">Please select at least one service.</div>
                 </div>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="visibility" name="visibility" value="1" {{ $apartment->visibility ? 'checked' : '' }}>
+                        <label class="form-check-label fs-5 fw-medium" for="visibility">
+                            Show on page 
+                        </label>
+                    </div>
+                </div>
+
                 <br>
                 <div class="text-center w-50 mx-auto d-flex gap-2">
                     <button type="submit" class="mine-custom-btn btn mt-3 w-100">Salva</button>
