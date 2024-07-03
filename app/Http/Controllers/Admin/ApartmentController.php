@@ -54,7 +54,6 @@ class ApartmentController extends Controller
             'verify' => false,
         ]);
         $apiBaseUrl='https://api.tomtom.com/search/2/geocode/';
-        $validatedData['address']=Apartment::formatAddress($validatedData['streetName'],$validatedData['houseNumber'],$validatedData['city'],$validatedData['cap']); 
         $apiAdress= Apartment::apiFormatAddress($validatedData['address']);
         $response = $client->get( $apiBaseUrl . $apiAdress . '.json', [
             'query' => [
@@ -132,8 +131,7 @@ class ApartmentController extends Controller
             $validatedData['slug'] = Apartment::generateSlug($validatedData['name']);
             $apartment->slug= $validatedData['slug'];
         }
-        if($validatedData['streetName']&& $validatedData['houseNumber']&& $validatedData['city']&&$validatedData['cap']){
-            $validatedData['address']=Apartment::formatAddress($validatedData['streetName'],$validatedData['houseNumber'],$validatedData['city'],$validatedData['cap']); 
+        if($apartment->address !==  $validatedData['address']){
             $client = new Client([
                 'verify' => false,
             ]);
@@ -154,9 +152,7 @@ class ApartmentController extends Controller
                 return back()->withErrors(['address' => 'Could not retrieve coordinates for the given address.']);
             }
             
-            $validatedData['address'] = $apartment->address;
-            $validatedData['latitude'] = $apartment->latitude;
-            $validatedData['longitude'] = $apartment->longitude;
+        
         }
         $fields = ['name', 'description', 'rooms', 'bathrooms', 'beds', 'square_meters', 'address', 'latitude', 'longitude', 'slug', 'image_cover'];
         
