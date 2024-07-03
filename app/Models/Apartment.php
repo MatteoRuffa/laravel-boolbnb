@@ -11,11 +11,13 @@ use App\Models\View;
 use App\Models\Promotion;
 use App\Models\ApartmentPromotion;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apartment extends Model
 {
     use HasFactory;
-
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
     protected $fillable = [
         'user_id', 
         'name', 
@@ -87,37 +89,4 @@ class Apartment extends Model
         $addressF = str_replace(' ','%20',$address);
         return  $addressF;
     }
-    
-    //ciap
-    // public function isPromoted()
-    // {
-    //     $now = Carbon::now();
-    //     return $this->promotions()->wherePivot('start_date', '<=', $now)
-    //                               ->wherePivot('end_date', '>=', $now)
-    //                               ->exists();
-    // }
-
-    //nicolai
-    // public function currentPromotion()
-    // {
-    //     return $this->promotions()->wherePivot('end_date', '>', now())->orderBy('end_date', 'desc')->first();
-    // }
-
-    // public function addPromotion(Promotion $promotion)
-    // {
-    //     $currentPromotion = $this->currentPromotion();
-    //     $startDate = now();
-
-    //     if ($currentPromotion) {
-    //         $startDate = $currentPromotion->pivot->end_date;
-    //     }
-
-    //     $endDate = $startDate->copy()->addHours($promotion->duration);
-
-    //     return $this->promotions()->attach($promotion->id, [
-    //         'start_date' => $startDate,
-    //         'end_date' => $endDate,
-    //     ]);
-    // }
-    //fine
 }
