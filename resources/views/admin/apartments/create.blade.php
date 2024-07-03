@@ -70,11 +70,11 @@
                     <div class="mb-3 @error('address') @enderror">
                         <label for="address" class="form-label fs-5 fw-medium">Address</label>
                         <input class="form-control @error('address') is-invalid @enderror" type="text" id="address" name="address" value="{{ old('address') }}" required maxlength="255" minlength="7">
+                        <div id="resultsContainer" class="results-container w-50"></div>
                         @error('address')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
-                    </div>
-                    <select id="resultsSelect" class="form-control mt-2" style="display: none;"></select>    
+                    </div>  
                 </div>
 
 
@@ -135,58 +135,9 @@
                 serviceError.style.display = 'none';
             }
         });
-        //funzione api indirizzo
-        document.addEventListener('DOMContentLoaded', function() {
-        const addressInput = document.getElementById('address');
-        const resultsSelect = document.getElementById('resultsSelect');
-        const apiKey= 'pqIYPfZIN1ji4KwqY0UAXNvwMpSdx2GH';
-        const apiBaseUrl= 'https://api.tomtom.com/search/2/search/';
-        const fetchAddresses = (query) => {
-            return fetch(`${apiBaseUrl}${query}.json?key=${apiKey}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => data.results)
-                .catch(error => {
-                    console.error('Error fetching the address:', error);
-                    return [];
-                });
-        };
-
-        const updateResults = (results) => {
-            resultsSelect.innerHTML = '';
-            if (results.length > 0) {
-                resultsSelect.style.display = 'block';
-                results.forEach(result => {
-                    const option = document.createElement('option');
-                    option.value = result.address.freeformAddress;
-                    option.textContent = result.address.freeformAddress;
-                    resultsSelect.appendChild(option);
-                });
-            } else {
-                resultsSelect.style.display = 'none';
-            }
-        };
-        addressInput.addEventListener('input', async function() {
-            const query = addressInput.value;
-            if (query.length < 5) {
-                resultsSelect.style.display = 'none';
-                resultsSelect.innerHTML = '';
-                return;
-            }
-            const results = await fetchAddresses(query);
-            updateResults(results);
-        });
-
-        resultsSelect.addEventListener('change', function() {
-            addressInput.value = resultsSelect.value;
-            resultsSelect.style.display = 'none';
-        });
-
-    });
+        
+        //lettura chiave api per la ricerca non tocca 
+        window.apiKey = "{{ env('TOMTOM_API_KEY') }}";
     </script>
 @endsection
 

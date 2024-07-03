@@ -323,8 +323,25 @@ li {
     background-color: #FA8A42;
 }
 
+//barra di ricerca indirizzo create e edit
+.results-container {
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    display: none; /* Nascondi per impostazione predefinita */
+}
 
+.results-container div {
+    padding: 10px;
+    cursor: pointer;
+}
 
+.results-container div:hover {
+    background-color: #f0f0f0;
+}
 
 
 
