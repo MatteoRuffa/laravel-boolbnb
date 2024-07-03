@@ -29,10 +29,7 @@ class UpdateApartmentRequest extends FormRequest
             'bathrooms' => 'nullable|integer|min:1',
             'square_meters' => 'nullable|integer|min:10',
             'image_cover' => 'nullable|image|max:2048',
-            'streetName' => 'nullable|string|max:255',
-            'houseNumber' => 'nullable|integer|min:1',
-            'city' => 'nullable|string|max:255',
-            'cap' => 'nullable|string|max:99999|min:00001',
+            'address' => 'string|max:255|min:7',
             'services' => 'nullable|array|min:1',
             'services.*' => 'integer|exists:services,id',
         ];
@@ -57,18 +54,9 @@ class UpdateApartmentRequest extends FormRequest
             'square_meters.integer' => 'Il campo metri quadrati deve essere un numero intero.',
             'square_meters.min' => 'Il campo metri quadrati deve essere almeno 10.',
             
-            'streetName.string' => 'Il campo indirizzo deve essere una stringa.',
-            'streetName.max' => 'Il campo indirizzo non può superare i 255 caratteri.',
-
-            'houseNumber.integer' => 'Il campo metri quadrati deve essere un numero intero.',
-            'houseNumber.min' => 'Il campo metri quadrati deve essere almeno 1.',
-
-            'city.string' => 'Il campo indirizzo deve essere una stringa.',
-            'city.max' => 'Il campo indirizzo non può superare i 255 caratteri.',
-
-            'cap.integer' => 'Il campo metri quadrati deve essere un numero intero.',
-            'cap.min' => 'Il campo cap deve avere 5 cifre.',
-            'cap.max' => 'Il campo cap deve avere 5 cifre.',
+            'address.string' => 'Il campo indirizzo deve essere una stringa.',
+            'address.max' => 'Il campo indirizzo non può superare i 255 caratteri.',
+            'address.min' => 'Il campo bagni deve avere almeno 7 caratteri.',
             
             'visibility.required' => 'Il campo visibilità è obbligatorio.',
             'visibility.boolean' => 'Il campo visibilità deve essere vero o falso.',
