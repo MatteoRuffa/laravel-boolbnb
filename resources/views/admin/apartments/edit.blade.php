@@ -6,9 +6,8 @@
         <div class="container rounded-2 p-5 container-table">
             <h1 class=" text-black fw-bolder text-uppercase">Modify apartment: {{ $apartment->title }}</h1>
 
-           
 
-            <form id="edit-apartment-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST" novalidate
+            <form id="edit-apartment-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST" 
 
                 enctype="multipart/form-data">
                 @csrf
@@ -20,7 +19,7 @@
                 <div class="mb-3 col @error('name') @enderror">
                     <label for="name" class="form-label fs-5 fw-medium">Name</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                        id="name" name="name" value="{{ old('name', $apartment->name) }}" maxlength="255"
+                        id="name" name="name" value="{{ old('name', $apartment->name) }}"required maxlength="255"
                         minlength="3">
                     @error('name')
                         <div class="alert alert-danger">{{ $message }}</div>
