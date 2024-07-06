@@ -28,8 +28,8 @@
 
                 <div class="mb-3 col @error('rooms') @enderror">
                     <label for="rooms" class="form-label fs-5 fw-medium">Rooms</label>
-                    <input type="number" class="form-control @error('rooms') is-invalid @enderror"
-                        id="rooms" name="rooms" value="{{ old('rooms', $apartment->rooms) }}">
+                    <input  class="form-control @error('rooms') is-invalid @enderror"
+                        id="rooms" name="rooms" value="{{ old('rooms', $apartment->rooms) }}"type="text" pattern="^\d+$" maxlength="255" minlength="1">
                     @error('rooms')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -40,10 +40,10 @@
             <div class="row">
                 <div class="mb-3 col @error('beds') @enderror">
                     <label for="beds" class="form-label fs-5 fw-medium">Beds</label>
-                    <input type="number"
+                    <input
                         class="form-control @error('beds') is-invalid @enderror"
                         id="beds" name="beds"
-                        value="{{ old('beds', $apartment->beds) }}" minlength="2">
+                        value="{{ old('beds', $apartment->beds) }}" minlength="2" type="text" pattern="^\d+$" maxlength="255" minlength="1">
                     @error('beds')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -53,8 +53,8 @@
 
                 <div class="mb-3 col @error('bathrooms') @enderror">
                     <label for="bathrooms" class="form-label fs-5 fw-medium">Bathrooms</label>
-                    <input type="number" class="form-control @error('bathrooms') is-invalid @enderror" id="bathrooms" name="bathrooms"
-                       placeholder="{{ old('bathrooms', $apartment->bathrooms) }}" >
+                    <input  class="form-control @error('bathrooms') is-invalid @enderror" id="bathrooms" name="bathrooms"
+                       placeholder="{{ old('bathrooms', $apartment->bathrooms) }}" type="text" pattern="^\d+$" maxlength="255" minlength="1">
                     @error('bathrooms')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -62,8 +62,8 @@
 
                 <div class="mb-3 col @error('square_meters') @enderror">
                     <label for="square_meters" class="form-label fs-5 fw-medium">Square meters</label>
-                    <input type="number" class="form-control @error('square_meters') is-invalid @enderror" id="square_meters" name="square_meters"
-                        placeholder="{{ old('square_meters', $apartment->square_meters) }}">
+                    <input type="text" class="form-control @error('square_meters') is-invalid @enderror" id="square_meters" name="square_meters"
+                        placeholder="{{ old('square_meters', $apartment->square_meters) }}" pattern="^\d+$" maxlength="255" minlength="1">
                     @error('square_meters')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror

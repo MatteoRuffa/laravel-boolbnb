@@ -18,7 +18,7 @@
                 <div class="mb-3 @error('name') is-invalid @enderror">
                         <label for="name" class="form-label fs-5 fw-medium">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                            id="name" name="name" value="{{ old('name') }}" required maxlength="255" minlength="3">
+                            id="name" name="name" value="{{ old('name') }}"  maxlength="255" minlength="3">
                         @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -35,8 +35,8 @@
 
                 <div class="mb-3 @error('rooms') @enderror">
                     <label for="rooms" class="form-label fs-5 fw-medium">Rooms</label>
-                    <input type="number" class="form-control @error('rooms') is-invalid @enderror"
-                        id="rooms" name="rooms" value="{{ old('rooms') }}" required>
+                    <input class="form-control @error('rooms') is-invalid @enderror"
+                        id="rooms" name="rooms" value="{{ old('rooms') }}" type="text" pattern="^\d+$" required maxlength="255" minlength="1">
                     @error('rooms')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -45,8 +45,8 @@
                 <div class="d-flex justify-content-between">
                     <div class="mb-3 @error('beds') @enderror">
                         <label for="beds" class="form-label fs-5 fw-medium">Beds</label>
-                        <input type="number" class="form-control @error('beds') is-invalid @enderror"
-                            id="beds" name="beds" value="{{ old('beds') }}" required>
+                        <input class="form-control @error('beds') is-invalid @enderror"
+                            id="beds" name="beds" value="{{ old('beds') }}" type="text" pattern="^\d+$" required maxlength="255" minlength="1">
                         @error('beds')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -54,7 +54,7 @@
 
                     <div class="mb-3 @error('square_meters') @enderror">
                         <label for="bathrooms"  class="form-label fs-5 fw-medium">Bathrooms</label>
-                        <input type="number" class="form-control @error('beds') is-invalid @enderror" id="bathrooms" name="bathrooms" value="{{ old('bathrooms') }}" required>
+                        <input class="form-control @error('beds') is-invalid @enderror" id="bathrooms" name="bathrooms" value="{{ old('bathrooms') }}" type="text" pattern="^\d+$" required maxlength="255" minlength="1">
                         @error('bathrooms')
                             <div class="error">{{ $message }}</div>
                         @enderror
@@ -62,8 +62,8 @@
 
                     <div class="mb-3 @error('square_meters') @enderror">
                         <label for="square_meters" class="form-label fs-5 fw-medium">Square meters</label>
-                        <input type="text" class="form-control @error('square_meters') is-invalid @enderror"
-                            id="square_meters" name="square_meters" value="{{ old('square_meters') }}" required maxlength="255" minlength="2">
+                        <input  class="form-control @error('square_meters') is-invalid @enderror"
+                            id="square_meters" name="square_meters" value="{{ old('square_meters') }}" type="text" pattern="^\d+$" required maxlength="255" minlength="1">
                         @error('square_meters')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
