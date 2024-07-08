@@ -40,10 +40,14 @@
             <a class="nav-link {Route::currentRouteName() == 'admin.promotions.index' ? 'active' : ''}}"
               href="{{route('admin.promotions.index')}}">Promotions</a>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
+            <a class="nav-link {Route::currentRouteName() == 'admin.lead.index' ? 'active' : ''}}"
+              href="{{route('admin.leads.index')}}">Messages</a>
+          </li>
+          {{-- <li class="nav-item">
             <a class="nav-link {Route::currentRouteName() == 'admin.services.index' ? 'active' : ''}}"
               href="{{route('admin.messages.index')}}">Messages</a>
-          </li> -->
+          </li> --}}
 
         </ul>
         <form class="d-flex mt-3" role="search">
