@@ -1,12 +1,13 @@
+@section('title', "Admin Dashboard / Apartments")
 @extends('layouts.admin')
 
-@section('title', "Admin Dashboard / Apartments")
 
 @section('content')
 
     <title>Apartment Details</title>
     <script src="https://js.braintreegateway.com/web/dropin/1.30.1/js/dropin.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.89.1/js/client.min.js"></script>
 
 
 <div class="container my-1 ls-glass ls-border p-4">
@@ -53,13 +54,18 @@
             <p>{{ $apartment->description }}</p>
         </div>
 
-        <div class="col-12 col-md-12 col-lg-4  text-white" >
+
+    </div>
+</div>  
+
+
+
+
 
 
 
 <button id="cta-sponsor" class="btn btn-cta mb-4 w-100" data-bs-toggle="modal"
-data-bs-target="#showPayment"
->
+data-bs-target="#showPayment">   
     <strong><i class="fa-solid fa-crown me-3 "></i>Attiva la sponsorizzazione</strong>
 </button>
 
@@ -83,7 +89,9 @@ data-bs-target="#showPayment"
                         <input type="hidden"  name="apartment_id" value="{{ $apartment->id }}">
                         <select id="promotion_id" class="form-select mb-3"  name="promotion_id" onclick="change(value)">
                             <option >Seleziona sponsorizzazione</option>
-                            @foreach ($promotions as $promotion)
+                            
+                            @foreach ($apartment->$promotions as $promotion)
+                            
                             <option  class="option" value="{{$promotion->id}}">{{$promotion->title}}</option>
             
                             @endforeach
@@ -91,7 +99,6 @@ data-bs-target="#showPayment"
                         </select>
     
                         <div id="box-description" class="box-description" >
-    
     
                             <div id="text-description-1" class="text-hide d-none ">
                                 <strong>Costo</strong>: {{$promotions[0]->price}}€ <br>
@@ -108,8 +115,6 @@ data-bs-target="#showPayment"
                                 <strong>Durata</strong>: 144 ore <br>
                                 {{$promotions[2]->description}}
                             </div>
-                            
-                
                         </div>
     
                         
@@ -119,26 +124,19 @@ data-bs-target="#showPayment"
                             <button type="submit" class="btn btn-payment fw-bold my-2">Acquista</button>
     
                         </div>
+
     
                     </form>
-                            
-                        </div>
-                    </div>
-                 </div>
-
+                </div>
             </div>
         </div>
     </div>
+</div>
+ 
+   
+ 
+  
 
-
-
-
-
-
-
-         
-
-      
 
     <div class="link d-flex align-items-center justify-content-start p-3">
         <a class="btn ls-btn p-2" href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="update-link p-4">
@@ -151,20 +149,62 @@ data-bs-target="#showPayment"
     </div>
 </div>
 
-<script>
-    var clientToken = "{{ $clientToken }}";
 
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let form = document.getElementById('payment-form');
+    let client_token = "{{ $clientToken }}"; // Token per Braintree    
+    
     braintree.dropin.create({
-        authorization: clientToken,
+        authorization: client_token,
         container: '#dropin-container'
     }, function (createErr, instance) {
-        document.getElementById('submit-button').addEventListener('click', function () {
+        if (createErr) {
+            console.error(createErr);
+            return;
+        }
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
             instance.requestPaymentMethod(function (err, payload) {
-                // Invia payload.nonce al tuo server
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                let nonceInput = document.createElement('input');
+                nonceInput.name = 'payment_method_nonce';
+                nonceInput.type = 'hidden';
+                nonceInput.value = payload.nonce; // Aggiunge il nonce al form
+                form.appendChild(nonceInput);
+
+                form.submit(); // Invia il form
             });
         });
+    });  
+
+    // Gestisce il clic sul pulsante per mostrare/nascondere il box dei pagamenti
+    let btn_sponsor = document.getElementById('cta-sponsor');
+    btn_sponsor.addEventListener('click', function() {
+        document.getElementById('box-payment').classList.toggle('d-none'); // Mostra/nasconde il box
     });
+  });
+
+  function change(value){
+    console.log(value)
+
+    const divs = document.querySelectorAll('.text-hide');
+    divs.forEach(div => {
+        div.classList.add('d-none');
+    });
+
+    document.querySelector('#box-description #text-description-' + value).classList.remove('d-none')
+  }
 </script>
+
 @endsection
 
 @include('partials.modal-delete', ['element' => $apartment, 'elementName' => 'apartment'])

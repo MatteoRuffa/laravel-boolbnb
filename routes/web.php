@@ -14,7 +14,10 @@ use App\Models\User;
 use App\Models\Service;
 use App\Models\Promotion;
 use App\Models\Message;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\PaymentController;
+
+
+
 
 
 
@@ -39,25 +42,27 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
     Route::resource('services', ServiceController::class);
     Route::resource('promotions', PromotionController::class);
     Route::resource('messages', MessageController::class);
+    
    
 });
 
-Route::middleware(['auth', 'verified'])
-    ->name('admin.')
-    ->prefix('admin')
-    ->group(function () {
-Route::resource('apartments', ApartmentController::class)->parameters(['apartments'=>'apartment:slug']);
- // Definisci le rotte per le sponsorizzazioni
- Route::get('promotion/create/{apartment:slug}', [PromotionController::class, 'create'])->name('promotion.create');
- Route::post('promotion/store/{apartment:slug}', [PromotionController::class, 'store'])->name('promotion.store');
- Route::get('promotion/show/{apartment:slug}', [PromotionController::class, 'show'])->name('promotion.show');
-});
-Route::get('/remove-expired-promotions', [PromotionController::class, 'removeExpiredPromotions']);
+ Route::middleware(['auth', 'verified'])
+     ->name('admin.')
+     ->prefix('admin')
+     ->group(function () {
+ Route::resource('apartments', ApartmentController::class)->parameters(['apartments'=>'apartment:slug']);
+ // Definisci le rotte per le sponsorizzazioni+
 
-Route::get('payment/form', [PaymentController::class, 'show'])->name('payment.form');
-Route::post('admin/payment/process', [PaymentController::class, 'process'])->name('admin.payment.process');
-Route::get('payment/success', [PaymentController::class, 'success'])->name('payment.success');
-Route::get('/payment/show', [PaymentController::class, 'show'])->name('payment.show');
+  Route::get('promotion/create/{apartment:slug}', [PromotionController::class, 'create'])->name('promotion.create');
+  Route::post('promotion/store/{apartment:slug}', [PromotionController::class, 'store'])->name('promotion.store');
+  Route::get('promotion/show/{apartment:slug}', [PromotionController::class, 'show'])->name('promotion.show');
+ });
+ Route::get('remove-expired-promotions', [PromotionController::class, 'removeExpiredPromotions']);
+
+ Route::get('admin/payment/form', [PaymentController::class, 'show'])->name('admin.payment.form');
+ Route::post('admin/payment/process', [PaymentController::class, 'process'])->name('admin.payment.process');
+ Route::get('admin/payment/success', [PaymentController::class, 'success'])->name('admin.payment.success');
+ Route::get('admin/payment/show', [PaymentController::class, 'show'])->name('admin.payment.show');
 
 
 Route::middleware('auth')->group(function () {

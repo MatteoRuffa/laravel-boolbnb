@@ -4,6 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Apartment;
 use App\Models\Promotion;
+use App\Models\User;
+use Illuminate\Support\Str;
+use App\Models\View;
+use App\Models\Message;
+use App\Models\Service;
+use App\Models\Payment;
+use App\Models\ApartmentPromotion;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -26,65 +34,66 @@ class PromotionController extends Controller
         return view('admin.apartments.sponsorl.sponsor-index', ['apartments' => $sponsoredApartments]);
 
     }
-
-    public function create(Apartment $apartment)
-    {
-        // Recupera tutti i pacchetti di sponsorizzazione disponibili
-        $promotions = Promotion::all();
-
-        // Recupera tutti gli appartamenti disponibili
-        $apartments = Apartment::all();
-
-        // Restituisce la vista con il form per creare una sponsorizzazione,
-        // passando i dati relativi all'appartamento e ai pacchetti di sponsorizzazione
-        return view('apartments.sponsorl.sponsor', compact('apartment', 'promotions', 'apartments'));
-    }
-
-    // Salva la sponsorizzazione
-    public function store(Request $request)
-    {
-        // Trova l'appartamento specificato nel form tramite il suo ID
-        $apartment = Apartment::findOrFail($request->apartment_id);
-
-        // Controlla se l'appartamento è già sponsorizzato
-        if ($this->isApartmentSponsored($apartment)) {
-            // Se l'appartamento è già sponsorizzato, mostra un messaggio di errore
-            return redirect()->back()->withErrors('Questo appartamento è già sponsorizzato.');
-        }
-
-        // Trova il pacchetto di sponsorizzazione specificato nel form tramite il suo ID
-        $promotion = Promotion::findOrFail($request->promotion_id);
-
-        // Effettua il redirect alla pagina di pagamento con i dettagli necessari
-        return redirect()->route('payment.show', [
-            'apartment_id' => $request->apartment_id,
-            'promotion_id' => $request->promotion_id
-        ]);
-    }
-
-    // Verifica se l'appartamento è già sponsorizzato
-    private function isApartmentSponsored($apartment)
-    {
-        return $apartment->promotions()->exists();
-    }
-
-    // Mostra i dettagli della sponsorizzazione
-    public function show($slug)
-    {
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
-        $promotions = $apartment->promotions;
-        return view('apartments.sponsorl.sponsor-show', compact('apartment', 'promotions'));
-    }
-
-    public function removeExpiredPromotions()
-    {
-        $now = Carbon::now();
-        Apartment::whereHas('promotions', function ($query) use ($now) {
-            $query->where('end_date', '<', $now);
-        })->each(function ($apartment) use ($now) {
-            $apartment->promotions()->wherePivot('end_date', '<', $now)->detach();
-        });
-
-        return response()->json(['status' => 'success']);
-    }
 }
+
+//     public function create(Apartment $apartment)
+//     {
+//         // Recupera tutti i pacchetti di sponsorizzazione disponibili
+//         $promotions = Promotion::all();
+
+//         // Recupera tutti gli appartamenti disponibili
+//         $apartments = Apartment::all();
+
+//         // Restituisce la vista con il form per creare una sponsorizzazione,
+//         // passando i dati relativi all'appartamento e ai pacchetti di sponsorizzazione
+//         return view('apartments.sponsorl.sponsor', compact('apartment', 'promotions', 'apartments'));
+//     }
+
+//     // Salva la sponsorizzazione
+//     public function store(Request $request)
+//     {
+//         // Trova l'appartamento specificato nel form tramite il suo ID
+//         $apartment = Apartment::findOrFail($request->apartment_id);
+
+//         // Controlla se l'appartamento è già sponsorizzato
+//         if ($this->isApartmentSponsored($apartment)) {
+//             // Se l'appartamento è già sponsorizzato, mostra un messaggio di errore
+//             return redirect()->back()->withErrors('Questo appartamento è già sponsorizzato.');
+//         }
+
+//         // Trova il pacchetto di sponsorizzazione specificato nel form tramite il suo ID
+//         $promotion = Promotion::findOrFail($request->promotion_id);
+
+//         // Effettua il redirect alla pagina di pagamento con i dettagli necessari
+//         return redirect()->route('payment.show', [
+//             'apartment_id' => $request->apartment_id,
+//             'promotion_id' => $request->promotion_id
+//         ]);
+//     }
+
+//     // Verifica se l'appartamento è già sponsorizzato
+//     private function isApartmentSponsored($apartment)
+//     {
+//         return $apartment->promotions()->exists();
+//     }
+
+//     // Mostra i dettagli della sponsorizzazione
+//     public function show($slug)
+//     {
+//         $apartment = Apartment::where('slug', $slug)->firstOrFail();
+//         $promotions = $apartment->promotions;
+//         return view('apartments.sponsorl.sponsor-show', compact('apartment', 'promotions'));
+//     }
+
+//     public function removeExpiredPromotions()
+//     {
+//         $now = Carbon::now();
+//         Apartment::whereHas('promotions', function ($query) use ($now) {
+//             $query->where('end_date', '<', $now);
+//         })->each(function ($apartment) use ($now) {
+//             $apartment->promotions()->wherePivot('end_date', '<', $now)->detach();
+//         });
+
+//         return response()->json(['status' => 'success']);
+//     }
+// }

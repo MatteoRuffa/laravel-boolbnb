@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Promotion;
 use App\Models\Service;
 use Braintree\Gateway;
+use App\Models\ApartmentPromotion;
+
 
 
 
@@ -90,7 +92,7 @@ class ApartmentController extends Controller
     public function show(Request $request, Gateway $gateway, $slug)
     {
         // Trova l'appartamento utilizzando lo slug
-        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+        $apartment = Apartment::where('slug', $slug)->with('promotions')->firstOrFail();
 
         // Controllo se l'utente è il proprietario dell'appartamento
         if ($apartment->user_id !== Auth::id()) {
@@ -101,9 +103,10 @@ class ApartmentController extends Controller
         // Altrimenti, mostra la vista dell'appartamento
         $success = false;
         $promotions = Promotion::all();
+        // Genera il token per il gateway di pagament
         $clientToken = $gateway->clientToken()->generate();
 
-        return view('admin.apartments.show', compact('success', 'apartment', 'clientToken', 'promotions'));
+         return view('admin.apartments.show', compact('success', 'apartment', 'clientToken', 'promotions'));
     }
  
     public function edit(Apartment $apartment)
