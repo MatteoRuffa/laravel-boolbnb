@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Lead;
+use Illuminate\Support\Facades\DB;
 
-class MessageController extends Controller
+class LeadController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $promotion = Message::paginate(10);
-        return view('admin.promotions.index', compact('promotion'));
+        $messages = Lead::paginate(20);
+        $totalMessage = DB::table('apartments')->count();
+        return view('admin.leads.index', compact('messages', 'totalMessage'));
     }
 
     /**
@@ -36,7 +38,7 @@ class MessageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Message $message)
+    public function show(Lead $message)
     {
         //
     }
@@ -44,7 +46,7 @@ class MessageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Message $message)
+    public function edit(Lead $message)
     {
         //
     }
@@ -52,7 +54,7 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Message $message)
+    public function update(Request $request, Lead $message)
     {
         //
     }
@@ -60,7 +62,7 @@ class MessageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Message $message)
+    public function destroy(Lead $message)
     {
         //
     }
