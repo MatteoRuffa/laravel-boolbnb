@@ -90,7 +90,7 @@ data-bs-target="#showPayment">
                         <select id="promotion_id" class="form-select mb-3"  name="promotion_id" onclick="change(value)">
                             <option >Seleziona sponsorizzazione</option>
                             
-                            @foreach ($apartment->$promotions as $promotion)
+                            @foreach ($promotions as $promotion)
                             
                             <option  class="option" value="{{$promotion->id}}">{{$promotion->title}}</option>
             
