@@ -1,5 +1,3 @@
-<h1>Ciao {{ $admin->name }}</h1>
-
 <p>
     <strong>
         {{ $lead->name }} 
