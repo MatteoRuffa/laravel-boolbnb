@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Promotion;
 use App\Models\Service;
+use Illuminate\Support\Facades\DB;
 
 
 class ApartmentController extends Controller
@@ -25,7 +26,8 @@ class ApartmentController extends Controller
     {
         $user = auth()->user(); // Recupera l'utente autenticato
         $apartments = $user->apartments()->paginate(10);
-        return view('admin.apartments.index', compact('apartments'));
+        $totalApartments = DB::table('apartments')->count();
+        return view('admin.apartments.index', compact('apartments', 'totalApartments'));
     }
 
     /**
