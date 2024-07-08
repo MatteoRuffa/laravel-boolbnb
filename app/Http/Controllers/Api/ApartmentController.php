@@ -68,7 +68,7 @@ class ApartmentController extends Controller
         //     'message' => 'Appartamenti trovati con successo.',
         //     'results' => $filteredApartments
         // ], 200);
-    }
+    // }
 
 
 }
