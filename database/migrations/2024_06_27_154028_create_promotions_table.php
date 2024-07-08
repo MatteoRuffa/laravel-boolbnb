@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->string('title', 100);
             $table->time('duration');
             $table->decimal('price', 3, 2);
+            $table->text('description');
             $table->timestamps();
         });
     }

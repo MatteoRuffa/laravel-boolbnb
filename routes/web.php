@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Apartment;
+use App\Models\User;
+use App\Models\Service;
+use App\Models\Promotion;
+use App\Models\Message;
+use App\Http\Controllers\PaymentController;
+
 
 
 /*
@@ -29,12 +35,30 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // allora viene rimandato alla login (e questo è definito in app/Http/Middleware/Authenticate.php)
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/admin/apartments', [ApartmentController::class, 'index'])->name('admin.apartments.index');
-    Route::resource('apartments', ApartmentController::class)->parameters(['apartments'=>'apartment:slug']);
+    Route::get('apartments', [ApartmentController::class, 'index'])->name('admin.apartments.index');
     Route::resource('services', ServiceController::class);
     Route::resource('promotions', PromotionController::class);
     Route::resource('messages', MessageController::class);
+   
 });
+
+Route::middleware(['auth', 'verified'])
+    ->name('admin.')
+    ->prefix('admin')
+    ->group(function () {
+Route::resource('apartments', ApartmentController::class)->parameters(['apartments'=>'apartment:slug']);
+ // Definisci le rotte per le sponsorizzazioni
+ Route::get('promotion/create/{apartment:slug}', [PromotionController::class, 'create'])->name('promotion.create');
+ Route::post('promotion/store/{apartment:slug}', [PromotionController::class, 'store'])->name('promotion.store');
+ Route::get('promotion/show/{apartment:slug}', [PromotionController::class, 'show'])->name('promotion.show');
+});
+Route::get('/remove-expired-promotions', [PromotionController::class, 'removeExpiredPromotions']);
+
+Route::get('payment/form', [PaymentController::class, 'show'])->name('payment.form');
+Route::post('admin/payment/process', [PaymentController::class, 'process'])->name('admin.payment.process');
+Route::get('payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/payment/show', [PaymentController::class, 'show'])->name('payment.show');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -47,3 +71,5 @@ require __DIR__ . '/auth.php';
 Route::fallback(function () {
     return redirect()->route('admin.dashboard');
 });
+
+

@@ -1,79 +1,90 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Models\Apartment;
 use App\Models\Promotion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 
 class PromotionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // Mostra il form per creare una nuova sponsorizzazione
+     public function index()
     {
+        // Recupera tutti gli appartamenti dell'utente autenticato
+        $user = Auth::user();
+        $apartments = Apartment::where('user_id', $user->id)->with('promotions')->get();
+
+        // Filtra solo gli appartamenti che hanno almeno una sponsorizzazione
+        $sponsoredApartments = $apartments->filter(function ($apartment) {
+            return $apartment->promotions->isNotEmpty();
+        });
+
+        return view('admin.apartments.sponsorl.sponsor-index', ['apartments' => $sponsoredApartments]);
+
+    }
+
+    public function create(Apartment $apartment)
+    {
+        // Recupera tutti i pacchetti di sponsorizzazione disponibili
         $promotions = Promotion::all();
-        return view('admin.promotions.index', compact('promotions'));
+
+        // Recupera tutti gli appartamenti disponibili
+        $apartments = Apartment::all();
+
+        // Restituisce la vista con il form per creare una sponsorizzazione,
+        // passando i dati relativi all'appartamento e ai pacchetti di sponsorizzazione
+        return view('apartments.sponsorl.sponsor', compact('apartment', 'promotions', 'apartments'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Salva la sponsorizzazione
+    public function store(Request $request)
     {
-        //
+        // Trova l'appartamento specificato nel form tramite il suo ID
+        $apartment = Apartment::findOrFail($request->apartment_id);
+
+        // Controlla se l'appartamento è già sponsorizzato
+        if ($this->isApartmentSponsored($apartment)) {
+            // Se l'appartamento è già sponsorizzato, mostra un messaggio di errore
+            return redirect()->back()->withErrors('Questo appartamento è già sponsorizzato.');
+        }
+
+        // Trova il pacchetto di sponsorizzazione specificato nel form tramite il suo ID
+        $promotion = Promotion::findOrFail($request->promotion_id);
+
+        // Effettua il redirect alla pagina di pagamento con i dettagli necessari
+        return redirect()->route('payment.show', [
+            'apartment_id' => $request->apartment_id,
+            'promotion_id' => $request->promotion_id
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    //nicolai
-    // public function store(Request $request, Apartment $apartment)
-    // {
-    //     $this->authorize('update', $apartment);
-
-    //     $promotionId = $request->input('promotion_id');
-    //     $promotion = Promotion::findOrFail($promotionId);
-
-    //     $apartment->addPromotion($promotion);
-
-    //     return redirect()->route('apartments.show', $apartment)->with('success', 'Appartamento sponsorizzato con successo');
-    // }
-    //fine
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Promotion $promotion)
+    // Verifica se l'appartamento è già sponsorizzato
+    private function isApartmentSponsored($apartment)
     {
-        //
+        return $apartment->promotions()->exists();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Promotion $promotion)
+    // Mostra i dettagli della sponsorizzazione
+    public function show($slug)
     {
-        //
+        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+        $promotions = $apartment->promotions;
+        return view('apartments.sponsorl.sponsor-show', compact('apartment', 'promotions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Promotion $promotion)
+    public function removeExpiredPromotions()
     {
-        //
-    }
+        $now = Carbon::now();
+        Apartment::whereHas('promotions', function ($query) use ($now) {
+            $query->where('end_date', '<', $now);
+        })->each(function ($apartment) use ($now) {
+            $apartment->promotions()->wherePivot('end_date', '<', $now)->detach();
+        });
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Promotion $promotion)
-    {
-        //
+        return response()->json(['status' => 'success']);
     }
 }

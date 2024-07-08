@@ -15,12 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('apartment_id');
             $table->unsignedBigInteger('promotion_id');
-
-            //nicolai 
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
-           // fine
-            
             $table->foreign('apartment_id')->references('id')->on('apartments');
             $table->foreign('promotion_id')->references('id')->on('promotions');
             $table->timestamps();

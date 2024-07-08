@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Promotion;
 use App\Models\Service;
+use Braintree\Gateway;
+
 
 
 class ApartmentController extends Controller
@@ -81,32 +83,29 @@ class ApartmentController extends Controller
         return redirect()->route('admin.apartments.index')->with('success', 'Apartment created successfully.');
     }
     
-
+// $promotions=Promotion::all();
     /**
      * Display the specified resource.
      */
-    public function show(Apartment $apartment)
+    public function show(Request $request, Gateway $gateway, $slug)
     {
-        $promotions=Promotion::all();
-        return view('admin.apartments.show', compact('apartment', 'promotions'));
+        // Trova l'appartamento utilizzando lo slug
+        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+
+        // Controllo se l'utente è il proprietario dell'appartamento
+        if ($apartment->user_id !== Auth::id()) {
+            // Se l'utente non è il proprietario dell'appartamento, restituisci una risposta 404
+            abort(404);
+        }
+
+        // Altrimenti, mostra la vista dell'appartamento
+        $success = false;
+        $promotions = Promotion::all();
+        $clientToken = $gateway->clientToken()->generate();
+
+        return view('admin.apartments.show', compact('success', 'apartment', 'clientToken', 'promotions'));
     }
-    // .nicolai
-    //  public function promote(Request $request, Apartment $apartment)
-    // {
-    //     $this->authorize('update', $apartment);
-
-    //     $promotionId = $request->input('promotion_id');
-    //     $promotion = Promotion::findOrFail($promotionId);
-
-    //     $apartment->addPromotion($promotion);
-
-    //     return redirect()->route('admin.apartments.show', $apartment)->with('success', 'Appartamento sponsorizzato con successo');
-    //  }
-    // fine
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+ 
     public function edit(Apartment $apartment)
     {
         if ($apartment->user_id !== auth()->id()) {
