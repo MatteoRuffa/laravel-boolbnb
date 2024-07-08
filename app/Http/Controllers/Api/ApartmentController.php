@@ -10,8 +10,12 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $apartments = Apartment::all();
-        //   dd($apartments);
+        if ($request->query('services')) {
+            $apartments = Apartment::with('services')->where('apartment_service.service_id', $request->query('services'))->get();
+            //dd($apartments);
+        } else {
+            $apartments = Apartment::with('services')->get();
+        }
         return response()->json([
             'success' => true,
             'message' => 'Ok',
