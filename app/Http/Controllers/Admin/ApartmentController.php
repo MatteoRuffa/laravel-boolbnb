@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Apartment;
 use App\Models\User;
 use Illuminate\Http\Request;
