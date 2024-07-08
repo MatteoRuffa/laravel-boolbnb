@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\LeadController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,8 +42,8 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
     Route::resource('services', ServiceController::class);
     Route::resource('promotions', PromotionController::class);
     Route::resource('messages', MessageController::class);
-    
-   
+    Route::resource('leads', LeadController::class);
+
 });
 
  Route::middleware(['auth', 'verified'])

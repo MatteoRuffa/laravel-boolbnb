@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Apartment;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ use App\Models\Promotion;
 use App\Models\Service;
 use Braintree\Gateway;
 use App\Models\ApartmentPromotion;
-
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -29,7 +30,8 @@ class ApartmentController extends Controller
     {
         $user = auth()->user(); // Recupera l'utente autenticato
         $apartments = $user->apartments()->paginate(10);
-        return view('admin.apartments.index', compact('apartments'));
+        $totalApartments = DB::table('apartments')->count();
+        return view('admin.apartments.index', compact('apartments', 'totalApartments'));
     }
 
     /**
