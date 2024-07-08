@@ -38,41 +38,41 @@ class ApartmentController extends Controller
             ], 404);
         }
     }
-    //     public function searchNearby(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'latitude' => 'required|numeric',
-    //         'longitude' => 'required|numeric',
-    //         'radius' => 'required|numeric',
-    //     ]);
+    public function searchNearby(Request $request)
+    {
+        $validated = $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'radius' => 'required|numeric',
+        ]);
 
         // Ottieni i parametri di ricerca dalla richiesta
-        // $latitude = $request->input('latitude');
-        // $longitude = $request->input('longitude');
-        // $radius = $request->input('radius');
-        
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+        $radius = $request->input('radius');
+
         // Calcola la distanza e recupera gli appartamenti nelle vicinanze
-        // $filteredApartments = Apartment::selectRaw("*, (
-        //     6371 * acos(
-        //         cos(radians(?)) *
-        //         cos(radians(latitude)) *
-        //         cos(radians(longitude) - radians(?)) +
-        //         sin(radians(?)) *
-        //         sin(radians(latitude))
-        //     )
-        //     ) AS distance", [$latitude, $longitude, $latitude])
-        //     ->having('distance', '<', $radius)
-        //     ->orderBy('distance')
-        //     ->get();
+        $filteredApartments = Apartment::selectRaw("*, (
+            6371 * acos(
+                cos(radians(?)) *
+               cos(radians(latitude)) *
+                cos(radians(longitude) - radians(?)) +
+              sin(radians(?)) *
+                sin(radians(latitude))
+            )
+             ) AS distance", [$latitude, $longitude, $latitude])
+            ->having('distance', '<', $radius)
+            ->orderBy('distance')
+            ->get();
 
 
         // Rispondi con i risultati trovati
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Appartamenti trovati con successo.',
-        //     'results' => $filteredApartments
-        // ], 200);
-    // }
+        return response()->json([
+            'success' => true,
+            'message' => 'Appartamenti trovati con successo.',
+            'results' => $filteredApartments
+        ], 200);
+    }
 
 
 }
