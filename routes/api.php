@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\LeadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\ServiceController;
-
+use App\Http\Controllers\Api\PromotionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,6 +20,14 @@ use App\Http\Controllers\Api\ServiceController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
 Route::get('apartments', [ApartmentController::class, 'index']);
 Route::get('apartments/{slug}', [ApartmentController::class, 'show']);
+Route::get('apartments/nearby', [ApartmentController::class, 'searchNearby']);
 Route::get('services', [ServiceController::class, 'index']);
+Route::get('promotions', [PromotionController::class, 'index']);
+
+// Contacts 
+Route::Post('/contacts', [LeadController::class, 'store']);
+

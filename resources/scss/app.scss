@@ -361,5 +361,9 @@ li {
     background-color: #f0f0f0;
 }
 
-
+#td-image-cover {
+    width: 15% !important;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
