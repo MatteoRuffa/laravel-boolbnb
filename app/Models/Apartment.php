@@ -92,8 +92,8 @@ class Apartment extends Model
     }
     public function setLocationAttribute($latitude, $longitude)
     {
-        if (isset($value['latitude']) && isset($value['longitude'])) {
-            $this->attributes['location'] = DB::raw("ST_GeomFromText('POINT({$value['latitude']} {$value['longitude']})')");
+        if (isset($latitude) && isset($latitude)) {
+            $this->attributes['location'] = DB::raw("ST_GeomFromText('POINT({$latitude} {$latitude})')");
         }
     }
     public function getLocationAttribute($value)
