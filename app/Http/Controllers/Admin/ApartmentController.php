@@ -58,7 +58,7 @@ class ApartmentController extends Controller
         ]);
         $apiBaseUrl='https://api.tomtom.com/search/2/geocode/';
         $apiAdress= Apartment::apiFormatAddress($validatedData['address']);
-        $response = $client->get( $apiBaseUrl . $apiAdress . '.json', [
+        $response = $client->get("{$apiBaseUrl}{$apiAdress}.json", [
             'query' => [
                 'key' => env('TOMTOM_API_KEY'),
             ]
@@ -76,7 +76,7 @@ class ApartmentController extends Controller
         $new_apartment = new Apartment();
         $new_apartment->fill($validatedData);
         $new_apartment->visibility = $request->has('visibility') ? 1 : 0;
-        $new_apartment->setLocationAttribute($validatedData['latitude'], $validatedData['longitude']); 
+        $new_apartment->setLocationAttribute($validatedData['longitude'], $validatedData['latitude']); 
         $new_apartment->save();
         if($request->has('services')){
             $new_apartment->services()->sync($request->services);

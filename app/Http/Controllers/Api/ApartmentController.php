@@ -27,7 +27,7 @@ class ApartmentController extends Controller
 
             // Query per cercare gli appartamenti entro un certo raggio
             $query = "
-                SELECT id, name, beds, bathrooms, visibility, description, rooms, square_meters, image_cover, address,
+                SELECT id, slug, name, beds, bathrooms, visibility, description, rooms, square_meters, image_cover, address,
                 ST_Distance_Sphere(location, POINT(?, ?)) AS distance 
                 FROM apartments 
                 HAVING distance <= ?
