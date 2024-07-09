@@ -76,6 +76,7 @@ class ApartmentController extends Controller
         $new_apartment = new Apartment();
         $new_apartment->fill($validatedData);
         $new_apartment->visibility = $request->has('visibility') ? 1 : 0;
+        $new_apartment->setLocationAttribute($validatedData['latitude'], $validatedData['longitude']); 
         $new_apartment->save();
         if($request->has('services')){
             $new_apartment->services()->sync($request->services);
@@ -164,9 +165,9 @@ class ApartmentController extends Controller
                 $validatedData[$field] = $apartment->$field;
             }
         }
-
         $apartment->fill($validatedData);
         $apartment->visibility = $request->has('visibility') ? 1 : 0;
+        $apartment->setLocationAttribute($validatedData['latitude'], $validatedData['longitude']); 
         $apartment->save();
         if($request->has('services')){
             $apartment->services()->sync($request->services);

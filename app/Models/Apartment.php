@@ -11,6 +11,7 @@ use App\Models\View;
 use App\Models\Promotion;
 use App\Models\ApartmentPromotion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB; 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apartment extends Model
@@ -88,5 +89,19 @@ class Apartment extends Model
     public static function apiFormatAddress($address){
         $addressF = str_replace(' ','%20',$address);
         return  $addressF;
+    }
+    public function setLocationAttribute($latitude, $longitude)
+    {
+        if (isset($latitude) && isset($latitude)) {
+            $this->attributes['location'] = DB::raw("ST_GeomFromText('POINT({$latitude} {$latitude})')");
+        }
+    }
+    public function getLocationAttribute($value)
+    {
+        $coords = sscanf($value, 'POINT(%f %f)');
+        return [
+            'latitude' => $coords[0],
+            'longitude' => $coords[1],
+        ];
     }
 }

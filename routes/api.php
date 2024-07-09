@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::get('apartments', [ApartmentController::class, 'index']);
 Route::get('apartments/{slug}', [ApartmentController::class, 'show']);
 Route::get('apartments/nearby', [ApartmentController::class, 'searchNearby']);
@@ -29,3 +30,4 @@ Route::get('promotions', [PromotionController::class, 'index']);
 
 // Contacts 
 Route::Post('/contacts', [LeadController::class, 'store']);
+

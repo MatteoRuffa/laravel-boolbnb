@@ -29,6 +29,7 @@ class ApartmentsSeeder extends Seeder
             $new_apartment->longitude = $apartment['longitude'];
             $new_apartment->latitude = $apartment['latitude'];
             $new_apartment->visibility = $apartment['visibility'];
+            $new_apartment->setLocationAttribute($apartment['latitude'], $apartment['longitude']); // Usa due parametri
             $new_apartment->save();
         };
     }
