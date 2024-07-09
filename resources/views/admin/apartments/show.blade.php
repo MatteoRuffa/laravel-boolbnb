@@ -1,7 +1,6 @@
 @section('title', "Admin Dashboard / Apartments")
 @extends('layouts.admin')
 
-
 @section('content')
 
     <title>Apartment Details</title>

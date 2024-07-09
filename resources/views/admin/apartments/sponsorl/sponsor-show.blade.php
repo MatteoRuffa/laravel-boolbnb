@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Sponsorizzazioni per {{ $apartment->name }}')
+
 @section('content')
 <div class="container">
     <h1>Sponsorizzazioni per {{ $apartment->name }}</h1>

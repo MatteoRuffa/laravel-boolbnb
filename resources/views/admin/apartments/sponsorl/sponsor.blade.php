@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
+@section('title', 'Crea Sponsorizzazione per {{ $apartment->name }}')
+
 
 @section('content')
 <div class="container">
