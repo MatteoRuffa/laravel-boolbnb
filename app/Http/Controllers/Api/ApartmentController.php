@@ -16,11 +16,11 @@ class ApartmentController extends Controller
             $lat = $request->input('latitude');
             $lon = $request->input('longitude');
             $radius = $request->input('radius');
-
+            
             // Verifica che i parametri siano numerici
-            if (!is_numeric($lat) || !is_numeric($lon) || !is_numeric($radius)) {
-                throw new \Exception('I parametri latitude, longitude e radius devono essere numerici.');
-            }
+            //  if (!is_numeric($lat) || !is_numeric($lon) || !is_numeric($radius)) {
+            //     throw new \Exception('I parametri latitude, longitude e radius devono essere numerici.');
+            // }
 
             // Query per cercare gli appartamenti entro un certo raggio
             $query = "
@@ -32,8 +32,8 @@ class ApartmentController extends Controller
             ";
 
             $apartments = DB::select($query, [
-                $lat,
                 $lon,
+                $lat,
                 $radius * 1000 // Converti il raggio in metri
             ]);
 
