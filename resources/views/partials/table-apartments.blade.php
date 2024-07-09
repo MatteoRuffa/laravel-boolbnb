@@ -21,7 +21,7 @@
     <tbody>
         @foreach ($elements as $element)
             <tr>
-                <!-- <td>{{ $element->id }}</td> -->
+                <!-- <td>{{ $element->id }}</td> pippo -->
                 <td  id="td-image-cover" class="d-none d-xl-table-cell"><img class="img-fluid rounded" src="{{ asset('storage/' . $element->image_cover) }}" alt="{{ $element->name }}"></td>
                 <td class="d-none d-xl-table-cell align-content-center">{{ $element->name }}</td>
                 <td class="d-none d-xl-table-cell align-content-center">{{ $element->rooms }}</td>
