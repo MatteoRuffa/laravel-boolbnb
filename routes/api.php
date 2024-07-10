@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\PromotionController;
+
+use App\Http\Controllers\Api\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,6 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+Route::get('search', [SearchController::class, 'index']);
 
 Route::get('apartments', [ApartmentController::class, 'index']);
 Route::get('apartments/{slug}', [ApartmentController::class, 'show']);

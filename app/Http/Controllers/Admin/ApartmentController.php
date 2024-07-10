@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Promotion;
 use App\Models\Service;
+use App\Models\Search;
 use Illuminate\Support\Facades\DB;
 
 
@@ -58,7 +59,7 @@ class ApartmentController extends Controller
             'verify' => false,
         ]);
         $apiBaseUrl='https://api.tomtom.com/search/2/geocode/';
-        $apiAdress= Apartment::apiFormatAddress($validatedData['address']);
+        $apiAdress= Search::apiFormatAddress($validatedData['address']);
         $response = $client->get("{$apiBaseUrl}{$apiAdress}.json", [
             'query' => [
                 'key' => env('TOMTOM_API_KEY'),
@@ -141,7 +142,7 @@ class ApartmentController extends Controller
                 'verify' => false,
             ]);
             $apiBaseUrl='https://api.tomtom.com/search/2/geocode/';
-            $apiAdress= Apartment::apiFormatAddress($validatedData['address']);
+            $apiAdress= Search::apiFormatAddress($validatedData['address']);
             $response = $client->get( $apiBaseUrl . $apiAdress . '.json', [
                 'query' => [
                     'key' => env('TOMTOM_API_KEY'),

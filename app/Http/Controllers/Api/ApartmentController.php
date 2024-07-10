@@ -21,6 +21,15 @@ class ApartmentController extends Controller
         } else {
             $apartments = Apartment::with('services')->get();
         }
+
+
+
+        if ($request->query('services')) {
+            $apartments = Apartment::with('services')->where('apartment_service.service_id', $request->query('services'))->get();
+            //dd($apartments);
+        } else {
+            $apartments = Apartment::with('services')->get();
+        }
        
         $cleanApartments = $apartments->map(function ($apartment) {
             $data = $apartment->toArray();
@@ -34,27 +43,30 @@ class ApartmentController extends Controller
 
 
     public function show($slug)
-    {
-        $apartment = Apartment::where('slug', $slug)->with('user', 'services')->first();
 
-        if ($apartment) {
-            // Converti l'appartamento in un array e rimuovi il campo 'location'
-            $data = $apartment->toArray();
-            unset($data['location']);
+{
+    $apartment = Apartment::where('slug', $slug)->with('user', 'services')->first();
 
-            // Restituisci l'appartamento con i dati aggiornati
-              return response()->json([
-                'success' => true,
-                'message' => 'Ok',
-                'results' => $data
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'apartment not found'
-            ], 404);
-        }
+    if ($apartment) {
+        // Converti l'appartamento in un array
+        $data = $apartment->toArray();
+        // Rimuovi il campo 'location'
+        unset($data['location']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Ok',
+            'results' => $data
+        ], 200);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'apartment not found'
+        ], 404);
+
     }
+}
+
     public function searchNearby(Request $request)
     {
         $validated = $request->validate([
