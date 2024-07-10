@@ -4,10 +4,10 @@
     <thead>
         <tr>
             <!-- <th scope="col">#id Project</th> -->
-            <th scope="col">Promotions id</th>
-            <th scope="col" class="d-none d-xl-table-cell">Title</th>
-            <th scope="col" class="d-none d-lg-table-cell">Duration</th>
-            <th scope="col" class="d-none d-lg-table-cell">Price</th>
+            <th scope="col" class="text-white fw-normal align-content-center d-xl-table-cell">Promotions id</th>
+            <th scope="col" class="text-white fw-normal align-content-center d-xl-table-cell">Title</th>
+            <th scope="col" class="text-white fw-normal align-content-center d-lg-table-cell">Duration</th>
+            <th scope="col" class="text-white fw-normal align-content-center d-lg-table-cell">Price</th>
         </tr>
     </thead>
     <tbody>
@@ -15,9 +15,9 @@
             <tr>
                 <!-- <td>{{ $element->id }}</td> -->
                 <td>{{ $element->id }}</td>
-                <td class="d-none d-xl-table-cell">{{ $element->title }}</td>
-                <td class="d-none d-xl-table-cell">{{ $element->duration }}</td>
-                <td class="d-none d-xl-table-cell">{{ $element->price }}</td>
+                <td class="align-content-center d-xl-table-cell">{{ $element->title }}</td>
+                <td class="align-content-center d-xl-table-cell">{{ $element->duration }}</td>
+                <td class="align-content-center d-xl-table-cell">{{ $element->price }}</td>
             </tr>
         @endforeach
     </tbody>

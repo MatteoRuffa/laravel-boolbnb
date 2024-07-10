@@ -4,10 +4,10 @@
 <div class="container mt-4">
     <div class="row justify-content-center form-login">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+            <div id="ls-register-form" class="card">
+                <div id="register-title" class="p-3 text-white fs-4 border-bottom"> {{ __('Register') }}</div>
 
-                <div class="card-body">
+                <div class="p-3">
                     <form method="POST" action="{{ route('register') }}" id="register-form">
                         @csrf
 
@@ -80,7 +80,7 @@
 
                         <div class="mb-4 row">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn draw-border">
                                     {{ __('Register') }}
                                 </button>
                             </div>

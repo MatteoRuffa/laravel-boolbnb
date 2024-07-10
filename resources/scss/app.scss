@@ -11,19 +11,31 @@ $fa-font-path: "../fonts/webfonts" !default;
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
+html{
+    scroll-behavior: smooth;
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+}
+
 body {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
-  }
+}
 
 // login
 #nav_login {
-    background-color: $mr-text-dark!important;
-    background: linear-gradient(to bottom, $mr-text-dark, lighten($mr-text-dark, 10%));
+    background-color: hsla(0, 0%, 100%, 0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid white;
+    height: 100px;
     a {
-        color: white;
+        color: rgb(0, 0, 0);
     }
 }
 .logo_cortese {
@@ -32,19 +44,22 @@ body {
         height: 50px;
     }
 }
-
+#home {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+}
 #uploadPreview {
-  
     aspect-ratio: 1 / 1;
     border-radius: 20px;
     object-fit: cover;
 }
-
-
 #nav-icon{
     font-size: 1.5rem;
 }
-
 .form-login {
     .card-body {
         #form-login .form-check-input[type="checkbox"]:checked,
@@ -59,46 +74,27 @@ body {
         }
     }
 }
+#login-form,#ls-register-form {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 16px 15px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
 
+}
+#login-title, #register-title {
+    background: linear-gradient(45deg, rgb(48, 48, 48), hsla(176, 11%, 25%, 0.911), rgb(48, 48, 48)) !important;
+    border-radius: 15px 15px  0px 0px;
+    color: rgb(0, 0, 0);
+}
+#analytics-title, #contability-title, #views-title, #messages-title, #apartments-title {
+    background: linear-gradient(45deg, rgb(48, 48, 48), hsla(176, 11%, 25%, 0.911), rgb(48, 48, 48)) !important;
+    color: white;
+    border-radius: 5px 5px 0px 0px ;
+    border-bottom: 1px solid black;
+}
 // buttons and various
-.btn {
-    background-color: $mr-color-contrast;
-    border-color: $mr-color-contrast;
-    color: white;
-    &.btn-danger {
-        background-color: #BB2D3B; 
-        border-color: #BB2D3B; 
-        color: white; 
-        &:hover {
-            background-color: darken(#BB2D3B, 10%); 
-            border-color: darken(#BB2D3B, 10%); 
-        }
-    }
-    &.btn-dark-override {
-        background-color: $mr-text-light;
-        border-color: $btn-dark-border;
-        color: $mr-bg-dark;
-    }
-    &.btn-table {
-        background-color: transparent;
-        border-color: transparent;
-        color: transparent;
-    }
-    &:hover {
-        background-color: $mr-bg-dark;
-        color: white;
-        box-shadow: 0 0 0 0.2rem rgba($mr-text-dark, .25);
-    }
-    &.btn-add:focus {
-        background-color: $mr-bg-dark;
-        color: white;
-        box-shadow: 0 0 0 0.2rem rgba($mr-text-dark, .25);
-    }
-    
-}
-.btn-link {
-    color: white;
-}
+
 
 .form-control:focus {
     border-color: $mr-text-dark;
@@ -106,8 +102,7 @@ body {
 }
 
 .card-header {
-    background-color: $mr-text-dark;
-    background: linear-gradient(to bottom, $mr-text-dark, lighten($mr-text-dark, 10%));
+    background: linear-gradient(45deg, rgb(48, 48, 48), hsla(176, 11%, 25%, 0.911), rgb(48, 48, 48)) !important;
     color: white;
 }
 
@@ -117,16 +112,21 @@ body {
     color: white;
 }
 .offcanvas {
-    background:linear-gradient(to bottom, #1085bfdf, lighten(#108bbfed, 10%))
-     !important;
- }
- 
- //questo cambia il colore della nav dell'header quando si è loggati
- .bg-dark {
-     background:linear-gradient(to bottom, $mr-text-dark, lighten($mr-text-dark, 10%))
-     !important;
- }
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, rgb(48, 48, 48), hsla(176, 11%, 25%, 0.911), rgb(48, 48, 48)) !important;
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+    #offcanvasDarkNavbarLabel {
+        color: white;
+        font-size: 2rem;
+    }
+}
 
+ //questo cambia il colore della nav dell'header quando si è loggati
+.bg-dark {
+    background: linear-gradient(45deg, rgb(48, 48, 48), hsla(176, 11%, 25%, 0.911), rgb(48, 48, 48)) !important;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
 // main
 main {
     // background-color: $mr-text-light;
@@ -139,7 +139,6 @@ main {
         }
     }
 }
-
 //show-apartments
 .img-show {
     width: 100%;
@@ -151,18 +150,16 @@ main {
         width: 100%;
         height: auto;
         display: block;
-       
     }
 }
-
 // table
 #mr-table {
-    border: 1px solid #29C1E6;
+    border: 1px solid #000000;
     border-radius: 10px;
     overflow: hidden;
+    
     .table-icon {
         font-size: 2rem;
-        color: $mr-color-contrast;
         text-decoration: none;
     }
     button.no-border {
@@ -176,30 +173,38 @@ main {
     }
     
 }
-
+table tr {
+    background: linear-gradient(45deg, rgb(48, 48, 48), hsla(176, 11%, 25%, 0.911), rgb(48, 48, 48)) !important;
+}
+table th {
+    background: transparent !important;
+    color: white;
+    border-bottom: 1px solid black;
+}
+#td-image-cover {
+    width: 15% !important;
+    object-fit: cover;
+}
 // pagination
 .pagination .page-link {
-    background-color: $mr-primary-color;
+    background-color: #4A5655;
     color: white; 
 }
 .pagination .page-item.active .page-link {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-    border-color: $mr-primary-color; 
+    border-color: rgb(255, 252, 51); 
 }
 .pagination .page-link:active {
-    background-color:$mr-primary-color; 
+    background-color: #4A5655;
     color: white; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-    border-color: $mr-primary-color; 
+    border-color: rgb(255, 252, 51); 
 }
-
-
 //form 
 .address {
     display: flex;
     justify-content: space-between;
 }
-
 .logo-container {
     position: absolute;
     top: 57%;
@@ -213,17 +218,14 @@ main {
         color: transparent;
     }
 }
-
 .bubbles {
     position:relative;
     border-radius:100%;
     width: 40px;
     aspect-ratio: 1;
     background: linear-gradient(#29C1E6, #109FBF);
-
     animation: bubbles-rotation 5s linear infinite;
-   
-    
+
     div,div::before,div::after{
         position: absolute;
         width: 12px;
@@ -269,7 +271,7 @@ main {
 }
 
 #ls-badge {
-    background-color: #29C1E6;
+    background-color: #4A5655;
     margin-top: 5px;
     margin-right: 5px;
     flex-wrap: wrap;
@@ -314,17 +316,14 @@ li {
     list-style-type: none;
 }
 
-.ls-btn {
-    background-color: #FA8A42;
-}
 
-.ls-btn-2 {
-    background-color: #29C1E6;
-    border: none;
+#edit-border {
+    border: 1px solid black;
+    padding: 10px;
 }
 
 .img_edit, .serv, .address{
-    border: 1px solid #29C1E6;
+    border: 1px solid #000000;
     border-radius: 20px;
     padding: 20px;
     margin: 10px auto;
@@ -361,9 +360,66 @@ li {
     background-color: #f0f0f0;
 }
 
-#td-image-cover {
-    width: 15% !important;
-    object-fit: cover;
-    border-radius: 10px;
+
+// nuovi bottoni
+.draw-border {
+    //box-shadow: inset 0 0 0 4px #000000;
+    color: #000000;
+    transition: color 0.25s 0.0833333333s;
+    position: relative;
+}
+
+.draw-border::before,
+.draw-border::after {
+    border: 0 solid transparent;
+    box-sizing: border-box;
+    border-radius: 3px;
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.draw-border::before {
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+}
+
+.draw-border::after {
+    border-top-width: 4px;
+    border-right-width: 4px;
+}
+
+.draw-border:hover {
+    color: #000000;
+    background-color: transparent;
+}
+
+.draw-border:hover::before,
+.draw-border:hover::after {
+    border-color: #4A5655;
+    transition: border-color 0s, width 0.25s, height 0.25s;
+    width: 100%;
+    height: 100%;
+}
+
+.draw-border:hover::before {
+    transition-delay: 0s, 0s, 0.25s;
+}
+
+.draw-border:hover::after {
+    transition-delay: 0s, 0.25s, 0s;
+}
+
+.btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1.5;
+    padding: 0.5em 0.9em;
+    letter-spacing: 0.05rem;
 }
 

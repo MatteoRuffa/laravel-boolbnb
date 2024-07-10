@@ -124,9 +124,9 @@
                     </div>
 
                     <div class="text-center w-25 mx-auto d-flex gap-2">
-                        <button type="submit" class="btn ">Add the Apartment</button>
+                        <button type="submit" class="btn draw-border">Add the Apartment</button>
                         <a href="{{ route('admin.apartments.index') }}"
-                            class="btn ">Back
+                            class="btn draw-border">Back
                         </a>
                     </div> 
             </form>
