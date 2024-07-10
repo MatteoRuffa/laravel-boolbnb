@@ -14,7 +14,13 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $apartments = Apartment::all();
+        if ($request->query('services')) {
+            $apartments = Apartment::with('services')->where('apartment_service.service_id', $request->query('services'))->get();
+            //dd($apartments);
+        } else {
+            $apartments = Apartment::with('services')->get();
+        }
+
 
         $cleanApartments = $apartments->map(function ($apartment) {
             $data = $apartment->toArray();
@@ -31,21 +37,28 @@ class ApartmentController extends Controller
     }
 
     public function show($slug)
-    {
-        $apartment = Apartment::where('slug', $slug)->with('user', 'services')->first();
-        if ($apartment) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Ok',
-                'results' => $apartment
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'apartment not found'
-            ], 404);
-        }
+{
+    $apartment = Apartment::where('slug', $slug)->with('user', 'services')->first();
+
+    if ($apartment) {
+        // Converti l'appartamento in un array
+        $data = $apartment->toArray();
+        // Rimuovi il campo 'location'
+        unset($data['location']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Ok',
+            'results' => $data
+        ], 200);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'apartment not found'
+        ], 404);
     }
+}
+
     public function searchNearby(Request $request)
     {
         $validated = $request->validate([
