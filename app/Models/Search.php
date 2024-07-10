@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB; 
+use App\Models\Apartment;
 
 class Search extends Model
 {
@@ -18,12 +19,6 @@ class Search extends Model
     {
         $addressF = str_replace(' ', '%20', $address);
         return $addressF;
-    }
-    public function setLocationAttribute($latitude, $longitude)
-    {
-        if (isset($latitude) && isset($longitude)) {
-            $this->attributes['location'] = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
-        }
     }
     public function getLocationAttribute($value)
     {
