@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Promotion;
+
 use App\Models\ApartmentPromotion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB; 
