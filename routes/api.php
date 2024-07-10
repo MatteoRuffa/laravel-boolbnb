@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApartmentController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\PromotionController;
+use App\Http\Controllers\Api\FilterController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::get('filter', [FilterController::class, 'index']);
 Route::get('apartments', [ApartmentController::class, 'index']);
 Route::get('apartments/{slug}', [ApartmentController::class, 'show']);
 Route::get('apartments/nearby', [ApartmentController::class, 'searchNearby']);
