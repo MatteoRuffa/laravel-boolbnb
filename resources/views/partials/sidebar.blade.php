@@ -1,20 +1,22 @@
 <nav id="nav-side" class="navbar navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
-      aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <a class="navbar-brand" href="#">Menu</a>
-    </button>
-    <div  class="p-3 ms-4 my-1 position-relative">
-      <div class="logo-container">
-        <p><i class="fs-4 fa-solid fa-house-flood-water"></i></p>
-      </div>
-      <div class="bubbles">
-        <div></div>
-      </div>
+  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+    aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    <a class="navbar-brand" href="#">Menu</a>
+  </button>
+  <div  class="p-3 ms-4 my-1 position-relative">
+    <div class="logo-container">
+      <p><i class="fs-4 fa-solid fa-house-flood-water"></i></p>
     </div>
-    @include('partials.header')
+    <div class="bubbles">
+      <div></div>
+    </div>
+  </div>
+  @include('partials.header')
+
+
 
     <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
       aria-labelledby="offcanvasDarkNavbarLabel">
@@ -52,7 +54,7 @@
         </ul>
         <form class="d-flex mt-3" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-dark-override" type="submit">Search</button>
+          <button class="btn draw-border text-white" type="submit">Search</button>
         </form>
       </div>
     </div>

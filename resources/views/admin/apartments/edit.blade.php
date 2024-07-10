@@ -3,19 +3,13 @@
 
 @section('content')
     <section class="container py-5">
-        <div class="container rounded-2 p-5 container-table">
+        <div  class="container rounded-2 p-5 container-table">
             <h1 class=" text-black fw-bolder text-uppercase">Modify apartment: {{ $apartment->title }}</h1>
-
-
             <form id="edit-apartment-form" action="{{ route('admin.apartments.update', $apartment->slug) }}" method="POST" 
-
                 enctype="multipart/form-data">
                 @csrf
-
                 @method('PUT')
-
-            <div class="row">
-
+            <div  class="row">
                 <div class="mb-3 col @error('name') @enderror">
                     <label for="name" class="form-label fs-5 fw-medium">Name</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror"
@@ -25,7 +19,6 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-
                 <div class="mb-3 col @error('rooms') @enderror">
                     <label for="rooms" class="form-label fs-5 fw-medium">Rooms</label>
                     <input  class="form-control @error('rooms') is-invalid @enderror"
@@ -35,8 +28,6 @@
                     @enderror
                 </div>
             </div>
-
-
             <div class="row">
                 <div class="mb-3 col @error('beds') @enderror">
                     <label for="beds" class="form-label fs-5 fw-medium">Beds</label>
@@ -54,7 +45,7 @@
                 <div class="mb-3 col @error('bathrooms') @enderror">
                     <label for="bathrooms" class="form-label fs-5 fw-medium">Bathrooms</label>
                     <input  class="form-control @error('bathrooms') is-invalid @enderror" id="bathrooms" name="bathrooms"
-                       placeholder="{{ old('bathrooms', $apartment->bathrooms) }}" type="text" pattern="^\d+$" maxlength="255" minlength="1">
+                    placeholder="{{ old('bathrooms', $apartment->bathrooms) }}" type="text" pattern="^\d+$" maxlength="255" minlength="1">
                     @error('bathrooms')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -165,10 +156,10 @@
                 </div>
 
                 <br>
-                <div class="text-center w-50 mx-auto d-flex gap-2">
-                    <button type="submit" class="mine-custom-btn btn mt-3 w-100">Salva</button>
+                <div class="text-center">
+                    <button type="submit" class="draw-border btn mt-3 mx-3"><i class="fa-solid fa-floppy-disk"></i> Salva</button>
                     <a href="{{ route('admin.apartments.index') }}"
-                        class="btn   ls-btn-2 mt-3 w-100">Indietro</a>
+                        class="btn draw-border mt-3 mx-3"> <i class="fa-solid fa-chevron-left"></i> Go back</a>
                 </div>
             </form>
         </div>

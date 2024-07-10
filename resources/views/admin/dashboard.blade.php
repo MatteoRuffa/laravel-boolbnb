@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2 class="fs-4 my-4">Welcome to the dashboard</h2>
+    <h2 class="text-decoration-underline fs-4 my-4">Welcome to the dashboard</h2>
 
     <div id="dashboard" class="row justify-content-center">
         <div class="col">
