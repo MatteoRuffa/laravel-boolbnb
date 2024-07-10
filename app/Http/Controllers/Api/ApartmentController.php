@@ -14,6 +14,7 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
+
         if ($request->query('services')) {
             $apartments = Apartment::with('services')->where('apartment_service.service_id', $request->query('services'))->get();
             //dd($apartments);
@@ -28,12 +29,9 @@ class ApartmentController extends Controller
             return $data;
         });
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Ok',
-            'results' => $cleanApartments
-        ], 200);
+
     }
+
 
     public function show($slug)
     {
