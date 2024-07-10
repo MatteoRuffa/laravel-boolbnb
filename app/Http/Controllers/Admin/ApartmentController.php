@@ -30,6 +30,7 @@ class ApartmentController extends Controller
         $totalApartments = DB::table('apartments')->count();
         return view('admin.apartments.index', compact('apartments', 'totalApartments'));
     }
+    // ciao
 
     /**
      * Show the form for creating a new resource.
