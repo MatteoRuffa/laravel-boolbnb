@@ -3,7 +3,7 @@
 
 @section('content')
     <section class="my-5">
-        <h1 class=" m-3">You are recived {{ $totalMessage }} messages</h1>
+        <h1 class="text-decoration-underline m-3">You have {{ $totalMessage }} messages</h1>
         @if (session()->has('message'))
             <div class="alert alert-success">
                 {{ session()->get('message') }}

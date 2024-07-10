@@ -1,7 +1,7 @@
 <!-- resources/views/partials/dashboard-card/views.blade.php -->
 
 <div class="card mb-3">
-    <div class="card-header">Views</div>
+    <div id="views-title" class="p-3">Views</div>
     <div class="card-body">
         <canvas id="viewsChart" width="400" height="200"></canvas>
     </div>

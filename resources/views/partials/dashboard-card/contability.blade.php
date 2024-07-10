@@ -1,7 +1,7 @@
 <!-- resources/views/partials/dashboard-card/contability.blade.php -->
 
 <div class="card mb-3">
-    <div class="card-header">Contability</div>
+    <div id="contability-title" class="p-3">Contability</div>
     <div class="card-body">
         <canvas id="contabilityChart" width="400" height="200"></canvas>
     </div>

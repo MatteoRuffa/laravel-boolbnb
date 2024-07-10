@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <section class="container">
-        <h1>Wellcome to Bool 'n' Bubbles Administration</h1>
-        <p>Please login to continue</p>
+    <section id="home" class="container">
+        <h1 class="text-decoration-underline">Wellcome to Bool 'n' Dreams Administration</h1>
+        <p>Please head to login to continue.</p>
     </section>
 @endsection
