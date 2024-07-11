@@ -34,7 +34,7 @@
                     <input
                         class="form-control @error('beds') is-invalid @enderror"
                         id="beds" name="beds"
-                        value="{{ old('beds', $apartment->beds) }}" minlength="2" type="text" pattern="^\d+$" maxlength="255" minlength="1">
+                        value="{{ old('beds', $apartment->beds) }}" minlength="1" type="text" pattern="^\d+$" maxlength="255" minlength="1">
                     @error('beds')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
