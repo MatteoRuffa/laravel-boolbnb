@@ -123,10 +123,10 @@
                         </div>
                     </div>
 
-                    <div class="text-center w-25 mx-auto d-flex gap-2">
-                        <button type="submit" class="btn draw-border">Add the Apartment</button>
+                    <div class="text-center mx-auto justify-content-center d-flex gap-2">
+                        <button type="submit" class="btn draw-border"><i class="fa-solid fa-plus"></i> Add the Apartment</button>
                         <a href="{{ route('admin.apartments.index') }}"
-                            class="btn draw-border">Back
+                            class="btn draw-border"><i class="fa-solid fa-chevron-left"></i> Back
                         </a>
                     </div> 
             </form>
