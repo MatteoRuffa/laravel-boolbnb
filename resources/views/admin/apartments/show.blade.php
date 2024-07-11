@@ -62,7 +62,7 @@
 
 
 
-
+<!-- MODALE DI PAGAMENTO -->
 <button id="cta-sponsor" class="btn btn-cta mb-4 w-100" data-bs-toggle="modal"
 data-bs-target="#showPayment">   
     <strong><i class="fa-solid fa-crown me-3 "></i>Attiva la sponsorizzazione</strong>
@@ -87,7 +87,7 @@ data-bs-target="#showPayment">
                         @csrf
                         <input type="hidden"  name="apartment_id" value="{{ $apartment->id }}">
                         <select id="promotion_id" class="form-select mb-3"  name="promotion_id" onclick="change(value)">
-                            <option >Seleziona sponsorizzazione</option>
+                        <option value="" disabled selected>Seleziona sponsorizzazione</option>
                             
                             @foreach ($promotions as $promotion)
                             
@@ -96,6 +96,7 @@ data-bs-target="#showPayment">
                             @endforeach
     
                         </select>
+                        <div id="error-message" class="text-danger d-none">Per favore, scegli una sponsorizzazione.</div>
     
                         <div id="box-description" class="box-description" >
     
@@ -131,12 +132,8 @@ data-bs-target="#showPayment">
         </div>
     </div>
 </div>
- 
+ <!-- FINE MODALE DI PAGAMENTO -->
    
- 
-  
-
-
     <div class="link d-flex align-items-center justify-content-start p-3">
         <a class="btn ls-btn p-2" href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="update-link p-4">
             <i class="fa-solid fa-gear"></i>
@@ -155,7 +152,11 @@ data-bs-target="#showPayment">
   document.addEventListener('DOMContentLoaded', function () {
     let form = document.getElementById('payment-form');
     let client_token = "{{ $clientToken }}"; // Token per Braintree    
-    
+
+    // Seleziona la prima opzione come predefinita e mostra la descrizione
+    document.getElementById('promotion_id').selectedIndex = 1; // Seleziona la prima sponsorizzazione valida
+    change(document.getElementById('promotion_id').value);
+
     braintree.dropin.create({
         authorization: client_token,
         container: '#dropin-container'
@@ -167,6 +168,17 @@ data-bs-target="#showPayment">
 
         form.addEventListener('submit', function (event) {
             event.preventDefault();
+
+            // Validazione: assicurarsi che una sponsorizzazione sia selezionata
+            const promotionSelect = document.getElementById('promotion_id');
+            const errorMessage = document.getElementById('error-message');
+
+            if (promotionSelect.value === "") {
+                errorMessage.classList.remove('d-none');
+                return;
+            } else {
+                errorMessage.classList.add('d-none');
+            }
 
             instance.requestPaymentMethod(function (err, payload) {
                 if (err) {
@@ -183,7 +195,7 @@ data-bs-target="#showPayment">
                 form.submit(); // Invia il form
             });
         });
-    });  
+    });
 
     // Gestisce il clic sul pulsante per mostrare/nascondere il box dei pagamenti
     let btn_sponsor = document.getElementById('cta-sponsor');
@@ -193,16 +205,17 @@ data-bs-target="#showPayment">
   });
 
   function change(value){
-    console.log(value)
+    console.log(value);
 
     const divs = document.querySelectorAll('.text-hide');
     divs.forEach(div => {
         div.classList.add('d-none');
     });
 
-    document.querySelector('#box-description #text-description-' + value).classList.remove('d-none')
+    document.querySelector('#box-description #text-description-' + value).classList.remove('d-none');
   }
 </script>
+
 
 @endsection
 

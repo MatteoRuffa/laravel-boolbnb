@@ -105,7 +105,7 @@ class ApartmentController extends Controller
         // Altrimenti, mostra la vista dell'appartamento
         $success = false;
         $promotions = Promotion::all();
-        // Genera il token per il gateway di pagament
+        //Genera il token per il gateway di pagament
         $clientToken = $gateway->clientToken()->generate();
 
          return view('admin.apartments.show', compact('success', 'apartment', 'clientToken', 'promotions'));
@@ -116,7 +116,7 @@ class ApartmentController extends Controller
         if ($apartment->user_id !== auth()->id()) {
             abort(404, 'Unauthorized action.');
         }
-        
+       
         $services= Service::all();
         return view('admin.apartments.edit', compact('apartment','services'));
     }
@@ -124,8 +124,9 @@ class ApartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateApartmentRequest $request, Apartment $apartment)
-    {
+    public function update(UpdateApartmentRequest $request, Apartment $apartment, Gateway $gateway)
+    {    $promotions = Promotion::all();
+        $clientToken = $gateway->clientToken()->generate();
         $validatedData = $request->validated();
         if ($request->hasFile('image_cover')) {
             $image_cover = Storage::put('img-apart-bnb', $request->image_cover);
@@ -173,7 +174,7 @@ class ApartmentController extends Controller
         if($request->has('services')){
             $apartment->services()->sync($request->services);
         }
-        return view('admin.apartments.show', compact('apartment')); 
+        return view('admin.apartments.show', compact('apartment','promotions', 'clientToken')); 
         // $project_modified =  Project::findOrFail($id);
         // $form_data = $request->validated();
         // if ($request->hasFile('image_url')) {

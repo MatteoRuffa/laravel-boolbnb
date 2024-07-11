@@ -57,19 +57,24 @@ class PaymentController extends Controller
             ->where('promotion_id', $promotion_id)
             ->first();
 
-        if ($existingPromotion) {
-            // Se già esiste, aggiornalo
-            $apartment->promotions()->updateExistingPivot($promotion_id, [
-                'start_date' => $start_date,
-                'end_date' => $end_date,
-            ]);
-        } else {
-            // Altrimenti, attaccalo
-            $apartment->promotions()->attach($promotion_id, [
-                'start_date' => $start_date,
-                'end_date' => $end_date,
-            ]);
-        }
+            if ($existingPromotion) {
+                // Se la promozione esiste già, aggiorna la data di fine
+                $current_end_date = Carbon::parse($existingPromotion->pivot->end_date);
+        
+                // Somma il nuovo periodo alla fine corrente
+                $new_end_date = $current_end_date->greaterThan($end_date) ? $current_end_date->copy()->addHours($hours)->addMinutes($minutes)->addSeconds($seconds) : $end_date;
+        
+                $apartment->promotions()->updateExistingPivot($promotion_id, [
+                    'start_date' => $start_date,
+                    'end_date' => $new_end_date,
+                ]);
+            } else {
+                // Altrimenti, attacca la nuova promozione
+                $apartment->promotions()->attach($promotion_id, [
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                ]);
+            }
 
         // Passa i dati necessari per la vista success
         return redirect()->route('admin.payment.success')

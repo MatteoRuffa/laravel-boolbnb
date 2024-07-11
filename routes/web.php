@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
      ->prefix('admin')
      ->group(function () {
  Route::resource('apartments', ApartmentController::class)->parameters(['apartments'=>'apartment:slug']);
- // Definisci le rotte per le sponsorizzazioni+
+ // Definisci le rotte per le sponsorizzazioni
 
   Route::get('promotion/create/{apartment:slug}', [PromotionController::class, 'create'])->name('promotion.create');
   Route::post('promotion/store/{apartment:slug}', [PromotionController::class, 'store'])->name('promotion.store');
