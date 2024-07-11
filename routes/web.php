@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Apartment;
+use App\Http\Controllers\Admin\PaymentController;
 
 
 /*
@@ -41,6 +42,28 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+Route::middleware(['auth', 'verified'])
+->name('admin.')
+->prefix('admin')
+->group(function () {
+Route::resource('apartments', ApartmentController::class)->parameters(['apartments'=>'apartment:slug']);
+// Definisci le rotte per le sponsorizzazioni
+
+Route::get('promotion/create/{apartment:slug}', [PromotionController::class, 'create'])->name('promotion.create');
+Route::post('promotion/store/{apartment:slug}', [PromotionController::class, 'store'])->name('promotion.store');
+Route::get('promotion/show/{apartment:slug}', [PromotionController::class, 'show'])->name('promotion.show');
+});
+Route::get('remove-expired-promotions', [PromotionController::class, 'removeExpiredPromotions']);
+
+Route::get('admin/payment/form', [PaymentController::class, 'show'])->name('admin.payment.form');
+Route::post('admin/payment/process', [PaymentController::class, 'process'])->name('admin.payment.process');
+Route::get('admin/payment/success', [PaymentController::class, 'success'])->name('admin.payment.success');
+Route::get('admin/payment/show', [PaymentController::class, 'show'])->name('admin.payment.show');
+
+
+
 
 require __DIR__ . '/auth.php';
 

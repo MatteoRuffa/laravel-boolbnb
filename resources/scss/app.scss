@@ -330,7 +330,8 @@ li {
 }
 
 .serv{
-    height: 130px;
+    overflow-x: auto; 
+    max-height: 455px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;

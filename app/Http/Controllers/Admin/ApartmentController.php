@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Promotion;
 use App\Models\Service;
 use App\Models\Search;
+use Braintree\Gateway;
+use App\Models\ApartmentPromotion;
 use Illuminate\Support\Facades\DB;
+
 
 
 class ApartmentController extends Controller
@@ -91,24 +94,25 @@ class ApartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Apartment $apartment)
+    public function show(Request $request, Gateway $gateway, $slug)
     {
-        $promotions=Promotion::all();
-        return view('admin.apartments.show', compact('apartment', 'promotions'));
+        // Trova l'appartamento utilizzando lo slug
+        $apartment = Apartment::where('slug', $slug)->with('promotions')->firstOrFail();
+
+        // Controllo se l'utente è il proprietario dell'appartamento
+        if ($apartment->user_id !== Auth::id()) {
+            // Se l'utente non è il proprietario dell'appartamento, restituisci una risposta 404
+            abort(404);
+        }
+
+        // Altrimenti, mostra la vista dell'appartamento
+        $success = false;
+        $promotions = Promotion::all();
+        //Genera il token per il gateway di pagament
+        $clientToken = $gateway->clientToken()->generate();
+
+         return view('admin.apartments.show', compact('success', 'apartment', 'clientToken', 'promotions'));
     }
-    // .nicolai
-    //  public function promote(Request $request, Apartment $apartment)
-    // {
-    //     $this->authorize('update', $apartment);
-
-    //     $promotionId = $request->input('promotion_id');
-    //     $promotion = Promotion::findOrFail($promotionId);
-
-    //     $apartment->addPromotion($promotion);
-
-    //     return redirect()->route('admin.apartments.show', $apartment)->with('success', 'Appartamento sponsorizzato con successo');
-    //  }
-    // fine
 
     /**
      * Show the form for editing the specified resource.
@@ -125,8 +129,10 @@ class ApartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateApartmentRequest $request, Apartment $apartment)
+    public function update(UpdateApartmentRequest $request, Apartment $apartment, Gateway $gateway)
     {
+        $promotions = Promotion::all();
+        $clientToken = $gateway->clientToken()->generate();
         $validatedData = $request->validated();
         if ($request->hasFile('image_cover')) {
             $image_cover = Storage::put('img-apart-bnb', $request->image_cover);
@@ -174,7 +180,7 @@ class ApartmentController extends Controller
         if($request->has('services')){
             $apartment->services()->sync($request->services);
         }
-        return view('admin.apartments.show', compact('apartment')); 
+        return view('admin.apartments.show', compact('apartment','promotions', 'clientToken')); 
     }
 
     /**
