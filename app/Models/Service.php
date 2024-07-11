@@ -13,7 +13,8 @@ class Service extends Model
         'icon'
     ];
     //Relazione uno a molti tra servizi e appartamenti 
-    public function apartments(){
-        return $this->belongsToMany(Apartment::class);
-    }
+    public function apartments()
+{
+    return $this->belongsToMany(Apartment::class, 'apartment_service');
+}
 }
