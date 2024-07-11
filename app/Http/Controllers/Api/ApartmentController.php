@@ -14,13 +14,14 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
-
+        
         try {
-            $lon = $request->input('longitude');
-            $lat = $request->input('latitude');
-            $radius = $request->input('radius');
-            $beds = $request->input('beds');
-            $bathrooms = $request->input('bathrooms');
+            $lon = (float) $request->input('longitude');
+            $lat = (float) $request->input('latitude');
+            $radius = (int) $request->input('radius');
+            $beds = (int) $request->input('beds');
+            $bathrooms = (int) $request->input('bathrooms');
+            $rooms= (int) $request->input('rooms');
             $services = $request->input('services'); // Assumi che sia un array di ID dei servizi
     
             // Verifica che i parametri siano numerici
@@ -36,11 +37,18 @@ class ApartmentController extends Controller
                 FROM apartments a
                 WHERE 1 = 1
             ";
-    
-            $bindings = [$lon, $lat]; // Parametri iniziali per la query
+            $services=array_map('intval', $services);
+            \Log::info('Parameters:', ['longitude' => $lon, 'latitude' => $lat, 'radius' => $radius, 'beds' => $beds, 'bathrooms' => $bathrooms, 'services' => $services]);
+            $bindings = [$lat,$lon]; // Parametri iniziali per la query
     
             // Aggiungi condizioni per i letti e i bagni usando switch
             switch (true) {
+                
+                case isset($rooms):
+                    $query .= " AND a.rooms >= ?";
+                    $bindings[] = $rooms;
+                    break;
+    
                 case isset($beds):
                     $query .= " AND a.beds >= ?";
                     $bindings[] = $beds;
