@@ -38,24 +38,17 @@ class SearchController extends Controller
     
             $bindings = [$lat, $lon]; // Parametri iniziali per la query
             // Aggiungi condizioni per i letti ,i bagni e stanze usando switch
-            switch (true) {
-                
-                case isset($rooms):
-                    $query .= " AND a.rooms >= ?";
-                    $bindings[] = $rooms;
-                    break;
-    
-                case isset($beds):
-                    $query .= " AND a.beds >= ?";
-                    $bindings[] = $beds;
-                    break;
-    
-                case isset($bathrooms):
-                    $query .= " AND a.bathrooms >= ?";
-                    $bindings[] = $bathrooms;
-                    break;
+            if ($beds !== null) {
+                $query .= " AND a.beds >= ?";
+                $bindings[] = $beds;
+            } 
+            if ($bathrooms !== null) {
+                $query .= " AND a.bathrooms >= ?";
+                $bindings[] = $bathrooms;
+            } if ($rooms !== null) {
+                $query .= " AND a.rooms >= ?";
+                $bindings[] = $rooms;
             }
-    
             // Aggiungi filtro per i servizi se presenti
             if (!empty($services)) {
                 $serviceIds = array_map('intval', $services);
