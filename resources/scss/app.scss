@@ -107,8 +107,7 @@ body {
 }
 
 .modal-header {
-    background-color: $mr-text-dark;
-    background: linear-gradient(to bottom, $mr-text-dark, lighten($mr-text-dark, 10%));
+    background: linear-gradient(45deg, rgb(48, 48, 48), hsla(176, 11%, 25%, 0.911), rgb(48, 48, 48)) !important;
     color: white;
 }
 .offcanvas {
