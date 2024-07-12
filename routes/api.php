@@ -26,7 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::get('search', [SearchController::class, 'index']);
+Route::get('/search/location', [SearchController::class, 'searchByLocation']);
+Route::get('/search/filter', [SearchController::class, 'filterApartments']);
 
 Route::get('apartments', [ApartmentController::class, 'index']);
 Route::get('apartments/{slug}', [ApartmentController::class, 'show']);
@@ -36,4 +37,4 @@ Route::get('promotions', [PromotionController::class, 'index']);
 
 // Contacts 
 Route::Post('/contacts', [LeadController::class, 'store']);
-
+//passare le promotion a vue
