@@ -14,27 +14,46 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->query('services')) {
-            $apartments = Apartment::with('services')->where('apartment_service.service_id', $request->query('services'))->get();
-            //dd($apartments);
-        } else {
-            $apartments = Apartment::with('services')->get();
+        try {
+            if ($request->query('promoted')) {
+                // Ottieni solo gli appartamenti sponsorizzati
+                $apartments = Apartment::with('services', 'promotions')
+                    ->whereHas('promotions', function($query) {
+                        $query->where('end_date', '>=', now());
+                    })
+                    ->get();
+    
+                // Ordina gli appartamenti in base al prezzo della promozione più alta
+                $apartments = $apartments->sortByDesc(function($apartment) {
+                    return $apartment->promotions->max('price');
+                });
+            } else {
+                $apartments = Apartment::with('services')->get();
+            }
+    
+            $cleanApartments = $apartments->map(function ($apartment) {
+                $data = $apartment->toArray();
+                unset($data['location']);
+                return $data;
+            });
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Ok',
+                'results' => $cleanApartments
+            ], 200);
+        } catch (\Exception $e) {
+            // Log dell'errore
+            \Log::error('Errore durante il recupero degli appartamenti: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Errore durante il recupero degli appartamenti',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-
-        $cleanApartments = $apartments->map(function ($apartment) {
-            $data = $apartment->toArray();
-            // Rimuovi il campo 'location'
-            unset($data['location']);
-            return $data;
-        });
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Ok',
-            'results' => $cleanApartments
-        ], 200);
     }
+    
+    
 
 
     public function show($slug)
@@ -62,41 +81,7 @@ class ApartmentController extends Controller
     }
 }
 
-    public function searchNearby(Request $request)
-    {
-        $validated = $request->validate([
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'radius' => 'required|numeric',
-        ]);
 
-        // Ottieni i parametri di ricerca dalla richiesta
-        $latitude = $request->input('latitude');
-        $longitude = $request->input('longitude');
-        $radius = $request->input('radius');
-
-        // Calcola la distanza e recupera gli appartamenti nelle vicinanze
-        $filteredApartments = Apartment::selectRaw("*, (
-            6371 * acos(
-                cos(radians(?)) *
-               cos(radians(latitude)) *
-                cos(radians(longitude) - radians(?)) +
-              sin(radians(?)) *
-                sin(radians(latitude))
-            )
-             ) AS distance", [$latitude, $longitude, $latitude])
-            ->having('distance', '<', $radius)
-            ->orderBy('distance')
-            ->get();
-
-
-        // Rispondi con i risultati trovati
-        return response()->json([
-            'success' => true,
-            'message' => 'Appartamenti trovati con successo.',
-            'results' => $filteredApartments
-        ], 200);
-    }
 
 
 }

@@ -29,10 +29,4 @@ class ApartmentPromotion extends Model
         return $this->belongsTo(Promotion::class);
     }
 
-    //nicolai
-    // public function timeRemaining() {
-    //     $now = Carbon::now();
-    //     return $now->diffForHumans($this->end_date, true);
-    // }
-    //fine
 }
