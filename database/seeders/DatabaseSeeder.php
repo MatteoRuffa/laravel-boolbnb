@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ApartmentsSeeder::class,
             PromotionSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }
