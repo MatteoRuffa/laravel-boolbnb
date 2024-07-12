@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title', 100);
             $table->time('duration');
             $table->decimal('price', 3, 2);
+            $table->text('description');
             $table->timestamps();
         });
     }
