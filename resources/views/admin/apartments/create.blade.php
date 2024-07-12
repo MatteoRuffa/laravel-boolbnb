@@ -19,6 +19,7 @@
                         <label for="name" class="form-label fs-5 fw-medium">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                             id="name" name="name" value="{{ old('name') }}"  maxlength="255" minlength="3">
+                            <label for="name">*required</label>
                         @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -37,6 +38,7 @@
                     <label for="rooms" class="form-label fs-5 fw-medium">Rooms</label>
                     <input class="form-control @error('rooms') is-invalid @enderror"
                         id="rooms" name="rooms" value="{{ old('rooms') }}" type="text" pattern="^\d+$" required maxlength="255" minlength="1">
+                        <label for="rooms">*required</label>
                     @error('rooms')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -47,6 +49,7 @@
                         <label for="beds" class="form-label fs-5 fw-medium">Beds</label>
                         <input class="form-control @error('beds') is-invalid @enderror"
                             id="beds" name="beds" value="{{ old('beds') }}" type="text" pattern="^\d+$" required maxlength="255" minlength="1">
+                            <label for="beds">*required</label>
                         @error('beds')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -55,6 +58,7 @@
                     <div class="mb-3 @error('square_meters') @enderror">
                         <label for="bathrooms"  class="form-label fs-5 fw-medium">Bathrooms</label>
                         <input class="form-control @error('beds') is-invalid @enderror" id="bathrooms" name="bathrooms" value="{{ old('bathrooms') }}" type="text" pattern="^\d+$" required maxlength="255" minlength="1">
+                        <label for="bathrooms">*required</label>
                         @error('bathrooms')
                             <div class="error">{{ $message }}</div>
                         @enderror
@@ -64,6 +68,7 @@
                         <label for="square_meters" class="form-label fs-5 fw-medium">Square meters</label>
                         <input  class="form-control @error('square_meters') is-invalid @enderror"
                             id="square_meters" name="square_meters" value="{{ old('square_meters') }}" type="text" pattern="^\d+$" required maxlength="255" minlength="1">
+                            <label for="square_meters">*required</label>
                         @error('square_meters')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -74,6 +79,7 @@
                     <div class="mb-3 @error('address') @enderror">
                         <label for="address" class="form-label fs-5 fw-medium">Address</label>
                         <input class="form-control @error('address') is-invalid @enderror" type="text" id="address" name="address" value="{{ old('address') }}" required maxlength="255" minlength="7">
+                        <label for="address">*required</label>
                         <div id="resultsContainer" class="results-container w-50"></div>
                         @error('address')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -92,6 +98,7 @@
                             <input type="file" accept="image/*"
                                 class="form-control @error('image_cover') is-invalid @enderror" id="uploadImage"
                                 name="image_cover" value="{{ old('image_cover') }}" required maxlength="255">
+                                <label for="address">*required</label>
                             @error('image_cover')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
