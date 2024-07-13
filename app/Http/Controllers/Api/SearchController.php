@@ -25,13 +25,16 @@ class SearchController extends Controller
             $query = "
                 SELECT a.id, a.slug, a.name, a.beds, a.bathrooms, a.visibility, a.description, a.rooms, 
                        a.square_meters, a.image_cover, a.address, a.latitude, a.longitude,
+                       COALESCE(p.price, 0) AS promotion_price,
                        ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) AS distance 
                 FROM apartments a
-                HAVING distance <= ?
-                ORDER BY distance
+                LEFT JOIN apartment_promotion ap ON a.id = ap.apartment_id
+                LEFT JOIN promotions p ON ap.promotion_id = p.id
+                WHERE ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) <= ?
+                ORDER BY promotion_price DESC, distance ASC
             ";
     
-            $bindings = [$lon, $lat, $radius * 1000]; // Parametri per la query
+            $bindings = [$lon, $lat, $lon, $lat, $radius * 1000]; // Parametri per la query
     
             $apartments = DB::select($query, $bindings);
     
@@ -66,8 +69,11 @@ class SearchController extends Controller
             $query = "
                 SELECT a.id, a.slug, a.name, a.beds, a.bathrooms, a.visibility, a.description, a.rooms, 
                        a.square_meters, a.image_cover, a.address, a.latitude, a.longitude,
+                       COALESCE(p.price, 0) AS promotion_price,
                        ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) AS distance 
                 FROM apartments a
+                LEFT JOIN apartment_promotion ap ON a.id = ap.apartment_id
+                LEFT JOIN promotions p ON ap.promotion_id = p.id
                 WHERE ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) <= ?
             ";
 
@@ -101,7 +107,7 @@ class SearchController extends Controller
                 $bindings = array_merge($bindings, $serviceIds, [$serviceCount]);
             }
 
-            $query .= " ORDER BY distance";
+            $query .= " ORDER BY promotion_price DESC, distance ASC";
 
             $apartments = DB::select($query, $bindings);
 
