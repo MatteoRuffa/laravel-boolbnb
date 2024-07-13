@@ -144,6 +144,7 @@
         document.getElementById('create-apartment-form').addEventListener('submit', function(event) {
             const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
             const serviceError = document.getElementById('service-error');
+            const addressInput = document.getElementById('address');
             let isServiceSelected = false;
     
             serviceCheckboxes.forEach(function(checkbox) {
@@ -157,6 +158,9 @@
                 event.preventDefault();
             } else {
                 serviceError.style.display = 'none';
+            }
+            if(addressInput.disabled == false){
+                event.preventDefault();
             }
         });
         
