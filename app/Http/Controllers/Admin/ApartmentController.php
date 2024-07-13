@@ -109,12 +109,11 @@ class ApartmentController extends Controller
         }
 
         // Altrimenti, mostra la vista dell'appartamento
-        $success = false;
         $promotions = Promotion::all();
         //Genera il token per il gateway di pagament
         $clientToken = $gateway->clientToken()->generate();
 
-         return view('admin.apartments.show', compact('success', 'apartment', 'clientToken', 'promotions'));
+        return view('admin.apartments.show', compact('apartment', 'promotions', 'clientToken'));
     }
 
     /**
@@ -134,9 +133,8 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment, Gateway $gateway)
     {
-        $promotions = Promotion::all();
-        $clientToken = $gateway->clientToken()->generate();
         $validatedData = $request->validated();
+        
         if ($request->hasFile('image_cover')) {
             $image_cover = Storage::put('img-apart-bnb', $request->image_cover);
             $validatedData['image_cover'] = $image_cover;
@@ -183,6 +181,8 @@ class ApartmentController extends Controller
         if($request->has('services')){
             $apartment->services()->sync($request->services);
         }
+        $promotions = Promotion::all();
+        $clientToken = $gateway->clientToken()->generate();
         return view('admin.apartments.show', compact('apartment','promotions', 'clientToken')); 
     }
 

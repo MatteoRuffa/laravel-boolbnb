@@ -55,7 +55,8 @@ Route::get('promotion/create/{apartment:slug}', [PromotionController::class, 'cr
 Route::post('promotion/store/{apartment:slug}', [PromotionController::class, 'store'])->name('promotion.store');
 Route::get('promotion/show/{apartment:slug}', [PromotionController::class, 'show'])->name('promotion.show');
 });
-Route::get('remove-expired-promotions', [PromotionController::class, 'removeExpiredPromotions']);
+Route::get('/remove-expired-promotions', [PromotionController::class, 'removeExpiredPromotions'])->name('admin.promotions.removeExpired');
+
 
 Route::get('admin/payment/form', [PaymentController::class, 'show'])->name('admin.payment.form');
 Route::post('admin/payment/process', [PaymentController::class, 'process'])->name('admin.payment.process');

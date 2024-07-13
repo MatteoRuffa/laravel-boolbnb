@@ -29,20 +29,20 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            function removeExpiredSponsorships() {
-                fetch('/remove-expired-sponsorships')
+            function removeExpiredPromotions() {
+                fetch('{{ route("admin.promotions.removeExpired") }}')
                     .then(response => response.json())
                     .then(data => {
-                        console.log('Expired sponsorships removed:', data);
+                        console.log('Expired promotions removed:', data);
                     })
                     .catch(error => {
-                        console.error('Error removing expired sponsorships:', error);
+                        console.error('Error removing expired promotions:', error);
                     });
             }
-    
-            // Esegui la funzione subito e poi ogni minuto 
-            removeExpiredSponsorships();
-            setInterval(removeExpiredSponsorships, 1 * 60 * 1000); // 1 minuto
+
+            // Esegui la funzione subito e poi ogni minuto
+            removeExpiredPromotions();
+            setInterval(removeExpiredPromotions, 1 * 60 * 1000); // 1 minuto
         });
     </script>
     <script src="https://js.braintreegateway.com/web/dropin/1.28.0/js/dropin.min.js"></script>
