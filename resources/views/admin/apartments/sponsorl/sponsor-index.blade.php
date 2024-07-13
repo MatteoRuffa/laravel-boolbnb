@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Sponsorizzazioni per {{ $apartment->name }}')
+@section('title', 'Sponsorship for {{ $apartment->name }}')
 
 @section('content')
     <h4 class="text-dark ms-4 pt-4 pb-2   text-center ">Sponsored Apartment Details</h4>

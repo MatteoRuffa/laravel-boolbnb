@@ -53,7 +53,22 @@
             <p>{{ $apartment->description }}</p>
         </div>
 
-
+    </div>
+    <div>
+        <label class="fs-4 ms-2">Actions</label>
+        <div class="link d-flex align-items-center justify-content-start p-3">
+            <a class="btn fs-5 draw-border p-2" href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="update-link p-4">
+                <i class="fa-solid fa-gear"></i>
+            </a>
+            <button type="button" class="btn fs-4 text-danger draw-border p-2 mx-2" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $apartment->id }}">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
+        <div class="container w-25">
+            <button id="cta-sponsor" class="btn-2 draw-border-2 mb-4 w-100" data-bs-toggle="modal" data-bs-target="#showPayment">   
+                <strong><i class="fa-solid fa-crown fs-3 text-white me-3 "></i>Sponsor your apartment</strong>
+            </button>
+        </div>
     </div>
 </div>  
 
@@ -63,23 +78,19 @@
 
 
 <!-- MODALE DI PAGAMENTO -->
-<button id="cta-sponsor" class="btn btn-cta mb-4 w-100" data-bs-toggle="modal"
-data-bs-target="#showPayment">   
-    <strong><i class="fa-solid fa-crown me-3 "></i>Attiva la sponsorizzazione</strong>
-</button>
 
 <div id="box-payment" class="d-none">
 
     {{-- <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal"
     data-bs-target="#showPayment">
-        Attiva
+        Activate
     </button> --}}
 
     <div class="modal fade" id="showPayment" tabindex="-1" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header " style="background-color: #0067697b; color:#4f4f4f">
-                    <h1 class="modal-title fs-5">Attiva la sponsorizzazione</h1>
+                    <h1 class="modal-title fs-5">Activate your sponsorship</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="background-color: #00676939;">
@@ -87,7 +98,7 @@ data-bs-target="#showPayment">
                         @csrf
                         <input type="hidden"  name="apartment_id" value="{{ $apartment->id }}">
                         <select id="promotion_id" class="form-select mb-3"  name="promotion_id" onclick="change(value)">
-                        <option value="" disabled selected>Seleziona sponsorizzazione</option>
+                        <option value="" disabled selected>select your sponsorship</option>
                             
                             @foreach ($promotions as $promotion)
                             
@@ -96,36 +107,30 @@ data-bs-target="#showPayment">
                             @endforeach
     
                         </select>
-                        <div id="error-message" class="text-danger d-none">Per favore, scegli una sponsorizzazione.</div>
+                        <div id="error-message" class="text-danger d-none">Please, select a sponsorship.</div>
     
                         <div id="box-description" class="box-description" >
     
                             <div id="text-description-1" class="text-hide d-none ">
                                 <strong>Costo</strong>: {{$promotions[0]->price}}€ <br>
-                                <strong>Durata</strong>: 24 ore <br>
+                                <strong>Durata</strong>: 24 h <br>
                                 {{$promotions[0]->description}}
                             </div>
                             <div id="text-description-2" class="text-hide d-none">
                                 <strong>Costo</strong>: {{$promotions[1]->price}}€ <br>
-                                <strong>Durata</strong>: 48 ore <br>
+                                <strong>Durata</strong>: 48 h <br>
                                 {{$promotions[1]->description}}
                             </div>
                             <div id="text-description-3" class="text-hide d-none">
                                 <strong>Costo</strong>: {{$promotions[2]->price}}€ <br>
-                                <strong>Durata</strong>: 144 ore <br>
+                                <strong>Durata</strong>: 144 h <br>
                                 {{$promotions[2]->description}}
                             </div>
                         </div>
-    
-                        
                         <div id="dropin-container"></div>
-    
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-payment fw-bold my-2">Acquista</button>
-    
+                            <button type="submit" class="btn btn-payment fw-bold my-2">Buy</button>
                         </div>
-
-    
                     </form>
                 </div>
             </div>
@@ -133,16 +138,6 @@ data-bs-target="#showPayment">
     </div>
 </div>
  <!-- FINE MODALE DI PAGAMENTO -->
-   
-    <div class="link d-flex align-items-center justify-content-start p-3">
-        <a class="btn ls-btn p-2" href="{{ route('admin.apartments.edit', $apartment->slug) }}" class="update-link p-4">
-            <i class="fa-solid fa-gear"></i>
-        </a>
-        <button type="button" class="btn btn-danger p-2 mx-2" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $apartment->id }}">
-            <i class="fa-solid fa-trash"></i>
-        </button>
-        <a href="{{ route('admin.apartments.index') }}" class="btn ls-btn-2">Back</a>
-    </div>
 </div>
 
 

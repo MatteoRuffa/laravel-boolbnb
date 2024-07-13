@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 option.addEventListener('click', () => {
                     addressInput.value = freeformAddress;
                     resultsContainer.style.display = 'none';
+                    addressInput.disabled = true;
                 });
                 resultsContainer.appendChild(option);
             });

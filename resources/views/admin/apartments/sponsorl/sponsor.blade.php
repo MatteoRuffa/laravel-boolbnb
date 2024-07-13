@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Crea Sponsorizzazione per {{ $apartment->name }}')
+@section('title', 'Activate sponsorship for {{ $apartment->name }}')
 
 
 @section('content')

@@ -30,9 +30,12 @@ class ApartmentController extends Controller
     public function index()
     {
         $user = auth()->user(); // Recupera l'utente autenticato
-        $apartments = $user->apartments()->paginate(10);
-        $totalApartments = DB::table('apartments')->count();
+        
+        $apartments = $user->apartments()->where('deleted_at', null)->where('user_id', $user->id)->paginate(10);
+        $totalApartments = DB::table('apartments')->where('user_id', $user->id)->where('deleted_at', null)->count();
         return view('admin.apartments.index', compact('apartments', 'totalApartments'));
+        
+
     }
     // ciao
 
