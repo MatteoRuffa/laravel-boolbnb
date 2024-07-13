@@ -20,32 +20,33 @@ class SearchController extends Controller
             if (!is_numeric($lat) || !is_numeric($lon) || !is_numeric($radius)) {
                 throw new \Exception('I parametri latitude, longitude e radius devono essere numerici.');
             }
-    
+
             // Base query per cercare gli appartamenti entro un certo raggio
             $query = "
                 SELECT a.id, a.slug, a.name, a.beds, a.bathrooms, a.visibility, a.description, a.rooms, 
-                       a.square_meters, a.image_cover, a.address, a.latitude, a.longitude,
-                       COALESCE(p.price, 0) AS promotion_price,
-                       ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) AS distance 
+                    a.square_meters, a.image_cover, a.address, a.latitude, a.longitude,
+                    COALESCE(p.price, 0) AS promotion_price,
+                    ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) AS distance 
                 FROM apartments a
                 LEFT JOIN apartment_promotion ap ON a.id = ap.apartment_id
                 LEFT JOIN promotions p ON ap.promotion_id = p.id
-                WHERE ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) <= ?
+                WHERE a.visibility = 1
+                AND ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) <= ?
                 ORDER BY promotion_price DESC, distance ASC
             ";
-    
+
             $bindings = [$lon, $lat, $lon, $lat, $radius * 1000]; // Parametri per la query
-    
+
             $apartments = DB::select($query, $bindings);
-    
+
             return response()->json([
                 'success' => true,
                 'results' => $apartments
             ], 200);
-    
+
         } catch (\Exception $e) {
             \Log::error('Error in SearchController@searchByLocation:', ['error' => $e->getMessage()]);
-    
+
             return response()->json([
                 'success' => false,
                 'message' => 'Si è verificato un errore durante il recupero degli appartamenti.',
@@ -53,6 +54,7 @@ class SearchController extends Controller
             ], 500);
         }
     }
+
 
     // Metodo per ottenere gli appartamenti basati sui filtri
     public function filterApartments(Request $request)
@@ -68,13 +70,14 @@ class SearchController extends Controller
             // Base query per cercare gli appartamenti entro un certo raggio
             $query = "
                 SELECT a.id, a.slug, a.name, a.beds, a.bathrooms, a.visibility, a.description, a.rooms, 
-                       a.square_meters, a.image_cover, a.address, a.latitude, a.longitude,
-                       COALESCE(p.price, 0) AS promotion_price,
-                       ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) AS distance 
+                    a.square_meters, a.image_cover, a.address, a.latitude, a.longitude,
+                    COALESCE(p.price, 0) AS promotion_price,
+                    ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) AS distance 
                 FROM apartments a
                 LEFT JOIN apartment_promotion ap ON a.id = ap.apartment_id
                 LEFT JOIN promotions p ON ap.promotion_id = p.id
-                WHERE ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) <= ?
+                WHERE a.visibility = 1
+                AND ST_Distance_Sphere(point(a.longitude, a.latitude), point(?, ?)) <= ?
             ";
 
             $bindings = [$lon, $lat, $lon, $lat, $radius * 1000]; // Parametri per la query
@@ -126,4 +129,5 @@ class SearchController extends Controller
             ], 500);
         }
     }
+
 }

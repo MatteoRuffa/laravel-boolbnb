@@ -16,8 +16,9 @@ class ApartmentController extends Controller
     {
         try {
             if ($request->query('promoted')) {
-                // Ottieni solo gli appartamenti sponsorizzati
+                 // Ottieni solo gli appartamenti sponsorizzati e visibili
                 $apartments = Apartment::with('services', 'promotions')
+                    ->where('visibility', 1)
                     ->whereHas('promotions', function($query) {
                         $query->where('end_date', '>=', now());
                     })
@@ -28,7 +29,8 @@ class ApartmentController extends Controller
                     return $apartment->promotions->max('price');
                 });
             } else {
-                $apartments = Apartment::with('services')->get();
+                // Ottieni solo gli appartamenti visibili
+                $apartments = Apartment::with('services')->where('visibility', 1)->get();
             }
     
             $cleanApartments = $apartments->map(function ($apartment) {
@@ -59,7 +61,10 @@ class ApartmentController extends Controller
     public function show($slug)
 
 {
-    $apartment = Apartment::where('slug', $slug)->with('user', 'services')->first();
+    $apartment = Apartment::where('slug', $slug)
+    ->where('visibility', 1) // Filtra solo gli appartamenti visibili
+    ->with('user', 'services')
+    ->first();
 
     if ($apartment) {
         // Converti l'appartamento in un array
