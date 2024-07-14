@@ -147,14 +147,14 @@
                 </div> 
         </form>
 </section>    <script>
-        //funzione per i service
-        document.getElementById('create-apartment-form').addEventListener('submit', function(event) {
-            const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
-            const serviceError = document.getElementById('service-error');
-            const addressInput = document.getElementById('address');
-            const addressdiv = document.getElementById('adreesResult');
-            let isServiceSelected = false;
-    
+    //funzione per i service
+    const addressInput = document.getElementById('address');
+    const addressdiv = document.getElementById('adreesResult');
+    document.getElementById('create-apartment-form').addEventListener('submit', function(event) {
+        const serviceCheckboxes = document.querySelectorAll('input[name="services[]"]');
+        const serviceError = document.getElementById('service-error');
+        let isServiceSelected = false;
+        
             serviceCheckboxes.forEach(function(checkbox) {
                 if (checkbox.checked) {
                     isServiceSelected = true;
