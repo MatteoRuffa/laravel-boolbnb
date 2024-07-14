@@ -5,7 +5,7 @@
         There are no apartments to display. Please add a new apartment.
     </div>
 @else
-<table id="mr-table" class="table fs-4 table-hover shadow mb-2 mt-3">
+<table id="mr-table" class="table table-hover shadow mb-2 mt-4 ms-3">
     <thead>
         <tr>
             <!-- <th scope="col">#id Project</th> -->

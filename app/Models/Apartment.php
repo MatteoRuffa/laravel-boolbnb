@@ -61,7 +61,7 @@ class Apartment extends Model
 
     public static function generateSlug($name){
         $slugBase = Str::slug(trim($name), '-');
-        $slugs = \App\Models\Apartment::orderBy('slug')->pluck('slug')->toArray();
+        $slugs = \App\Models\Apartment::withTrashed()->orderBy('slug')->pluck('slug')->toArray();
         $num = 1;
         $slugNumbers = [];
         
