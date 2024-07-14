@@ -29,7 +29,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // se no entra in gioco la rotta di fallback che rimanda alla dashboard: ma se non è autenticato,
 // allora viene rimandato alla login (e questo è definito in app/Http/Middleware/Authenticate.php)
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [ApartmentController::class, 'index'])->name('admin.apartments.index');
     Route::get('/admin/apartments', [ApartmentController::class, 'index'])->name('admin.apartments.index');
     Route::resource('apartments', ApartmentController::class)->parameters(['apartments'=>'apartment:slug']);
     Route::resource('services', ServiceController::class);
@@ -69,5 +69,5 @@ Route::get('admin/payment/show', [PaymentController::class, 'show'])->name('admi
 require __DIR__ . '/auth.php';
 
 Route::fallback(function () {
-    return redirect()->route('admin.dashboard');
+    return redirect()->route('admin.apartments.index');
 });

@@ -8,8 +8,12 @@
   </button>
   <div  class="p-3 ms-4 my-1 position-relative">
     <div class="logo-container">
-      <p><i class="fs-4 fa-solid fa-house-flood-water"></i></p>
-    </div>
+          <a href="http://localhost:5174" class="text-decoration-none text-white">
+            <p>
+              <i class="fs-4 fa-solid fa-house-flood-water"></i>
+            </p>
+          </a>
+        </div>
     <div class="bubbles">
       <div></div>
     </div>
@@ -26,10 +30,7 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link active{{Route::currentRouteName() == 'admin.dashboard' ? 'active' : ''}}"
-              href="{{route('admin.dashboard')}}" aria-current="page">Dasboard</a>
-          </li>
+          
           <li class="nav-item">
             <a class="nav-link {Route::currentRouteName() == 'admin.apartments.index' ? 'active' : ''}}"
               href="{{route('admin.apartments.index')}}">Apartments</a>
@@ -38,10 +39,10 @@
             <a class="nav-link {Route::currentRouteName() == 'admin.services.index' ? 'active' : ''}}"
               href="{{route('admin.services.index')}}">Services</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link {Route::currentRouteName() == 'admin.promotions.index' ? 'active' : ''}}"
               href="{{route('admin.promotions.index')}}">Promotions</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link {Route::currentRouteName() == 'admin.lead.index' ? 'active' : ''}}"
               href="{{route('admin.leads.index')}}">Messages</a>
@@ -50,12 +51,17 @@
             <a class="nav-link {Route::currentRouteName() == 'admin.services.index' ? 'active' : ''}}"
               href="{{route('admin.messages.index')}}">Messages</a>
           </li> --}}
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:5174">
+              Switch to Client Side
+            </a>
+          </li>
 
         </ul>
-        <form class="d-flex mt-3" role="search">
+        <!-- <form class="d-flex mt-3" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn draw-border text-white" type="submit">Search</button>
-        </form>
+        </form> -->
       </div>
     </div>
   </div>
