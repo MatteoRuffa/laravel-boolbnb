@@ -17,19 +17,19 @@ class PromotionSeeder extends Seeder
                 'title' => 'Standard',
                 'duration' => '24:00:00',
                 'price' => 2.99,
-                'description' => "The sponsored apartment appears for 24 hours on the Homepage in the “Featured Apartments” section and in the search page, it is always positioned before a non-sponsored apartment that meets the same search criteria."
+                'description' => "The sponsored apartment will appear for 24 hours on the Homepage in the “Featured Apartments” section and in the search page, it will be always positioned before a non-sponsored apartment that meets the same search criteria."
             ],
             [
                 'title' => 'Plus',
                 'duration' => '72:00:00',
                 'price' => 5.99,
-                'description' => "The sponsored apartment appears for 48 hours on the Homepage in the “Featured Apartments” section and in the search page, it is always positioned before a non-sponsored apartment that meets the same search criteria."
+                'description' => "The sponsored apartment will appear for 48 hours on the Homepage in the “Featured Apartments” section and in the search page, it will be always positioned before a non-sponsored apartment that meets the same search criteria."
             ],
             [
                 'title' => 'Premium',
                 'duration' => '144:00:00',
                 'price' => 9.99,
-                'description' => "The sponsored apartment appears for 144 hours on the Homepage in the “Featured Apartments” section and in the search page, it is always positioned before a non-sponsored apartment that meets the same search criteria."
+                'description' => "The sponsored apartment will appear for 144 hours on the Homepage in the “Featured Apartments” section and in the search page, it will be always positioned before a non-sponsored apartment that meets the same search criteria."
             ]
         ];
 
