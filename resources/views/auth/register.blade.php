@@ -10,7 +10,7 @@
                     {{ __('Register') }}
                 </div>
                 <div class="p-3">
-                    <form id="register-form">
+                    <form id="register-form" method="POST">
                         @csrf
 
                         <div class="mb-4 row">
@@ -173,9 +173,6 @@ function getEmailErrorMessage(email) {
                 // Se una delle validazioni fallisce, impedisci l'invio del modulo
                 if (!valid) {
                     event.preventDefault();
-                } else {
-                    // Svuota i campi del modulo
-                    form.reset();
                 }
             });
         });
