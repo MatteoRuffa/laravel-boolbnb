@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', () => {
     const addressInput = document.getElementById('address');
+    const addressdiv = document.getElementById('adreesResult');
     const resultsContainer = document.getElementById('resultsContainer');
     const apiBaseUrl = 'https://api.tomtom.com/search/2/search/';
     const apiKey =  window.apiKey;
@@ -180,7 +181,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 option.addEventListener('click', () => {
                     addressInput.value = freeformAddress;
                     resultsContainer.style.display = 'none';
-                    addressInput.disabled = true;
+                    addressInput.style.display = 'none';
+                    addressdiv.style.display = 'block';
+                    addressdiv.innerHTML= addressInput.value;
                 });
                 resultsContainer.appendChild(option);
             });
