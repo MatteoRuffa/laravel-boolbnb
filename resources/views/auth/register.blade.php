@@ -10,7 +10,7 @@
                     {{ __('Register') }}
                 </div>
                 <div class="p-3">
-                    <form id="register-form" method="POST">
+                    <form id="register-form" method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="mb-4 row">
@@ -57,7 +57,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }} <span class="text-danger">*</span> </label>
                             
                             <div class="col-md-6">
-                                <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                                <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                 <label for="password"><span class="text-danger">*</span> required</label>
                                 
                                 @error('password')
@@ -72,7 +72,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }} <span class="text-danger">*</span> </label>
 
                             <div class="col-md-6">
-                                <input type="password" id="password-confirm" name="password-confirm" class="form-control" required>
+                                <input type="password" id="password-confirm" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 <label for="password-confirm"><span class="text-danger">*</span> required</label>
                             </div>
                             <span id="errorPassword" class="invalid-feedback"></span><br>
