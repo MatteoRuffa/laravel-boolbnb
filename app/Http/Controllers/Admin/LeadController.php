@@ -13,11 +13,15 @@ class LeadController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $messages = Lead::with('apartment')->paginate(20);
-        $totalMessage = DB::table('leads')->count(); 
-        return view('admin.leads.index', compact('messages', 'totalMessage'));
-    }
+{
+    $messages = Lead::with('apartment')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(20);
+                    
+    $totalMessage = DB::table('leads')->count(); 
+    
+    return view('admin.leads.index', compact('messages', 'totalMessage'));
+}
 
     /**
      * Show the form for creating a new resource.
