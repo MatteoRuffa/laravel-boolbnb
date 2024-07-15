@@ -3,14 +3,14 @@
 
 @section('content')
     <section class="my-5">
-        <h1 class="text-decoration-underline m-3">{{ $lead->name }} has sent you a message</h1>
+        <h1 class=" m-3"><strong>{{ $lead->name }}</strong> has sent you a message</h1>
+        <div><strong>Date:</strong>{{ $lead->created_at }}</div>
+        
+        <div class="my-3 py-2"> 
+            <strong>Message content:</strong>  {{ $lead->message }}
+        </div>
 
-        <p class="my-3 p-2">
-            {{ $lead->message }}
-        </p>
+        <div>You may contact {{ $lead->name }} through the following email: <strong>{{ $lead->email }}</strong></div>
 
-        <span>{{ $lead->created_at }}</span>
-
-        <span>You may contact {{ $lead->name }} through the following email: {{ $lead->email }}</span>
     </section>
 @endsection
