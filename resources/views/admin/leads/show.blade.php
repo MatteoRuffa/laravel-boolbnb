@@ -1,5 +1,5 @@
 @section('title', 'Admin Dashboard / Messages')
-@extends ('layouts.admin')
+@extends('layouts.admin')
 
 @section('content')
     <section class="my-5">

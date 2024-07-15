@@ -21,8 +21,44 @@
                 <td class="align-content-center d-xl-table-cell">{{ $message->name }}</td>
                 <td class="align-content-center d-lg-table-cell">{{ $message->email }}</td>
                 <td class="align-content-center d-lg-table-cell">{{ $message->message }}</td>
-                <td class="align-content-center d-lg-table-cell">actions</td>
+                <td class="align-content-center d-lg-table-cell">
+                    <a href="{{ route('admin.leads.show', $message->id) }}" class="btn draw-border">
+                        <div class="icon-container">
+                            <i class="fs-3 fas fa-info-circle"></i>
+                        </div>
+                    </a>
+                    <form class="d-inline" id="delete-form-{{ $message->id }}" action="{{ route('admin.leads.destroy', $message->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn draw-border" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $message->id }}">
+                            <i class="fs-3 text-danger fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
             </tr>
+            <!-- Include the modal for delete confirmation -->
+            <div class="modal fade" id="deleteModal-{{ $message->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirm deletion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this message?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn draw-border" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cancel</button>
+                            <form action="{{ route('admin.leads.destroy', ['lead' => $message->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn draw-border"><i class="fa-solid fa-trash"></i> Delete permanently</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endforeach
     </tbody>
 </table>
+

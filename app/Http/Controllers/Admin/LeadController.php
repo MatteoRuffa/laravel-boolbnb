@@ -13,15 +13,15 @@ class LeadController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $messages = Lead::with('apartment')
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(20);
-                    
-    $totalMessage = DB::table('leads')->count(); 
-    
-    return view('admin.leads.index', compact('messages', 'totalMessage'));
-}
+    {
+        $messages = Lead::with('apartment')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(20);
+                        
+        $totalMessage = DB::table('leads')->count(); 
+        
+        return view('admin.leads.index', compact('messages', 'totalMessage'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -57,15 +57,15 @@ class LeadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Lead $message)
+    public function show(Lead $lead)
     {
-        //
+        return view('admin.leads.show', compact('lead'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Lead $message)
+    public function edit(Lead $lead)
     {
         //
     }
@@ -73,7 +73,7 @@ class LeadController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Lead $message)
+    public function update(Request $request, Lead $lead)
     {
         //
     }
@@ -81,8 +81,11 @@ class LeadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lead $message)
+    public function destroy(Lead $lead)
     {
-        //
+        $lead->delete();
+        return redirect()->route('admin.leads.index')->with('success', 'Lead deleted successfully');
     }
 }
+
+
