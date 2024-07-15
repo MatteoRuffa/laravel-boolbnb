@@ -6,18 +6,25 @@
     <span class="navbar-toggler-icon"></span>
     <a class="navbar-brand" href="#">Menu</a>
   </button>
-  <div  class="p-3 ms-4 my-1 position-relative">
-    <div class="logo-container">
-          <a href="http://localhost:5174" class="text-decoration-none text-white">
+  <!-- <div  class="p-3 ms-4 my-1 position-relative">
+    <div class="logo-container"> -->
+      <div class="p-3 ms-4 my-1 position-relative">
+        <div class="logo-container">
+             <img class="logo-large logo-filter" src="{{ asset('image/logo-6.png') }}" alt="Logo grande">
+             <img class="logo-small logo-filter" src="{{ asset('image/logo-only-B.png') }}" alt="Logo piccolo">
+        </div>
+      </div>
+
+          <!-- <a href="http://localhost:5174" class="text-decoration-none text-white">
             <p>
               <i class="fs-4 fa-solid fa-house-flood-water"></i>
             </p>
-          </a>
-        </div>
-    <div class="bubbles">
+          </a> -->
+        <!-- </div> -->
+    <!-- <div class="bubbles">
       <div></div>
-    </div>
-  </div>
+    </div> -->
+  <!-- </div> -->
   @include('partials.header')
 
 

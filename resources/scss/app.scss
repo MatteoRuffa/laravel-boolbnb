@@ -563,3 +563,31 @@ li {
 .draw-border-3:hover::after {
     transition-delay: 0s, 0.25s, 0s;
 }
+
+/* Nascondi il logo piccolo di default */
+.logo-small {
+    display: none;
+}
+
+/* Mostra il logo grande di default */
+.logo-large {
+    display: block;
+    width: 180px;
+    margin-left: 130px;
+}
+
+/* Quando lo schermo è più piccolo di 768px, mostra il logo piccolo e nascondi il logo grande */
+@media (max-width: 768px) {
+    .logo-large {
+        display: none;
+    }
+    .logo-small {
+        display: block;
+        width: 160px;
+        margin-right: 15px;
+    }
+}
+.logo-filter {
+    filter: brightness(0) invert(1); /* Per rendere il logo bianco */
+  
+}
