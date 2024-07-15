@@ -11,7 +11,7 @@
         @endif
 
         @include('partials.table-messages', ['elements' => $messages, 'elementName' => 'messages']) 
-       {{$messages->links('vendor.pagination.bootstrap-5')}}  
+        {{$messages->links('vendor.pagination.bootstrap-5')}}  
 
     </section>
 @endsection
