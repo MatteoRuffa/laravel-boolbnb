@@ -18,6 +18,7 @@
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required>
+                                <label for="name"><span class="text-danger">*</span> required</label>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -28,9 +29,11 @@
 
                         <div class="mb-4 row">
                             <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('Last name') }}</label>
-
+                            
                             <div class="col-md-6">
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required>
+                                <label for="last_name"><span class="text-danger">*</span> required</label> 
+                                {{-- add label --}}
                                 @error('last_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -38,6 +41,7 @@
                                 @enderror
                             </div>
                         </div>
+                        
                         <div class="mb-4 row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }} <span class="text-danger">*</span> </label>
 
