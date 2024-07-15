@@ -31,11 +31,19 @@ class ApartmentController extends Controller
     {
         $user = auth()->user(); // Recupera l'utente autenticato
         
-        $apartments = $user->apartments()->where('deleted_at', null)->where('user_id', $user->id)->paginate(10);
-        $totalApartments = DB::table('apartments')->where('user_id', $user->id)->where('deleted_at', null)->count();
-        return view('admin.apartments.index', compact('apartments', 'totalApartments'));
+        // Recupera gli appartamenti ordinati per data di creazione in ordine decrescente
+        $apartments = $user->apartments()
+                           ->where('deleted_at', null)
+                           ->where('user_id', $user->id)
+                           ->orderBy('created_at', 'desc')
+                           ->paginate(10);
         
-
+        $totalApartments = DB::table('apartments')
+                             ->where('user_id', $user->id)
+                             ->where('deleted_at', null)
+                             ->count();
+    
+        return view('admin.apartments.index', compact('apartments', 'totalApartments'));
     }
     // ciao
 

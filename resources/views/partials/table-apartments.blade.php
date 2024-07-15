@@ -1,4 +1,3 @@
-<!-- resources/views/admin/project/table.blade.php -->
 @include('partials.modal-show')
 @if($elements->isEmpty())
     <div class="alert alert-info">
@@ -10,19 +9,29 @@
         <tr>
             <!-- <th scope="col">#id Project</th> -->
             <th class="text-white w-25 d-none fw-normal d-xl-table-cell" scope="col">Apartment cover</th>
-            <th  class="text-white w-25 d-xl-table-cell  fw-normal" scope="col">Apartment name</th>
+            <th class="text-white w-25 d-xl-table-cell fw-normal" scope="col">Apartment name</th>
+            <th class="text-white w-25 fw-normal d-lg-table-cell" scope="col">Promotions</th>
             <th scope="col" class="text-white w-25 fw-normal d-lg-table-cell">Visibility</th>
-            <th scope="col" class=" text-white w-25 fw-normal d-lg-table-cell">Address</th>
-            <th scope="col" class="text-white w-25 fw-normal {{ Route::currentRouteName() === 'admin.apartments.index'  }}">Actions</th>
+            <th scope="col" class="text-white w-25 fw-normal d-lg-table-cell">Address</th>
+            <th scope="col" class="text-white w-25 fw-normal {{ Route::currentRouteName() === 'admin.apartments.index' }}">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($elements as $element)
             <tr>
                 <!-- <td>{{ $element->id }}</td> pippo -->
-                <td  id="td-image-cover" class="d-none d-xl-table-cell"><img class="img-fluid rounded" src="{{ asset('storage/' . $element->image_cover) }}" alt="{{ $element->name }}"></td>
-                <td class=" d-xl-table-cell align-content-center">{{ $element->name }}</td>
-                <td class=" d-xl-table-cell align-content-center">
+                <td id="td-image-cover" class="d-none d-xl-table-cell"><img class="img-fluid rounded" src="{{ asset('storage/' . $element->image_cover) }}" alt="{{ $element->name }}"></td>
+                <td class="d-xl-table-cell align-content-center">{{ $element->name }}</td>
+                <td class="d-lg-table-cell align-content-center">
+                    @if ($element->promotions->isNotEmpty())
+                        @foreach ($element->promotions as $promotion)
+                            <span>{{ $promotion->title }}</span><br>
+                        @endforeach
+                    @else
+                        <span>N/A</span>
+                    @endif
+                </td>
+                <td class="d-xl-table-cell align-content-center">
                     @if ($element->visibility == 1)
                     <div>
                         <i class="fa-solid fa-eye"></i>
@@ -35,9 +44,9 @@
                         </div>
                     @endif
                 </td>
-                <td class=" d-lg-table-cell align-content-center">{{ $element->address }}</td>
+                <td class="d-lg-table-cell align-content-center">{{ $element->address }}</td>
                 <td class="{{ Route::currentRouteName() === 'admin.apartments.index' ? '' : 'd-none' }} align-content-center pe-3 d-lg-table-cell">
-                        <!-- Amministration Actions -->
+                        <!-- Administration Actions -->
                             <a href="{{ route('admin.apartments.show', $element) }}" class="btn draw-border">
                                 <div class="icon-container">
                                     <i class="fs-3 fas fa-info-circle"></i>

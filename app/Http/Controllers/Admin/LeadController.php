@@ -14,8 +14,12 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $messages = Lead::paginate(20);
-        $totalMessage = DB::table('apartments')->count();
+        $messages = Lead::with('apartment')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(20);
+                        
+        $totalMessage = DB::table('leads')->count(); 
+        
         return view('admin.leads.index', compact('messages', 'totalMessage'));
     }
 
@@ -32,21 +36,36 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string',
+            'apartment_id' => 'required|exists:apartments,id', // Valida che l'ID dell'appartamento esista
+        ]);
+
+        // Crea un nuovo lead
+        $lead = new Lead();
+        $lead->name = $validatedData['name'];
+        $lead->email = $validatedData['email'];
+        $lead->message = $validatedData['message'];
+        $lead->apartment_id = $validatedData['apartment_id']; // Salva l'ID dell'appartamento
+        $lead->save();
+
+        return response()->json(['message' => 'Lead created successfully'], 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Lead $message)
+    public function show(Lead $lead)
     {
-        //
+        return view('admin.leads.show', compact('lead'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Lead $message)
+    public function edit(Lead $lead)
     {
         //
     }
@@ -54,7 +73,7 @@ class LeadController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Lead $message)
+    public function update(Request $request, Lead $lead)
     {
         //
     }
@@ -62,8 +81,11 @@ class LeadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lead $message)
+    public function destroy(Lead $lead)
     {
-        //
+        $lead->delete();
+        return redirect()->route('admin.leads.index')->with('success', 'Lead deleted successfully');
     }
 }
+
+

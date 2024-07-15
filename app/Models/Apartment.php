@@ -9,7 +9,7 @@ use App\Models\Service;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Promotion;
-
+use App\Models\Lead;
 use App\Models\ApartmentPromotion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB; 
@@ -89,6 +89,10 @@ class Apartment extends Model
         if (isset($latitude) && isset($longitude)) {
             $this->attributes['location'] = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
         }
+    }
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
     }
 
 }
