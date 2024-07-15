@@ -8,8 +8,8 @@
   </button>
   <!-- <div  class="p-3 ms-4 my-1 position-relative">
     <div class="logo-container"> -->
-      <div class="p-3 ms-4 my-1 position-relative">
-        <div class="logo-container">
+      <div class="d-flex ">
+        <div class="logo-container align-items-center">
              <img class="logo-large logo-filter" src="{{ asset('image/logo-6.png') }}" alt="Logo grande">
              <img class="logo-small logo-filter" src="{{ asset('image/logo-only-B.png') }}" alt="Logo piccolo">
         </div>
