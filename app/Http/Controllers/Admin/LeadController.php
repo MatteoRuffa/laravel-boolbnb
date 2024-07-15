@@ -14,8 +14,8 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $messages = Lead::paginate(20);
-        $totalMessage = DB::table('apartments')->count();
+        $messages = Lead::with('apartment')->paginate(20);
+        $totalMessage = DB::table('leads')->count(); 
         return view('admin.leads.index', compact('messages', 'totalMessage'));
     }
 
@@ -32,7 +32,22 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string',
+            'apartment_id' => 'required|exists:apartments,id', // Valida che l'ID dell'appartamento esista
+        ]);
+
+        // Crea un nuovo lead
+        $lead = new Lead();
+        $lead->name = $validatedData['name'];
+        $lead->email = $validatedData['email'];
+        $lead->message = $validatedData['message'];
+        $lead->apartment_id = $validatedData['apartment_id']; // Salva l'ID dell'appartamento
+        $lead->save();
+
+        return response()->json(['message' => 'Lead created successfully'], 200);
     }
 
     /**

@@ -14,7 +14,7 @@ class ServiceController extends Controller
     public function index()
     {
         // Usa il metodo paginate direttamente sul modello Eloquent
-        $services = Service::paginate(10);
+        $services = Service::paginate(20);
         return view('admin.services.index', compact('services'));
     }
 

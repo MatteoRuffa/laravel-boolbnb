@@ -13,5 +13,10 @@ class lead extends Model
         'name',
         'email',
         'message',
+        'apartment_id',
     ];
+    public function apartment()
+    {
+        return $this->belongsTo(Apartment::class);
+    }
 }
