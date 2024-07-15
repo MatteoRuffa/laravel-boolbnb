@@ -137,7 +137,7 @@
     </button> --}}
 
     <div class="modal fade" id="showPayment" tabindex="-1" aria-hidden="true" >
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header " style="background-color: #0067697b; color:#4f4f4f">
                     <h1 class="modal-title fs-5">Activate your sponsorship</h1>
