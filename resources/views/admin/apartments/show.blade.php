@@ -113,6 +113,9 @@
             <button type="button" class="btn fs-4 text-danger draw-border p-2 mx-2" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $apartment->id }}">
                 <i class="fa-solid fa-trash"></i>
             </button>
+            <a href="{{ route('admin.apartments.index') }}" class="btn draw-border">
+                <i class="fa-solid fa-chevron-left"></i> Go back
+            </a>
         </div>
         <div class="container w-25">
             <button id="cta-sponsor" class="btn-2 draw-border-2 mb-4 w-100" data-bs-toggle="modal" data-bs-target="#showPayment">   
