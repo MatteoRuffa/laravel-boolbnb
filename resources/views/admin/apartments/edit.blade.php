@@ -168,6 +168,9 @@
             <div class="text-center">
                 <button type="submit" class="draw-border-2 p-2 px-3 btn-2 mt-3 mx-3"><i class="fa-solid fa-floppy-disk"></i> Salva</button>
             </div>
+            <a href="{{ route('admin.apartments.index') }}" class="btn draw-border">
+                <i class="fa-solid fa-chevron-left"></i> Go back
+            </a>
         </form>
 </section>
 

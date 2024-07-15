@@ -49,7 +49,57 @@
         </div>
 
         <div id="info-right" class="ls-border ls-glass p-3">
-            <h4 class="text-center text-uppercase mb-4">Description</h4>
+            <h4 class="text-center text-uppercase mb-4">Sponsorships</h4>
+            @if($apartment->promotions->isEmpty())
+                <div class="alert alert-warning text-center" role="alert">
+                    This apartment has no active promotions.
+                </div>
+            @else
+                @foreach($apartment->promotions as $promotion)
+                    <div class="promotion-details mb-3">
+                        <h5 class="fw-bold">Types of Promotion: {{ $promotion->title }}</h5>
+                        <p>{{ $promotion->description }}</p>
+                        <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($promotion->pivot->start_date)->format('d/m/Y H:i:s') }}</p>
+                        <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($promotion->pivot->end_date)->format('d/m/Y H:i:s') }}</p>
+                        <p><strong>Remaining Time:</strong> <span id="timer-{{ $apartment->id }}-{{ $promotion->id }}"></span></p>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            function startTimer(duration, display) {
+                                var timer = duration, hours, minutes, seconds;
+                                setInterval(function () {
+                                    hours = parseInt(timer / 3600, 10);
+                                    minutes = parseInt((timer % 3600) / 60, 10);
+                                    seconds = parseInt(timer % 60, 10);
+
+                                    hours = hours < 10 ? "0" + hours : hours;
+                                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                                    display.textContent = hours + ":" + minutes + ":" + seconds;
+
+                                    if (--timer < 0) {
+                                        clearInterval(interval); // Ferma l'intervallo una volta terminato il timer
+                                    }
+                                }, 1000);
+                            }
+
+                            var now = new Date().getTime();
+                            var end = new Date('{{ \Carbon\Carbon::parse($promotion->pivot->end_date)->format('Y-m-d H:i:s') }}').getTime();
+                            var duration = Math.floor((end - now) / 1000);
+                            var display = document.querySelector('#timer-{{ $apartment->id }}-{{ $promotion->id }}');
+
+                            if (duration > 0) {
+                                startTimer(duration, display);
+                            } else {
+                                display.textContent = '00:00:00';
+                            }
+                        });
+                    </script>
+                @endforeach
+            @endif
+
+            <h4 class="text-center text-uppercase mt-4 mb-4">Description</h4>
             <p>{{ $apartment->description }}</p>
         </div>
 
