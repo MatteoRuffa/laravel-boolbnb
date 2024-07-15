@@ -4,6 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="{{ asset('image/logo-only-B.png') }}?v=1">
+    <link rel=
+
+   
+
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -26,7 +32,7 @@
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     <div class="logo_cortese">
-                        <img src="{{asset('image/logoCortese.jpeg')}}" alt="" class="rounded-circle">
+                        <img src="{{asset('image/logo-only-B.png')}}" alt="" class="rounded-circle">
                     </div>
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
