@@ -13,7 +13,7 @@
             <th  class="text-white w-25 d-xl-table-cell  fw-normal" scope="col">Apartment name</th>
             <th scope="col" class="text-white w-25 fw-normal d-lg-table-cell">Visibility</th>
             <th scope="col" class=" text-white w-25 fw-normal d-lg-table-cell">Address</th>
-            <th scope="col" class="text-white w-25 fw-normal {{ Route::currentRouteName() === 'admin.apartments.index' ? '' : 'd-none' }}"> Actions</th>
+            <th scope="col" class="text-white w-25 fw-normal {{ Route::currentRouteName() === 'admin.apartments.index'  }}">Actions</th>
         </tr>
     </thead>
     <tbody>
