@@ -166,7 +166,7 @@ php artisan make:model Nome -rcms --requests
 
 # creo le views relative
 
-#creo form request per validazione
+#creo form request per validazione.
 	
 php artisan make:request StoreMomemodelRequest
 
