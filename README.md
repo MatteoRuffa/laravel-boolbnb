@@ -31,7 +31,7 @@ ctrl + c
 ```bash
 npm remove postcss
 
-#installo dbal per migration e seeder
+#installo dbal per migration e seeder.
 composer require doctrine/dbal
 
 composer require guzzlehttp/guzzle
